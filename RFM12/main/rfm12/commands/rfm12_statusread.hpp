@@ -46,4 +46,6 @@ typedef class _rfm12_statusread_command_t {
 
 } rfm12_statusread_command_t;
 
+#else
+#error Dual Include
 #endif /* RFM12_STATUSREAD_H_ */

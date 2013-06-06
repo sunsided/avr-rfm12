@@ -132,4 +132,6 @@ typedef class _rfm12_configset_command_t {
 
 } rfm12_configset_command_t;
 
+#else
+#error Dual Include
 #endif /* RFM12_CONFIGSET_H_ */

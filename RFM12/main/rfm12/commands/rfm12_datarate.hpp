@@ -66,4 +66,6 @@ typedef class _rfm12_datarate_command_t {
 
 } rfm12_datarate_command_t;
 
+#else
+#error Dual Include
 #endif /* RFM12_DATARATE_H_ */
