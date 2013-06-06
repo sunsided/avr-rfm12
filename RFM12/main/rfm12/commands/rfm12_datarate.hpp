@@ -6,15 +6,16 @@
  */ 
 
 
-#ifndef RFM12_POWERMGMT_H_
-#define RFM12_POWERMGMT_H_
+#ifndef RFM12_DATARATE_H_
+#define RFM12_DATARATE_H_
 
+#include <stdlib.h>
 #include <stdint.h>
 
 /**
-* \brief Power Management Command
+* \brief Data Rate Command
 */
-typedef class _rfm12_powermgmt_command_t {
+typedef class _rfm12_datarate_command_t {
 	public:
 	union {
 		/**
@@ -27,6 +28,15 @@ typedef class _rfm12_powermgmt_command_t {
 			*/
 			const uint8_t		command_code:8;		
 
+			/**
+			* \brief Expected bit rate CS value
+			*/
+			uint8_t				cs:1;
+			
+			/**
+			* \brief Expected bit rate R values
+			*/
+			uint8_t				r:7;
 		};
 	};
 	
@@ -35,15 +45,25 @@ typedef class _rfm12_powermgmt_command_t {
 	/**
 	* \brief Initializes this instance to default values (POR)
 	*/
-	_rfm12_powermgmt_command_t() 
-		: command_word(0x8208)
+	_rfm12_datarate_command_t() 
+		: command_word(0xC623)
 	{}
 
 	/**
-	* \brief Cast-Operator
+	* \brief Cast operator
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_powermgmt_command_t;
+	/**
+	* \brief Sets the bit rate.
+	*
+	* Sets the actual bit rate in transmit mode and the expected bit rate in receive mode.
+	*
+	* \param bitrate The bitrate in kbps (in range of 0 to 256.0)
+	* \param real_bitrate Optional. The real calculated bitrate.
+	*/
+	bool set_bit_rate(const float bitrate = 115.20F, float* real_bitrate = NULL);
 
-#endif /* RFM12_POWERMGMT_H_ */
+} rfm12_datarate_command_t;
+
+#endif /* RFM12_DATARATE_H_ */

@@ -187,6 +187,9 @@
     <Compile Include="rfm12\commands\rfm12_datafilter.hpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rfm12\commands\rfm12_datarate.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12\commands\rfm12_datarate.hpp">
       <SubType>compile</SubType>
     </Compile>
