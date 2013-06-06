@@ -162,13 +162,61 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rfm12\commands\rfm12_afc.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_batteryclockdivider.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_configset.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_datafilter.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_datarate.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_fiforead.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_fiforesetmode.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_frequency.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_lowdutycycle.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_pllsetting.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_powermgmt.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_receivercontrol.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_statusread.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_synchronpattern.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_txconfig.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_txwrite.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\rfm12_wakeuptimer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12\rfm12.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\rfm12.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\rfm12commands.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\spi.cpp">
@@ -187,6 +235,7 @@
   <ItemGroup>
     <Folder Include="comm" />
     <Folder Include="rfm12" />
+    <Folder Include="rfm12\commands" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
