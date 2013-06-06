@@ -6,8 +6,10 @@
  */ 
 
 
-#ifndef RFM12COMMANDS_H_
-#define RFM12COMMANDS_H_
+#ifndef RFM12_CONFIGSET_H_
+#define RFM12_CONFIGSET_H_
+
+#include <stdint.h>
 
 /**
 * \brief Frequency Band 
@@ -130,5 +132,4 @@ typedef class _rfm12_configset_command_t {
 
 } rfm12_configset_command_t;
 
-
-#endif /* RFM12COMMANDS_H_ */
+#endif /* RFM12_CONFIGSET_H_ */

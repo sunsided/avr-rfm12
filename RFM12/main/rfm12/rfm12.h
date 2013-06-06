@@ -10,6 +10,8 @@
 #define RFM12_H_
 
 #include <stdint.h>
+#include "commands/rfm12_configset.hpp"
+#include "commands/rfm12_powermgmt.hpp"
 
 /**
  * \brief Initializes the RFM12 interrupt pin.

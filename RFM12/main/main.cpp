@@ -17,7 +17,6 @@
 #include "main.h"
 #include "rfm12/spi.h"
 #include "rfm12/rfm12.h"
-#include "rfm12/rfm12commands.hpp"
 
 #include <util/delay.h> 
 
