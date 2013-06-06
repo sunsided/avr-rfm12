@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 /**
-* \brief Power Management Command
+* \brief Transmit Register Write Command
 */
 typedef class _rfm12_powermgmt_command_t {
 	public:

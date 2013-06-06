@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 /**
-* \brief Power Management Command
+* \brief Wake-up Timer Command
 */
 typedef class _rfm12_powermgmt_command_t {
 	public:

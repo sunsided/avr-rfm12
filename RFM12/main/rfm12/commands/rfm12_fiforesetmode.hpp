@@ -39,7 +39,7 @@ typedef enum
 } sensitive_reset_t;
 
 /**
-* \brief Power Management Command
+* \brief FIFO and Reset Mode Command
 */
 typedef class _rfm12_fifoandresetmode_command_t {
 	public:

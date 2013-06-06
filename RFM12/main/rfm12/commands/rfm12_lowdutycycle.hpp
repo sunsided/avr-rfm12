@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 /**
-* \brief Power Management Command
+* \brief Low-Duty Cycle Command
 */
 typedef class _rfm12_powermgmt_command_t {
 	public:

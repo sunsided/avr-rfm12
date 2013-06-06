@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 /**
-* \brief Power Management Command
+* \brief FIFO Read Command
 */
 typedef class _rfm12_fiforead_command_t {
 	public:

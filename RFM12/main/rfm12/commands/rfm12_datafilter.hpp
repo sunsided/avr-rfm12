@@ -20,7 +20,7 @@ typedef enum {
 } filter_type_t;
 
 /**
-* \brief Power Management Command
+* \brief Data Filter Command
 */
 typedef class _rfm12_datafilter_command_t {
 	public:

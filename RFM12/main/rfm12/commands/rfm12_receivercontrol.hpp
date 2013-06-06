@@ -68,7 +68,7 @@ typedef enum {
 } rssi_threshold_t;
 
 /**
-* \brief Power Management Command
+* \brief Receiver Control Command
 */
 typedef class _rfm12_receivercontrol_command_t {
 	public:

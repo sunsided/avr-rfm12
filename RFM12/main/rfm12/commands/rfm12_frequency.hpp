@@ -14,7 +14,7 @@
 #include "rfm12_configset.hpp"
 
 /**
-* \brief Power Management Command
+* \brief Frequency Setting Command
 */
 typedef class _rfm12_frequency_command_t {
 	public:

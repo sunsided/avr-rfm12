@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 /**
-* \brief Power Management Command
+* \brief Synchron Pattern Command
 */
 typedef class _rfm12_synchronpattern_command_t {
 	public:
