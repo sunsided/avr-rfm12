@@ -54,7 +54,7 @@ typedef class _rfm12_configset_command_t {
 		/**
 		* \brief The raw command word.
 		*/
-		uint16_t command_word;
+		const uint16_t command_word;
 		struct {
 			/**
 			* \brief The command code.
