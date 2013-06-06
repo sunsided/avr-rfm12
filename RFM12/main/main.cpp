@@ -165,10 +165,10 @@ int main()
 
 		usart_comm_send_char(cmd.el);
 		usart_comm_send_char(cmd.ef);
-		cmd.el = true;
+		cmd.enable_data();
 		usart_comm_send_char(cmd.el);
 		usart_comm_send_char(cmd.ef);
-		cmd.ef = true;
+		cmd.enable_fifo();
 		usart_comm_send_char(cmd.el);
 		usart_comm_send_char(cmd.ef);
 		usart_comm_send_zstr("\r\n");
