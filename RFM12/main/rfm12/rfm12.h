@@ -12,6 +12,20 @@
 #include <stdint.h>
 #include "commands/rfm12_configset.hpp"
 #include "commands/rfm12_powermgmt.hpp"
+#include "commands/rfm12_frequency.hpp"
+#include "commands/rfm12_datarate.hpp"
+#include "commands/rfm12_receivercontrol.hpp"
+#include "commands/rfm12_datafilter.hpp"
+#include "commands/rfm12_fiforesetmode.hpp"
+#include "commands/rfm12_synchronpattern.hpp"
+#include "commands/rfm12_fiforead.hpp"
+#include "commands/rfm12_txwrite.hpp"
+#include "commands/rfm12_pllsetting.hpp"
+#include "commands/rfm12_txwrite.hpp"
+#include "commands/rfm12_wakeuptimer.hpp"
+#include "commands/rfm12_lowdutycycle.hpp"
+#include "commands/rfm12_batteryclockdivider.hpp"
+#include "commands/rfm12_statusread.hpp"
 
 /**
  * \brief Initializes the RFM12 interrupt pin.
