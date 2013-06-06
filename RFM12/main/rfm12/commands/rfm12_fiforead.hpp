@@ -6,15 +6,15 @@
  */ 
 
 
-#ifndef RFM12_POWERMGMT_H_
-#define RFM12_POWERMGMT_H_
+#ifndef RFM12_FIFOREAD_H_
+#define RFM12_FIFOREAD_H_
 
 #include <stdint.h>
 
 /**
 * \brief Power Management Command
 */
-typedef class _rfm12_powermgmt_command_t {
+typedef class _rfm12_fiforead_command_t {
 	public:
 	union {
 		/**
@@ -27,6 +27,10 @@ typedef class _rfm12_powermgmt_command_t {
 			*/
 			const uint8_t		command_code:8;		
 
+			/**
+			* \brief Padding.
+			*/
+			const uint8_t		:8;		
 		};
 	};
 	
@@ -35,8 +39,8 @@ typedef class _rfm12_powermgmt_command_t {
 	/**
 	* \brief Initializes this instance to default values (POR)
 	*/
-	_rfm12_powermgmt_command_t() 
-		: command_word(0x8208)
+	_rfm12_fiforead_command_t() 
+		: command_word(0xB000)
 	{}
 
 	/**
@@ -44,8 +48,8 @@ typedef class _rfm12_powermgmt_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_powermgmt_command_t;
+} _rfm12_fiforead_command_t;
 
 #else
 #error Dual Include
-#endif /* RFM12_POWERMGMT_H_ */
+#endif /* RFM12_FIFOREAD_H_ */
