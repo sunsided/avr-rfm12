@@ -6,15 +6,23 @@
  */ 
 
 
-#ifndef RFM12_POWERMGMT_H_
-#define RFM12_POWERMGMT_H_
+#ifndef RFM12_DATAFILTER_H_
+#define RFM12_DATAFILTER_H_
 
 #include <stdint.h>
 
 /**
+* \brief Data Filter Type
+*/
+typedef enum {
+	FILTER_DIGITAL = 0,		//<! Digital filter
+	FILTER_ANALOG = 1		//<! Analog RC filte
+} filter_type_t;
+
+/**
 * \brief Power Management Command
 */
-typedef class _rfm12_powermgmt_command_t {
+typedef class _rfm12_datafilter_command_t {
 	public:
 	union {
 		/**
@@ -27,6 +35,41 @@ typedef class _rfm12_powermgmt_command_t {
 			*/
 			const uint8_t		command_code:8;		
 
+			/**
+			* \brief Clock recovery (CR) auto lock enable
+			*/
+			bool				al:1;
+			
+			/**
+			* \brief Clock recovery lock control
+			*/
+			uint8_t				lm:1;
+			
+			/**
+			* \brief Padding bit
+			*/
+			const uint8_t		:1;
+
+			/**
+			* \brief Filter Type
+			*/
+			filter_type_t		s:1;
+			
+			/**
+			* \brief Padding bit
+			*/
+			const uint8_t		:1;
+			
+			/**
+			* \brief DQD threshold parameter.
+			*
+			* Determines the threshold level at which the DQD signal goes high. The 
+			* valid range is 0 to 7, but the value should always be larger than or equal to 4 (the default).
+			* It can be calculated using the following formula:
+			*
+			* f = 4 x (deviation – TX-RXoffset ) / bit rate
+			*/
+			uint8_t				f:3;
 		};
 	};
 	
@@ -35,8 +78,8 @@ typedef class _rfm12_powermgmt_command_t {
 	/**
 	* \brief Initializes this instance to default values (POR)
 	*/
-	_rfm12_powermgmt_command_t() 
-		: command_word(0x8208)
+	_rfm12_datafilter_command_t () 
+		: command_word(0xC22C)
 	{}
 
 	/**
@@ -44,8 +87,8 @@ typedef class _rfm12_powermgmt_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_powermgmt_command_t;
+} rfm12_datafilter_command_t ;
 
 #else
 #error Dual Include
-#endif /* RFM12_POWERMGMT_H_ */
+#endif /* RFM12_DATAFILTER_H_ */
