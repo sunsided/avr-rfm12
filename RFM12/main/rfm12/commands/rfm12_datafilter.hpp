@@ -16,7 +16,7 @@
 */
 typedef enum {
 	FILTER_DIGITAL = 0,		//<! Digital filter
-	FILTER_ANALOG = 1		//<! Analog RC filte
+	FILTER_ANALOG = 1		//<! Analog RC filter
 } filter_type_t;
 
 /**
