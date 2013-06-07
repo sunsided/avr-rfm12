@@ -30,12 +30,19 @@ typedef class _rfm12_wakeuptimer_command_t {
 			/**
 			* \brief Wake-up time period exponential factor.
 			*
+			* Twake-up = 1.03 · M · 2R + 0.5 [ms]
+			*
 			* For future compatibility, r should be in range 0..29 inclusive.
 			*/
 			uint8_t				r:5;
 			
 			/**
 			* \brief Wake-up time period mantissa factor.
+			*
+			* Twake-up = 1.03 · M · 2R + 0.5 [ms]
+			*
+			* This parameter also indirectly controls the Low Duty-Cycle Command setting d.
+			* \see rfm12_lowdutycycle_command_t
 			*/
 			uint8_t				m:8;
 		};
