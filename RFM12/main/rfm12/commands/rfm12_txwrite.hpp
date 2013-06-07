@@ -6,15 +6,15 @@
  */ 
 
 
-#ifndef RFM12_POWERMGMT_H_
-#define RFM12_POWERMGMT_H_
+#ifndef RFM12_TXWRITE_H_
+#define RFM12_TXWRITE_H_
 
 #include <stdint.h>
 
 /**
 * \brief Transmit Register Write Command
 */
-typedef class _rfm12_powermgmt_command_t {
+typedef class _rfm12_txwrite_command_t {
 	public:
 	union {
 		/**
@@ -27,6 +27,10 @@ typedef class _rfm12_powermgmt_command_t {
 			*/
 			const uint8_t		command_code:8;		
 
+			/**
+			* \brief Transmission data
+			*/
+			uint8_t				t:8;
 		};
 	};
 	
@@ -35,17 +39,22 @@ typedef class _rfm12_powermgmt_command_t {
 	/**
 	* \brief Initializes this instance to default values (POR)
 	*/
-	_rfm12_powermgmt_command_t() 
-		: command_word(0x8208)
+	_rfm12_txwrite_command_t() 
+		: command_word(0xB8AA)
 	{}
 
 	/**
-	* \brief Cast-Operator
+	* \brief Cast operator
 	*/
 	inline operator uint16_t() const { return this->command_word; }
+		
+	/**
+	* \brief Sets the data for transmission.
+	*/
+	inline void set_data(uint8_t byte = 0xAA) { this->t = byte; }
 
-} rfm12_powermgmt_command_t;
+} rfm12_txwrite_command_t;
 
 #else
 #error Dual Include
-#endif /* RFM12_POWERMGMT_H_ */
+#endif /* RFM12_TXWRITE_H_ */
