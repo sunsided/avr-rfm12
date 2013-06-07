@@ -106,7 +106,4 @@ typedef class _rfm12_batteryclockdivider_command_t {
 
 } rfm12_batteryclockdivider_command_t;
 
-#else
-#error Dual Include
-
 #endif /* RFM12_BATTERYCLOCKDIVIDER_H_ */

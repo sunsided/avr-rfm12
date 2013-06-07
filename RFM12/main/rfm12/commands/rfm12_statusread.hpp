@@ -25,8 +25,12 @@ typedef class _rfm12_statusread_command_t {
 			/**
 			* \brief The command code.
 			*/
-			const uint16_t		command_code:16;		
-
+			const uint16_t		command_code:1;
+			
+			/**
+			* \brief Padding
+			*/
+			const uint16_t		:15;
 		};
 	};
 	
@@ -40,12 +44,10 @@ typedef class _rfm12_statusread_command_t {
 	{}
 
 	/**
-	* \brief Cast-Operator
+	* \brief Cast operator
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
 } rfm12_statusread_command_t;
 
-#else
-#error Dual Include
 #endif /* RFM12_STATUSREAD_H_ */

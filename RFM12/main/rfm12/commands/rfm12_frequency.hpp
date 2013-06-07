@@ -76,6 +76,4 @@ typedef class _rfm12_frequency_command_t {
 
 } rfm12_frequency_command_t;
 
-#else
-#error Dual Include
 #endif /* RFM12_FREQUENCY_H_ */

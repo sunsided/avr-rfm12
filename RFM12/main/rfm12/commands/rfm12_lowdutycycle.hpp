@@ -57,7 +57,7 @@ typedef class _rfm12_lowdutycycle_command_t {
 	{}
 
 	/**
-	* \brief Cast-Operator
+	* \brief Cast operator
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
@@ -70,6 +70,4 @@ typedef class _rfm12_lowdutycycle_command_t {
 
 } rfm12_lowdutycycle_command_t;
 
-#else
-#error Dual Include
 #endif /* RFM12_LOWDUTYCYCLE_H_ */

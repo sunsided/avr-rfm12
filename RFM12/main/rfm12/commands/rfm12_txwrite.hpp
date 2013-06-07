@@ -55,6 +55,4 @@ typedef class _rfm12_txwrite_command_t {
 
 } rfm12_txwrite_command_t;
 
-#else
-#error Dual Include
 #endif /* RFM12_TXWRITE_H_ */

@@ -79,12 +79,10 @@ typedef class _rfm12_powermgmt_command_t {
 	{}
 
 	/**
-	* \brief Cast-Operator
+	* \brief Cast operator
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
 } rfm12_powermgmt_command_t;
 
-#else
-#error Dual Include
 #endif /* RFM12_POWERMGMT_H_ */

@@ -72,6 +72,4 @@ typedef class _rfm12_wakeuptimer_command_t {
 
 } rfm12_wakeuptimer_command_t;
 
-#else
-#error Dual Include
 #endif /* RFM12_WAKEUPTIMER_H_ */
