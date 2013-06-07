@@ -14,11 +14,19 @@
 *
 * Sets the actual bit rate in transmit mode and the expected bit rate in receive mode.
 *
-* \param bitrate The bitrate in kbps (in range of 0 to 256.0)
+* \param bitrate The bitrate in kbps (in range of ]0 to 256.0])
 */
 bool rfm12_datarate_command_t::set_bit_rate(const float bitrate, float* real_bitrate) 
 {
 	bool valid = true;
+	
+	// sanity check
+	if (bitrate <= 0 + FLT_EPSILON) {
+		if (NULL != real_bitrate) {
+			*real_bitrate = 0.0F;
+		}
+		return false;
+	}
 	
 	// R is a 7-bit value (range of 0..127)
 
@@ -50,7 +58,7 @@ bool rfm12_datarate_command_t::set_bit_rate(const float bitrate, float* real_bit
 	
 	// calculate for cs = 0
 	uint8_t cs = 0;
-	float r_flt = 1.0F/(bitrate*29.0F/10000.0F) - 1.0F;
+	float r_flt = 10000.0F/(bitrate*29.0F) - 1.0F;
 	
 	// sanity check
 	if (r_flt <= 0 + FLT_EPSILON || r_flt >= 127.0 + FLT_EPSILON) {
