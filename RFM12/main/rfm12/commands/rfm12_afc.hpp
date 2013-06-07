@@ -88,7 +88,7 @@ typedef class _rfm12_afc_command_t {
 	/**
 	* \brief Initializes this instance to default values (POR)
 	*/
-	rfm12_afc_command_t() 
+	_rfm12_afc_command_t() 
 		: command_word(0xC4F7)
 	{}
 
