@@ -21,7 +21,6 @@
 #include "commands/rfm12_fiforead.hpp"
 #include "commands/rfm12_txwrite.hpp"
 #include "commands/rfm12_pllsetting.hpp"
-#include "commands/rfm12_txwrite.hpp"
 #include "commands/rfm12_wakeuptimer.hpp"
 #include "commands/rfm12_lowdutycycle.hpp"
 #include "commands/rfm12_batteryclockdivider.hpp"
