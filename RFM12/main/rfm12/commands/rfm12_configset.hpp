@@ -53,7 +53,7 @@ namespace rfm12
 		/**
 		* \brief Configuration Setting Command.
 		*/
-		typedef class _rfm12_configset_command_t : public IRfm12Command 
+		class Rfm12ConfigSetCommand : public IRfm12Command 
 		{
 			public:
 			union {
@@ -95,7 +95,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_configset_command_t() 
+			Rfm12ConfigSetCommand() 
 				: command_word(0x8008)
 			{}
 
@@ -135,9 +135,7 @@ namespace rfm12
 			* \param value Data register enabled.
 			*/
 			inline void enableData(const bool value = true) { this->el = value; }
-
-		} Rfm12ConfigSetCommand;
-
+		};
 	}
 }
 

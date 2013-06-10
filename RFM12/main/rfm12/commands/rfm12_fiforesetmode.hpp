@@ -46,7 +46,7 @@ namespace rfm12
 		/**
 		* \brief FIFO and Reset Mode Command
 		*/
-		typedef class _rfm12_fifoandresetmode_command_t : public IRfm12Command {
+		class Rfm12FifoAndResetModeCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -94,7 +94,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_fifoandresetmode_command_t() 
+			Rfm12FifoAndResetModeCommand() 
 				: command_word(0xCA80)
 			{}
 
@@ -102,9 +102,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12FifoAndResetModeCommand;
-
+		};
 	}
 }
 

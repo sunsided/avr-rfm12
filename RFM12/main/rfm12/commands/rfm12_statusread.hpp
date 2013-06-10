@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Status Read Command
 		*/
-		typedef class _rfm12_statusread_command_t : public IRfm12Command {
+		class Rfm12StatusReadCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -44,7 +44,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_statusread_command_t() 
+			Rfm12StatusReadCommand() 
 				: command_word(0x0000)
 			{}
 
@@ -52,9 +52,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12StatusReadCommand;
-
+		};
 	}
 }
 

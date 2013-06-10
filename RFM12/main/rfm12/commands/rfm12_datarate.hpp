@@ -20,7 +20,7 @@ namespace rfm12
 		/**
 		* \brief Data Rate Command
 		*/
-		typedef class _rfm12_datarate_command_t : public IRfm12Command {
+		class Rfm12DataRateCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -50,7 +50,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_datarate_command_t() 
+			Rfm12DataRateCommand() 
 				: command_word(0xC623)
 			{}
 
@@ -68,9 +68,7 @@ namespace rfm12
 			* \param real_bitrate Optional. The real calculated bitrate.
 			*/
 			bool setBitRate(const float bitrate = 115.20F, float* real_bitrate = NULL);
-
-		} Rfm12DataRateCommand;
-
+		};
 	}
 }
 

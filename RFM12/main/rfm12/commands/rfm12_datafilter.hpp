@@ -27,7 +27,7 @@ namespace rfm12
 		/**
 		* \brief Data Filter Command
 		*/
-		typedef class _rfm12_datafilter_command_t : public IRfm12Command {
+		class Rfm12DataFilterCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -83,7 +83,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_datafilter_command_t () 
+			Rfm12DataFilterCommand () 
 				: command_word(0xC22C)
 			{}
 
@@ -91,8 +91,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12DataFilterCommand;
+		};
 	}
 }
 #endif /* RFM12_DATAFILTER_H_ */

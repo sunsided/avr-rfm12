@@ -75,7 +75,7 @@ namespace rfm12
 		/**
 		* \brief Receiver Control Command
 		*/
-		typedef class _rfm12_receivercontrol_command_t : public IRfm12Command {
+		class Rfm12ReceiverControlCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -122,7 +122,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_receivercontrol_command_t() 
+			Rfm12ReceiverControlCommand() 
 				: command_word(0x9080)
 			{}
 
@@ -130,9 +130,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12ReceiverControlCommand;
-
+		};
 	}
 }
 

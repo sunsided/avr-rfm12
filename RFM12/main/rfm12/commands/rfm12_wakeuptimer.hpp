@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Wake-up Timer Command
 		*/
-		typedef class _rfm12_wakeuptimer_command_t : public IRfm12Command {
+		class Rfm12WakeupTimerCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -58,7 +58,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_wakeuptimer_command_t() 
+			Rfm12WakeupTimerCommand() 
 				: command_word(0xE196)
 			{}
 
@@ -74,9 +74,7 @@ namespace rfm12
 			* effectively resulting in a wake-up time of 0.5ms.
 			*/
 			inline void disableWakeupTimer() { this->r = 0; this->m = 0; }
-
-		} Rfm12WakeupTimerCommand;
-
+		};
 	}
 }
 

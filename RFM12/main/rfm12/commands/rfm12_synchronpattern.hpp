@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Synchron Pattern Command
 		*/
-		typedef class _rfm12_synchronpattern_command_t : public IRfm12Command {
+		class Rfm12SynchronPatternCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -46,7 +46,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_synchronpattern_command_t() 
+			Rfm12SynchronPatternCommand() 
 				: command_word(0xCED4)
 			{}
 
@@ -61,8 +61,7 @@ namespace rfm12
 			* For RFM12 (i.e. not RFM12B), this value must always be 0xD4.
 			*/
 			inline void setSynchronByte(const uint8_t byte = 0xD4) { this->b = byte; }
-
-		} Rfm12SynchronPatternCommand;
+		};
 	}
 }
 

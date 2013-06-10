@@ -68,7 +68,7 @@ namespace rfm12
 		/**
 		* \brief TX Configuration Control Command
 		*/
-		typedef class _rfm12_txconfig_command_t : public IRfm12Command {
+		class Rfm12TxConfigCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -122,7 +122,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_txconfig_command_t() 
+			Rfm12TxConfigCommand() 
 				: command_word(0x9800)
 			{}
 
@@ -141,8 +141,7 @@ namespace rfm12
 				this->m = frequency;
 				this->mp = inversion;
 			}
-
-		} Rfm12TxConfigCommand;
+		};
 	}
 }
 #endif /* RFM12_TXCONFIG_H_ */

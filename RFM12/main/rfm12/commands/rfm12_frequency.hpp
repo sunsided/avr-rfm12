@@ -21,7 +21,7 @@ namespace rfm12
 		/**
 		* \brief Frequency Setting Command
 		*/
-		typedef class _rfm12_frequency_command_t : public IRfm12Command {
+		class Rfm12FrequencyCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -46,7 +46,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_frequency_command_t() 
+			Rfm12FrequencyCommand() 
 				: command_word(0xA680)
 			{}
 
@@ -77,9 +77,7 @@ namespace rfm12
 			* \return true in case of success, false if the channel was out of range
 			*/
 			bool setByChannel(const uint16_t channel = 1200, const frequency_band_t band = FREQ_BAND_433, float *real_frequency = NULL);
-
-		} Rfm12FrequencyCommand;
-
+		};
 	}
 }
 

@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Low Duty-Cycle Command
 		*/
-		typedef class _rfm12_lowdutycycle_command_t : public IRfm12Command {
+		class Rfm12LowDutyCycleCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -57,7 +57,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_lowdutycycle_command_t() 
+			Rfm12LowDutyCycleCommand() 
 				: command_word(0xC80E)
 			{}
 
@@ -72,9 +72,7 @@ namespace rfm12
 			* \param enabled true if the Low Duty-Cycle mode should be enabled, false otherwise.
 			*/
 			inline void setEnabled(const bool enabled = false) { this->en = enabled; }
-
-		} Rfm12LowDutyCycleCommand;
-
+		};
 	}
 }
 

@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief FIFO Read Command
 		*/
-		typedef class _rfm12_fiforead_command_t : public IRfm12Command {
+		class Rfm12FifoReadCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -44,7 +44,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_fiforead_command_t() 
+			Rfm12FifoReadCommand() 
 				: command_word(0xB000)
 			{}
 
@@ -52,9 +52,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12FifoReadCommand;
-
+		};
 	}
 }
 

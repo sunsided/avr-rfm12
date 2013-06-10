@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Transmit Register Write Command
 		*/
-		typedef class _rfm12_txwrite_command_t : public IRfm12Command {
+		class Rfm12TransmitRegisterWriteCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -44,7 +44,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_txwrite_command_t() 
+			Rfm12TransmitRegisterWriteCommand() 
 				: command_word(0xB8AA)
 			{}
 
@@ -57,9 +57,7 @@ namespace rfm12
 			* \brief Sets the data for transmission.
 			*/
 			inline void setData(uint8_t byte = 0xAA) { this->t = byte; }
-
-		} Rfm12TransmitRegisterWriteCommand;
-
+		};
 	}
 }
 

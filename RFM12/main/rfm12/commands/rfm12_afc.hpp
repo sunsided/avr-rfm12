@@ -43,7 +43,7 @@ namespace rfm12
 		/**
 		* \brief AFC Command
 		*/
-		typedef class _rfm12_afc_command_t : public IRfm12Command 
+		class Rfm12AfcCommand : public IRfm12Command 
 		{
 			public:
 			union {
@@ -94,7 +94,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_afc_command_t() 
+			Rfm12AfcCommand() 
 				: command_word(0xC4F7)
 			{}
 
@@ -102,9 +102,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12AfcCommand;
-
+		};
 	}
 }
 

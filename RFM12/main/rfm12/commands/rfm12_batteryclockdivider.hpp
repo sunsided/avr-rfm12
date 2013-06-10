@@ -56,7 +56,7 @@ namespace rfm12
 		/**
 		* \brief Low Battery Detector and Microcontroller Clock Divider Command
 		*/
-		typedef class _rfm12_batteryclockdivider_command_t : public IRfm12Command 
+		class Rfm12BatteryDetectorAndClockDividerCommand : public IRfm12Command 
 		{
 			public:
 			union {
@@ -101,7 +101,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_batteryclockdivider_command_t() 
+			Rfm12BatteryDetectorAndClockDividerCommand() 
 				: command_word(0xC000)
 			{}
 
@@ -109,9 +109,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12BatteryDetectorAndClockDividerCommand;
-
+		};
 	}
 }
 

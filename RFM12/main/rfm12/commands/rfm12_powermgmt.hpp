@@ -19,7 +19,8 @@ namespace rfm12
 		/**
 		* \brief Power Management Command
 		*/
-		typedef class _rfm12_powermgmt_command_t : public IRfm12Command {
+		class Rfm12PowerManagementCommand : public IRfm12Command 
+		{
 			public:
 			union {
 				/**
@@ -79,7 +80,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_powermgmt_command_t() 
+			Rfm12PowerManagementCommand() 
 				: command_word(0x8208)
 			{}
 
@@ -87,9 +88,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12PowerManagementCommand;
-
+		};
 	}
 }
 

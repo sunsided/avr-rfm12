@@ -38,7 +38,7 @@ namespace rfm12
 		/**
 		* \brief PLL (Phase-Locked Loop) Setting Command
 		*/
-		typedef class _rfm12_pllsetting_command_t : public IRfm12Command {
+		class Rfm12PllSettingCommand : public IRfm12Command {
 			public:
 			union {
 				/**
@@ -88,7 +88,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			_rfm12_pllsetting_command_t() 
+			Rfm12PllSettingCommand() 
 				: command_word(0xCC77)
 			{}
 
@@ -96,9 +96,7 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
-
-		} Rfm12PllSettingCommand;
-
+		};
 	}
 }
 
