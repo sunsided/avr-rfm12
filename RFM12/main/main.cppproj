@@ -232,6 +232,9 @@
     <Compile Include="rfm12\commands\rfm12_wakeuptimer.hpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rfm12\IRfm12Command.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12\rfm12.cpp">
       <SubType>compile</SubType>
     </Compile>

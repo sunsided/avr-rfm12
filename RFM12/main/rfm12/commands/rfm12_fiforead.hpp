@@ -10,6 +10,7 @@
 #define RFM12_FIFOREAD_H_
 
 #include <stdint.h>
+#include "../IRfm12Command.h"
 
 namespace rfm12
 {
@@ -18,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief FIFO Read Command
 		*/
-		typedef class _rfm12_fiforead_command_t {
+		typedef class _rfm12_fiforead_command_t : public IRfm12Command {
 			public:
 			union {
 				/**

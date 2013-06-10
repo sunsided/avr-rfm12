@@ -10,6 +10,7 @@
 #define RFM12_AFC_H_
 
 #include <stdint.h>
+#include "../IRfm12Command.h"
 
 namespace rfm12
 {
@@ -42,7 +43,8 @@ namespace rfm12
 		/**
 		* \brief AFC Command
 		*/
-		typedef class _rfm12_afc_command_t {
+		typedef class _rfm12_afc_command_t : public IRfm12Command 
+		{
 			public:
 			union {
 				/**

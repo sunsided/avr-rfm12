@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "rfm12_configset.hpp"
+#include "../IRfm12Command.h"
 
 namespace rfm12
 {
@@ -20,7 +21,7 @@ namespace rfm12
 		/**
 		* \brief Frequency Setting Command
 		*/
-		typedef class _rfm12_frequency_command_t {
+		typedef class _rfm12_frequency_command_t : public IRfm12Command {
 			public:
 			union {
 				/**

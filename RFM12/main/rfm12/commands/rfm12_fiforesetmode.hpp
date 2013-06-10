@@ -10,6 +10,7 @@
 #define RFM12_FIFORESETMODE_H_
 
 #include <stdint.h>
+#include "../IRfm12Command.h"
 
 namespace rfm12
 {
@@ -45,7 +46,7 @@ namespace rfm12
 		/**
 		* \brief FIFO and Reset Mode Command
 		*/
-		typedef class _rfm12_fifoandresetmode_command_t {
+		typedef class _rfm12_fifoandresetmode_command_t : public IRfm12Command {
 			public:
 			union {
 				/**

@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include "../IRfm12Command.h"
 
 namespace rfm12
 {
@@ -19,7 +20,7 @@ namespace rfm12
 		/**
 		* \brief Data Rate Command
 		*/
-		typedef class _rfm12_datarate_command_t {
+		typedef class _rfm12_datarate_command_t : public IRfm12Command {
 			public:
 			union {
 				/**
