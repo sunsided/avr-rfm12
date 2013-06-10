@@ -70,6 +70,6 @@ typedef class _rfm12_wakeuptimer_command_t {
 	*/
 	inline void disable_wakeup_timer() { this->r = 0; this->m = 0; }
 
-} rfm12_wakeuptimer_command_t;
+} Rfm12WakeupTimerCommand;
 
 #endif /* RFM12_WAKEUPTIMER_H_ */

@@ -53,6 +53,6 @@ typedef class _rfm12_txwrite_command_t {
 	*/
 	inline void set_data(uint8_t byte = 0xAA) { this->t = byte; }
 
-} rfm12_txwrite_command_t;
+} Rfm12TransmitRegisterWriteCommand;
 
 #endif /* RFM12_TXWRITE_H_ */

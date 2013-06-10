@@ -126,6 +126,6 @@ typedef class _rfm12_receivercontrol_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_receivercontrol_command_t;
+} Rfm12ReceiverControlCommand;
 
 #endif /* RFM12_RECEIVERCONTROL_H_ */

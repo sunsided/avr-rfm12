@@ -57,6 +57,6 @@ typedef class _rfm12_synchronpattern_command_t {
 	*/
 	inline void set_byte(const uint8_t byte = 0xD4) { this->b = byte; }
 
-} rfm12_synchronpattern_command_t;
+} Rfm12SynchronPatternCommand;
 
 #endif /* RFM12_SYNCHRONPATTERN_H_ */

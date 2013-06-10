@@ -92,6 +92,6 @@ typedef class _rfm12_pllsetting_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_pllsetting_command_t;
+} Rfm12PllSettingCommand;
 
 #endif /* RFM12_PLLSETTING_H_ */

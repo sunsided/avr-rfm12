@@ -48,6 +48,6 @@ typedef class _rfm12_fiforead_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} _rfm12_fiforead_command_t;
+} Rfm12FifoReadCommand;
 
 #endif /* RFM12_FIFOREAD_H_ */

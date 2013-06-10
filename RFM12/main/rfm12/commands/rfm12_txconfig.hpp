@@ -137,6 +137,6 @@ typedef class _rfm12_txconfig_command_t {
 		this->mp = inversion;
 	}
 
-} rfm12_txconfig_command_t;
+} Rfm12TxConfigCommand;
 
 #endif /* RFM12_TXCONFIG_H_ */

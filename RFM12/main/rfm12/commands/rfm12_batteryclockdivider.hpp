@@ -104,6 +104,6 @@ typedef class _rfm12_batteryclockdivider_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_batteryclockdivider_command_t;
+} Rfm12BatteryDetectorAndClockDividerCommand;
 
 #endif /* RFM12_BATTERYCLOCKDIVIDER_H_ */

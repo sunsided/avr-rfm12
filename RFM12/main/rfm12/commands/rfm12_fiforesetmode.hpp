@@ -98,6 +98,6 @@ typedef class _rfm12_fifoandresetmode_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_fifoandresetmode_command_t;
+} Rfm12FifoAndResetModeCommand;
 
 #endif /* RFM12_FIFORESETMODE_H_ */

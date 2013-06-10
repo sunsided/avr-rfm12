@@ -68,6 +68,6 @@ typedef class _rfm12_lowdutycycle_command_t {
 	*/
 	inline void set_enabled(const bool enabled = false) { this->en = enabled; }
 
-} rfm12_lowdutycycle_command_t;
+} Rfm12LowDutyCycleCommand;
 
 #endif /* RFM12_LOWDUTYCYCLE_H_ */

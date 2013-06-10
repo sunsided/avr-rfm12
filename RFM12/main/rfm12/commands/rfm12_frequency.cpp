@@ -19,7 +19,7 @@
 * \param real_frequency The real calculated target frequency.
 * \return true in case of success, false if the frequency was out of range
 */
-bool rfm12_frequency_command_t::set_by_frequency(const float frequency, float *real_frequency)
+bool Rfm12FrequencyCommand::set_by_frequency(const float frequency, float *real_frequency)
 {
 	// f0 = 10*c1*(c2 + frequency/4000)
 	// F  = (400*(frequency - 10*c1*c2))
@@ -113,7 +113,7 @@ bool rfm12_frequency_command_t::set_by_frequency(const float frequency, float *r
 * \param real_frequency The real calculated target frequency.
 * \return true in case of success, false if the frequency was out of range
 */
-bool rfm12_frequency_command_t::set_by_channel(const uint16_t channel, const frequency_band_t band, float *real_frequency)
+bool Rfm12FrequencyCommand::set_by_channel(const uint16_t channel, const frequency_band_t band, float *real_frequency)
 {
 	// f0 = 10*c1*(c2 + frequency/4000)
 	// F  = (400*(frequency - 10*c1*c2))

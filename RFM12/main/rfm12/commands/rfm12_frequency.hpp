@@ -74,6 +74,6 @@ typedef class _rfm12_frequency_command_t {
 	*/
 	bool set_by_channel(const uint16_t channel = 1200, const frequency_band_t band = FREQ_BAND_433, float *real_frequency = NULL);
 
-} rfm12_frequency_command_t;
+} Rfm12FrequencyCommand;
 
 #endif /* RFM12_FREQUENCY_H_ */

@@ -83,6 +83,6 @@ typedef class _rfm12_powermgmt_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_powermgmt_command_t;
+} Rfm12PowerManagementCommand;
 
 #endif /* RFM12_POWERMGMT_H_ */

@@ -64,6 +64,6 @@ typedef class _rfm12_datarate_command_t {
 	*/
 	bool set_bit_rate(const float bitrate = 115.20F, float* real_bitrate = NULL);
 
-} rfm12_datarate_command_t;
+} Rfm12DataRateCommand;
 
 #endif /* RFM12_DATARATE_H_ */

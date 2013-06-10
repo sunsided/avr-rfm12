@@ -97,6 +97,6 @@ typedef class _rfm12_afc_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_afc_command_t;
+} Rfm12AfcCommand;
 
 #endif /* RFM12_AFC_H_ */

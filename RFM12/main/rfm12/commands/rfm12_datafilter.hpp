@@ -87,6 +87,6 @@ typedef class _rfm12_datafilter_command_t {
 	*/
 	inline operator uint16_t() const { return this->command_word; }
 
-} rfm12_datafilter_command_t ;
+} Rfm12DataFilterCommand;
 
 #endif /* RFM12_DATAFILTER_H_ */

@@ -16,7 +16,7 @@
 *
 * \param bitrate The bitrate in kbps (in range of ]0 to 256.0])
 */
-bool rfm12_datarate_command_t::set_bit_rate(const float bitrate, float* real_bitrate) 
+bool Rfm12DataRateCommand::set_bit_rate(const float bitrate, float* real_bitrate) 
 {
 	bool valid = true;
 	

@@ -130,6 +130,6 @@ typedef class _rfm12_configset_command_t {
 	*/
 	inline void enable_data(const bool value = true) { this->el = value; }
 
-} rfm12_configset_command_t;
+} Rfm12ConfigSetCommand;
 
 #endif /* RFM12_CONFIGSET_H_ */
