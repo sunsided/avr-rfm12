@@ -15,7 +15,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Power Management Command
 		*/

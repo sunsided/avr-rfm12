@@ -59,7 +59,7 @@ namespace rfm12
 			*
 			* For RFM12 (i.e. not RFM12B), this value must always be 0xD4.
 			*/
-			inline void set_byte(const uint8_t byte = 0xD4) { this->b = byte; }
+			inline void setSynchronByte(const uint8_t byte = 0xD4) { this->b = byte; }
 
 		} Rfm12SynchronPatternCommand;
 	}

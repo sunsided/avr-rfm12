@@ -17,7 +17,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Frequency Setting Command
 		*/
@@ -33,7 +32,6 @@ namespace rfm12
 					* \brief The command code.
 					*/
 					const uint8_t		command_code:4;
-
 
 					/**
 					* \brief The frequency parameter F.
@@ -65,7 +63,7 @@ namespace rfm12
 			* \param real_frequency Optional. The real calculated target frequency.
 			* \return true in case of success, false if the frequency was out of range
 			*/
-			bool set_by_frequency(const float frequency = 433.0F, float *real_frequency = NULL);
+			bool setByFrequency(const float frequency = 433.0F, float *real_frequency = NULL);
 
 			/**
 			* \brief Sets the target frequency by channel.
@@ -77,7 +75,7 @@ namespace rfm12
 			* \param real_frequency Optional. The real calculated target frequency. If no valid band was set, this value will be set to zero.
 			* \return true in case of success, false if the channel was out of range
 			*/
-			bool set_by_channel(const uint16_t channel = 1200, const frequency_band_t band = FREQ_BAND_433, float *real_frequency = NULL);
+			bool setByChannel(const uint16_t channel = 1200, const frequency_band_t band = FREQ_BAND_433, float *real_frequency = NULL);
 
 		} Rfm12FrequencyCommand;
 

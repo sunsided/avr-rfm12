@@ -16,7 +16,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Data Rate Command
 		*/
@@ -67,7 +66,7 @@ namespace rfm12
 			* \param bitrate The bitrate in kbps (in range of 0 to 256.0)
 			* \param real_bitrate Optional. The real calculated bitrate.
 			*/
-			bool set_bit_rate(const float bitrate = 115.20F, float* real_bitrate = NULL);
+			bool setBitRate(const float bitrate = 115.20F, float* real_bitrate = NULL);
 
 		} Rfm12DataRateCommand;
 

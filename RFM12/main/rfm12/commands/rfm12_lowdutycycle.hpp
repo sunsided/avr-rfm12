@@ -15,7 +15,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Low Duty-Cycle Command
 		*/
@@ -71,7 +70,7 @@ namespace rfm12
 			*
 			* \param enabled true if the Low Duty-Cycle mode should be enabled, false otherwise.
 			*/
-			inline void set_enabled(const bool enabled = false) { this->en = enabled; }
+			inline void setEnabled(const bool enabled = false) { this->en = enabled; }
 
 		} Rfm12LowDutyCycleCommand;
 

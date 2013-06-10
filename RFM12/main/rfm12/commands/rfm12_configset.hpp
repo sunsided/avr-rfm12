@@ -15,7 +15,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Frequency Band 
 		* \see rfm12_configset_commant_t
@@ -108,7 +107,7 @@ namespace rfm12
 			*	
 			* \param band The frequency band.
 			*/
-			inline void set_frequency_band(const frequency_band_t band = FREQ_BAND_433) {
+			inline void setFrequencyBand(const frequency_band_t band = FREQ_BAND_433) {
 				this->b = band;
 			}
 
@@ -117,7 +116,7 @@ namespace rfm12
 			*	
 			* \param load The capacitance.
 			*/
-			inline void set_crystal_capacitance(const crystal_load_t load = CL_125) {
+			inline void setCrystalCapacitance(const crystal_load_t load = CL_125) {
 				this->x = load;
 			}
 
@@ -126,14 +125,14 @@ namespace rfm12
 			*	
 			* \param value FIFO enabled.
 			*/
-			inline void enable_fifo(const bool value = true) { this->ef = value; }
+			inline void enableFifo(const bool value = true) { this->ef = value; }
 
 			/**
 			* \brief Sets whether the internal data register should be enabled.
 			*	
 			* \param value Data register enabled.
 			*/
-			inline void enable_data(const bool value = true) { this->el = value; }
+			inline void enableData(const bool value = true) { this->el = value; }
 
 		} Rfm12ConfigSetCommand;
 

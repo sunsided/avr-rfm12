@@ -15,7 +15,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Microcontroller output clock buffer rise and fall time.
 		*/

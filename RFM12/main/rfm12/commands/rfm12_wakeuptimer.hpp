@@ -15,7 +15,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Wake-up Timer Command
 		*/
@@ -73,7 +72,7 @@ namespace rfm12
 			* Sets the wake-up timer period mantissa and exponent to zero,
 			* effectively resulting in a wake-up time of 0.5ms.
 			*/
-			inline void disable_wakeup_timer() { this->r = 0; this->m = 0; }
+			inline void disableWakeupTimer() { this->r = 0; this->m = 0; }
 
 		} Rfm12WakeupTimerCommand;
 

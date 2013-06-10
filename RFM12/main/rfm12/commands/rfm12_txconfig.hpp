@@ -15,7 +15,6 @@ namespace rfm12
 {
 	namespace commands
 	{
-
 		/**
 		* \brief Relative Output Power
 		*/
@@ -137,7 +136,7 @@ namespace rfm12
 			* \param frequency The delta frequency
 			* \param inversion The inversion mode
 			*/
-			inline void set_fsk(const fsk_deltaffsk_t frequency = FSKDF_15KHZ, const fsk_invert_t inversion = FSKMODE_NORMAL) {
+			inline void setFsk(const fsk_deltaffsk_t frequency = FSKDF_15KHZ, const fsk_invert_t inversion = FSKMODE_NORMAL) {
 				this->m = frequency;
 				this->mp = inversion;
 			}

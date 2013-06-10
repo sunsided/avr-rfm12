@@ -55,7 +55,7 @@ namespace rfm12
 			/**
 			* \brief Sets the data for transmission.
 			*/
-			inline void set_data(uint8_t byte = 0xAA) { this->t = byte; }
+			inline void setData(uint8_t byte = 0xAA) { this->t = byte; }
 
 		} Rfm12TransmitRegisterWriteCommand;
 
