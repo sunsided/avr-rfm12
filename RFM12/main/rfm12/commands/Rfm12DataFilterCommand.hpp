@@ -10,7 +10,7 @@
 #define RFM12_DATAFILTER_H_
 
 #include <stdint.h>
-#include "../IRfm12Command.h"
+#include "IRfm12Command.h"
 
 namespace rfm12
 {

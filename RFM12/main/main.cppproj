@@ -175,10 +175,16 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rfm12\commands\IRfm12Command.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12\commands\Rfm12AfcCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\commands\Rfm12BatteryDetectorAndClockDividerCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\Rfm12CommandResult.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\commands\Rfm12ConfigSetCommand.hpp">
@@ -232,13 +238,10 @@
     <Compile Include="rfm12\commands\Rfm12WakeupTimerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\IRfm12Command.h">
+    <Compile Include="rfm12\Rfm12.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\rfm12.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\rfm12.h">
+    <Compile Include="rfm12\Rfm12.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="spi\spi.cpp">

@@ -10,6 +10,8 @@
 #define RFM12_H_
 
 #include <stdint.h>
+#include "commands/IRfm12Command.h"
+#include "commands/Rfm12CommandResult.h"
 #include "commands/Rfm12ConfigSetCommand.hpp"
 #include "commands/Rfm12PowerManagementCommand.hpp"
 #include "commands/Rfm12FrequencyCommand.hpp"
@@ -53,6 +55,20 @@ namespace rfm12
 	 * \return Status word.
 	 */
 	uint_least16_t rfm12_read_status();
+
+	/**
+	* \brief Implementation of RFM12
+	*/
+	class Rfm12
+	{
+	public:
+		/**
+		* \brief Executes an RFM12 command.
+		*
+		* \param command The command to execute.
+		*/
+		commands::Rfm12CommandResult executeCommand(const commands::IRfm12Command* command) const;
+	};
 
 }
 

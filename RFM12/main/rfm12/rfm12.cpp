@@ -9,7 +9,7 @@
 #include <avr/io.h>
 #include "../main.h"
 #include "../spi/spi.h"
-#include "rfm12.h"
+#include "Rfm12.h"
 
 namespace rfm12
 {
