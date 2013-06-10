@@ -15,7 +15,7 @@
 #include "comm/command_decoder.h"
 
 #include "main.h"
-#include "rfm12/spi.h"
+#include "spi/spi.h"
 #include "rfm12/rfm12.h"
 
 using namespace rfm12;

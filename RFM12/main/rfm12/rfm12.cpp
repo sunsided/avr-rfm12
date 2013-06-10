@@ -8,7 +8,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include "../main.h"
-#include "spi.h"
+#include "../spi/spi.h"
 #include "rfm12.h"
 
 namespace rfm12

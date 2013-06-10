@@ -57,15 +57,15 @@
     </com_atmel_avrdbg_tool_ispmk2>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.8.1" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.8.1" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -238,10 +238,10 @@
     <Compile Include="rfm12\rfm12.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\spi.cpp">
+    <Compile Include="spi\spi.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\spi.h">
+    <Compile Include="spi\spi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="system.h">
@@ -253,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="comm" />
+    <Folder Include="spi" />
     <Folder Include="rfm12" />
     <Folder Include="rfm12\commands" />
   </ItemGroup>
