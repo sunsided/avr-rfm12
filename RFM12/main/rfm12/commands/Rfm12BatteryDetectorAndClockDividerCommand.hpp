@@ -34,23 +34,23 @@ namespace rfm12
 		* \brief Battery threshold setting
 		*/
 		typedef enum {
-			BATTHRES_2250mV = 0b0000,		//<! 2.25 V
-			BATTHRES_2350mV = 0b0001,		//<! 2.35 V
-			BATTHRES_2450mV = 0b0010,		//<! 2.45 V
-			BATTHRES_2550mV = 0b0011,		//<! 2.55 V
-			BATTHRES_2650mV = 0b0100,		//<! 2.65 V
-			BATTHRES_2750mV = 0b0101,		//<! 2.75 V
-			BATTHRES_2850mV = 0b0110,		//<! 2.85 V
-			BATTHRES_2950mV = 0b0111,		//<! 2.95 V
+			BATTHRESH_2250mV = 0b0000,		//<! 2.25 V
+			BATTHRESH_2350mV = 0b0001,		//<! 2.35 V
+			BATTHRESH_2450mV = 0b0010,		//<! 2.45 V
+			BATTHRESH_2550mV = 0b0011,		//<! 2.55 V
+			BATTHRESH_2650mV = 0b0100,		//<! 2.65 V
+			BATTHRESH_2750mV = 0b0101,		//<! 2.75 V
+			BATTHRESH_2850mV = 0b0110,		//<! 2.85 V
+			BATTHRESH_2950mV = 0b0111,		//<! 2.95 V
 	
-			BATTHRES_3050mV = 0b1000,		//<! 3.05 V
-			BATTHRES_3150mV = 0b1001,		//<! 3.15 V
-			BATTHRES_3250mV = 0b1010,		//<! 3.25 V
-			BATTHRES_3350mV = 0b1011,		//<! 3.35 V
-			BATTHRES_3450mV = 0b1100,		//<! 3.45 V
-			BATTHRES_3550mV = 0b1101,		//<! 3.55 V
-			BATTHRES_3650mV = 0b1110,		//<! 3.65 V
-			BATTHRES_3750mV = 0b1111,		//<! 3.75 V
+			BATTHRESH_3050mV = 0b1000,		//<! 3.05 V
+			BATTHRESH_3150mV = 0b1001,		//<! 3.15 V
+			BATTHRESH_3250mV = 0b1010,		//<! 3.25 V
+			BATTHRESH_3350mV = 0b1011,		//<! 3.35 V
+			BATTHRESH_3450mV = 0b1100,		//<! 3.45 V
+			BATTHRESH_3550mV = 0b1101,		//<! 3.55 V
+			BATTHRESH_3650mV = 0b1110,		//<! 3.65 V
+			BATTHRESH_3750mV = 0b1111,		//<! 3.75 V
 		} battery_threshold_t;
 
 		/**
