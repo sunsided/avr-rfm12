@@ -55,7 +55,7 @@ int main()
 	// signal we're ready to go
 	led_doubleflash_sync();
 		
-/*
+
 	// 1000 0000 .... .... Configuration Setting Command
 	uint8_t band			= 0b01; // 433 Mhz
 	uint8_t capacitance		= 0b0111; // 12.0pF 
@@ -117,7 +117,7 @@ int main()
 	
 	// 1100 0000 .... .... Low Battery Detector and Microcontroller Clock Divider Command
 	rfm12_command(0b1100000001001001); // 1.66MHz,3.1V
-*/		
+/**/		
 
 	// bye.
 	while(1) 
@@ -146,7 +146,7 @@ int main()
 		rfm12_command(0b1011100000000000 | (0xAA & 0b0000000011111111));
 		
 		_delay_ms(500);
-		
+		*/
 		// Register lesen
 		// uint16_t values = rfm12_command(0b1011000000000000);
 		
@@ -154,7 +154,7 @@ int main()
 		usart_comm_send_char(status >> 8);
 		usart_comm_send_char(status & 0xFF);
 		usart_comm_send_zstr("\r\n");
-		*/
+		/*
 		
 		rfm12_configset_command_t cmd;
 		usart_comm_send_char(sizeof(rfm12_configset_command_t));
@@ -171,6 +171,7 @@ int main()
 		usart_comm_send_char(cmd.el);
 		usart_comm_send_char(cmd.ef);
 		usart_comm_send_zstr("\r\n");
+		*/
 	}
 }
 
