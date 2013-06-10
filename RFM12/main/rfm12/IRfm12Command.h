@@ -21,7 +21,7 @@ namespace rfm12
 		class IRfm12Command
 		{
 		public:
-			virtual ~IRfm12Command(){}
+			inline virtual ~IRfm12Command(){}
 				
 			/**
 			* \brief Gets the command word.
