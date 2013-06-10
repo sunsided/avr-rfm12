@@ -9,6 +9,7 @@
 #include <float.h>
 #include "rfm12_frequency.hpp"
 
+using namespace rfm12::commands;
 
 /**
 * \brief Sets the target frequency by frequency.

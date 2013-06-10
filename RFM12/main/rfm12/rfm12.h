@@ -28,27 +28,32 @@
 #include "commands/rfm12_batteryclockdivider.hpp"
 #include "commands/rfm12_statusread.hpp"
 
-/**
- * \brief Initializes the RFM12 interrupt pin.
- * 
- * \return void
- */
-void rfm12_initialize_interrupt();
+namespace rfm12
+{
 
-/**
- * \brief Sends a command to the RFM12.
- *
- * \param command The command word
- *
- * \return The result
- */
-uint_least16_t rfm12_command(uint_least16_t command);
+	/**
+	 * \brief Initializes the RFM12 interrupt pin.
+	 * 
+	 * \return void
+	 */
+	void rfm12_initialize_interrupt();
 
-/**
- * \brief Reads the status register from the RFM12.
- *
- * \return Status word.
- */
-uint_least16_t rfm12_read_status();
+	/**
+	 * \brief Sends a command to the RFM12.
+	 *
+	 * \param command The command word
+	 *
+	 * \return The result
+	 */
+	uint_least16_t rfm12_command(const uint_least16_t command);
+
+	/**
+	 * \brief Reads the status register from the RFM12.
+	 *
+	 * \return Status word.
+	 */
+	uint_least16_t rfm12_read_status();
+
+}
 
 #endif /* RFM12_H_ */

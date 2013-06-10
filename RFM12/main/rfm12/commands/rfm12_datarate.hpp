@@ -12,58 +12,66 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-/**
-* \brief Data Rate Command
-*/
-typedef class _rfm12_datarate_command_t {
-	public:
-	union {
+namespace rfm12
+{
+	namespace commands
+	{
+
 		/**
-		* \brief The raw command word.
+		* \brief Data Rate Command
 		*/
-		const uint16_t command_word;
-		struct {
-			/**
-			* \brief The command code.
-			*/
-			const uint8_t		command_code:8;		
+		typedef class _rfm12_datarate_command_t {
+			public:
+			union {
+				/**
+				* \brief The raw command word.
+				*/
+				const uint16_t command_word;
+				struct {
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:8;		
 
-			/**
-			* \brief Expected bit rate CS value
-			*/
-			uint8_t				cs:1;
+					/**
+					* \brief Expected bit rate CS value
+					*/
+					uint8_t				cs:1;
 			
-			/**
-			* \brief Expected bit rate R values
-			*/
-			uint8_t				r:7;
-		};
-	};
+					/**
+					* \brief Expected bit rate R values
+					*/
+					uint8_t				r:7;
+				};
+			};
 	
-	public:
+			public:
 
-	/**
-	* \brief Initializes this instance to default values (POR)
-	*/
-	_rfm12_datarate_command_t() 
-		: command_word(0xC623)
-	{}
+			/**
+			* \brief Initializes this instance to default values (POR)
+			*/
+			_rfm12_datarate_command_t() 
+				: command_word(0xC623)
+			{}
 
-	/**
-	* \brief Cast operator
-	*/
-	inline operator uint16_t() const { return this->command_word; }
+			/**
+			* \brief Cast operator
+			*/
+			inline operator uint16_t() const { return this->command_word; }
 
-	/**
-	* \brief Sets the bit rate.
-	*
-	* Sets the actual bit rate in transmit mode and the expected bit rate in receive mode.
-	*
-	* \param bitrate The bitrate in kbps (in range of 0 to 256.0)
-	* \param real_bitrate Optional. The real calculated bitrate.
-	*/
-	bool set_bit_rate(const float bitrate = 115.20F, float* real_bitrate = NULL);
+			/**
+			* \brief Sets the bit rate.
+			*
+			* Sets the actual bit rate in transmit mode and the expected bit rate in receive mode.
+			*
+			* \param bitrate The bitrate in kbps (in range of 0 to 256.0)
+			* \param real_bitrate Optional. The real calculated bitrate.
+			*/
+			bool set_bit_rate(const float bitrate = 115.20F, float* real_bitrate = NULL);
 
-} Rfm12DataRateCommand;
+		} Rfm12DataRateCommand;
+
+	}
+}
 
 #endif /* RFM12_DATARATE_H_ */

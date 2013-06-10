@@ -11,48 +11,55 @@
 
 #include <stdint.h>
 
-/**
-* \brief Transmit Register Write Command
-*/
-typedef class _rfm12_txwrite_command_t {
-	public:
-	union {
+namespace rfm12
+{
+	namespace commands
+	{
 		/**
-		* \brief The raw command word.
+		* \brief Transmit Register Write Command
 		*/
-		const uint16_t command_word;
-		struct {
-			/**
-			* \brief The command code.
-			*/
-			const uint8_t		command_code:8;		
+		typedef class _rfm12_txwrite_command_t {
+			public:
+			union {
+				/**
+				* \brief The raw command word.
+				*/
+				const uint16_t command_word;
+				struct {
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:8;		
 
-			/**
-			* \brief Transmission data
-			*/
-			uint8_t				t:8;
-		};
-	};
+					/**
+					* \brief Transmission data
+					*/
+					uint8_t				t:8;
+				};
+			};
 	
-	public:
+			public:
 
-	/**
-	* \brief Initializes this instance to default values (POR)
-	*/
-	_rfm12_txwrite_command_t() 
-		: command_word(0xB8AA)
-	{}
+			/**
+			* \brief Initializes this instance to default values (POR)
+			*/
+			_rfm12_txwrite_command_t() 
+				: command_word(0xB8AA)
+			{}
 
-	/**
-	* \brief Cast operator
-	*/
-	inline operator uint16_t() const { return this->command_word; }
+			/**
+			* \brief Cast operator
+			*/
+			inline operator uint16_t() const { return this->command_word; }
 		
-	/**
-	* \brief Sets the data for transmission.
-	*/
-	inline void set_data(uint8_t byte = 0xAA) { this->t = byte; }
+			/**
+			* \brief Sets the data for transmission.
+			*/
+			inline void set_data(uint8_t byte = 0xAA) { this->t = byte; }
 
-} Rfm12TransmitRegisterWriteCommand;
+		} Rfm12TransmitRegisterWriteCommand;
+
+	}
+}
 
 #endif /* RFM12_TXWRITE_H_ */

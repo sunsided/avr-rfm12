@@ -18,6 +18,8 @@
 #include "rfm12/spi.h"
 #include "rfm12/rfm12.h"
 
+using namespace rfm12;
+
 #include <util/delay.h> 
 
 #define BIN(a,b) 0b ## a ## b

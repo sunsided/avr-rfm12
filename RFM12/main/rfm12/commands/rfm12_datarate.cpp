@@ -9,6 +9,8 @@
 #include <float.h>
 #include "rfm12_datarate.hpp"
 
+using namespace rfm12::commands;
+
 /**
 * \brief Sets the bit rate.
 *

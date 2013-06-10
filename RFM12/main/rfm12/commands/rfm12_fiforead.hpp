@@ -11,43 +11,51 @@
 
 #include <stdint.h>
 
-/**
-* \brief FIFO Read Command
-*/
-typedef class _rfm12_fiforead_command_t {
-	public:
-	union {
+namespace rfm12
+{
+	namespace commands
+	{
+
 		/**
-		* \brief The raw command word.
+		* \brief FIFO Read Command
 		*/
-		const uint16_t command_word;
-		struct {
-			/**
-			* \brief The command code.
-			*/
-			const uint8_t		command_code:8;		
+		typedef class _rfm12_fiforead_command_t {
+			public:
+			union {
+				/**
+				* \brief The raw command word.
+				*/
+				const uint16_t command_word;
+				struct {
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:8;		
 
-			/**
-			* \brief Padding.
-			*/
-			const uint8_t		:8;		
-		};
-	};
+					/**
+					* \brief Padding.
+					*/
+					const uint8_t		:8;		
+				};
+			};
 	
-	public:
+			public:
 
-	/**
-	* \brief Initializes this instance to default values (POR)
-	*/
-	_rfm12_fiforead_command_t() 
-		: command_word(0xB000)
-	{}
+			/**
+			* \brief Initializes this instance to default values (POR)
+			*/
+			_rfm12_fiforead_command_t() 
+				: command_word(0xB000)
+			{}
 
-	/**
-	* \brief Cast operator
-	*/
-	inline operator uint16_t() const { return this->command_word; }
+			/**
+			* \brief Cast operator
+			*/
+			inline operator uint16_t() const { return this->command_word; }
 
-} Rfm12FifoReadCommand;
+		} Rfm12FifoReadCommand;
+
+	}
+}
 
 #endif /* RFM12_FIFOREAD_H_ */
