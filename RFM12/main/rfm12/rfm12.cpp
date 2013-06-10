@@ -9,7 +9,7 @@
 #include <avr/io.h>
 #include "../main.h"
 #include "../spi/spi.h"
-#include "Rfm12.h"
+#include "Rfm12.hpp"
 
 namespace rfm12
 {
@@ -37,13 +37,30 @@ namespace rfm12
 	 *
 	 * \return The result
 	 */
-	uint_least16_t _Command(const uint_least16_t command)
+	inline const uint_fast16_t Rfm12::executeCommandInternal(const uint_least16_t command_code) const
 	{
 		spi_begin();
-		uint_least16_t result  = spi_transmit(command >> 8) << 8;
-					   result |= spi_transmit(command & 0xFF);
+		uint_fast16_t result  = spi_transmit((command_code >> 8) & 0xFF) << 8;
+					   result |= spi_transmit(command_code & 0xFF);
 		spi_end();
+		
 		return result;
+	}
+
+	/**
+	 * \brief Sends a command to the RFM12.
+	 *
+	 * \param command The command word
+	 *
+	 * \return The result
+	 */
+	const commands::CommandResult Rfm12::executeCommandRaw(const uint_least16_t command_code) const
+	{
+		const uint16_t result = executeCommandInternal(command_code);
+		
+		// wrap in beautiful paper
+		commands::CommandResult commandResult(result);
+		return commandResult;
 	}
 
 	/**
@@ -51,9 +68,14 @@ namespace rfm12
 	 *
 	 * \return Status byte
 	 */
-	uint_least16_t rfm12_read_status()
+	const commands::StatusCommandResult Rfm12::readStatus() const
 	{
-		return _Command((uint_least16_t)0x0000);
+		static commands::StatusReadCommand readCommand;
+		const uint16_t result = executeCommandInternal(readCommand.getCommandWord());
+		
+		// wrap in beautiful paper
+		commands::StatusCommandResult commandResult(result);
+		return commandResult;
 	}
 
 }

@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include "ICommand.h"
+#include "ICommand.hpp"
 #include "ConfigSetCommand.hpp"
 
 namespace rfm12

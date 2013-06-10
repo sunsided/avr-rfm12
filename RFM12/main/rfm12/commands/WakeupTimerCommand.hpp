@@ -10,7 +10,7 @@
 #define RFM12_WAKEUPTIMER_H_
 
 #include <stdint.h>
-#include "ICommand.h"
+#include "ICommand.hpp"
 
 namespace rfm12
 {
@@ -47,7 +47,7 @@ namespace rfm12
 					* Twake-up = 1.03 · M · 2R + 0.5 [ms]
 					*
 					* This parameter also indirectly controls the Low Duty-Cycle Command setting d.
-					* \see _lowdutycycle_Command_t
+					* \see LowDutyCycleCommand
 					*/
 					uint8_t				m:8;
 				};

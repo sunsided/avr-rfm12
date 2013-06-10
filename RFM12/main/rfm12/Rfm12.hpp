@@ -10,8 +10,8 @@
 #define RFM12_H_
 
 #include <stdint.h>
-#include "commands/ICommand.h"
-#include "commands/CommandResult.h"
+
+#include "commands/ICommand.hpp"
 #include "commands/ConfigSetCommand.hpp"
 #include "commands/PowerManagementCommand.hpp"
 #include "commands/FrequencyCommand.hpp"
@@ -30,6 +30,9 @@
 #include "commands/BatteryDetectorAndClockDividerCommand.hpp"
 #include "commands/StatusReadCommand.hpp"
 
+#include "commands/CommandResult.hpp"
+#include "commands/StatusCommandResult.hpp"
+
 namespace rfm12
 {
 
@@ -41,22 +44,6 @@ namespace rfm12
 	void rfm12_initialize_interrupt();
 
 	/**
-	 * \brief Sends a command to the RFM12.
-	 *
-	 * \param command The command word
-	 *
-	 * \return The result
-	 */
-	uint_least16_t _Command(const uint_least16_t command);
-
-	/**
-	 * \brief Reads the status register from the RFM12.
-	 *
-	 * \return Status word.
-	 */
-	uint_least16_t rfm12_read_status();
-
-	/**
 	* \brief Implementation of RFM12
 	*/
 	class Rfm12
@@ -65,9 +52,38 @@ namespace rfm12
 		/**
 		* \brief Executes an RFM12 command.
 		*
-		* \param command The command to execute.
+		* \param command_code The command to execute.
 		*/
-		commands::CommandResult executeCommand(const commands::ICommand* command) const;
+		const commands::CommandResult executeCommandRaw(const uint_least16_t command_code) const;
+	
+		/**
+		 * \brief Sends a command to the RFM12.
+		 *
+		 * \param command The command word
+		 *
+		 * \return The result
+		 */
+		inline const commands::CommandResult executeCommand(const commands::ICommand* command) const
+		{
+			return executeCommandRaw(command->getCommandWord());
+		}
+		
+		/**
+		 * \brief Reads the status register from the RFM12.
+		 *
+		 * \return The status.
+		 */
+		const commands::StatusCommandResult readStatus() const;
+
+	private:
+		/**
+		 * \brief Sends a command to the RFM12.
+		 *
+		 * \param command The command word
+		 *
+		 * \return The result
+		 */
+		inline const uint_fast16_t executeCommandInternal(const uint_least16_t command_code) const;
 	};
 
 }

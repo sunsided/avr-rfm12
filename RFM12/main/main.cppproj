@@ -18,16 +18,16 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>
-    </OverrideVtorValue>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <CacheFlash>true</CacheFlash>
     <UncachedRange />
     <BootSegment>2</BootSegment>
-    <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
-    <avrtoolinterface>ISP</avrtoolinterface>
+    <avrtool>com.atmel.avrdbg.tool.simulator</avrtool>
+    <avrtoolinterface>
+    </avrtoolinterface>
     <com_atmel_avrdbg_tool_ispmk2>
       <ToolType xmlns="">com.atmel.avrdbg.tool.ispmk2</ToolType>
       <ToolName xmlns="">AVRISP mkII</ToolName>
@@ -67,6 +67,19 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolName xmlns="">Simulator</ToolName>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <StimuliFile xmlns="">
+      </StimuliFile>
+      <Channel xmlns="">
+        <host>127.0.0.1</host>
+        <port>49226</port>
+        <ssl>False</ssl>
+      </Channel>
+    </com_atmel_avrdbg_tool_simulator>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -175,7 +188,7 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\ICommand.h">
+    <Compile Include="rfm12\commands\ICommand.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\commands\AfcCommand.hpp">
@@ -184,7 +197,7 @@
     <Compile Include="rfm12\commands\BatteryDetectorAndClockDividerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\CommandResult.h">
+    <Compile Include="rfm12\commands\CommandResult.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\commands\ConfigSetCommand.hpp">
@@ -209,6 +222,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\commands\FrequencyCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\commands\StatusCommandResult.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\commands\LowDutyCycleCommand.hpp">
@@ -241,7 +257,7 @@
     <Compile Include="rfm12\Rfm12.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\Rfm12.h">
+    <Compile Include="rfm12\Rfm12.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="spi\spi.cpp">

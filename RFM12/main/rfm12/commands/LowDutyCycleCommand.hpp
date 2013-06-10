@@ -10,7 +10,7 @@
 #define RFM12_LOWDUTYCYCLE_H_
 
 #include <stdint.h>
-#include "ICommand.h"
+#include "ICommand.hpp"
 
 namespace rfm12
 {
@@ -41,7 +41,7 @@ namespace rfm12
 					* duty-cycle = (D · 2 +1) / M · 100%
 					*
 					* This value is also indirectly controlled by Wake-Up Timer setting M.
-					* \see _wakeuptimer_Command_t
+					* \see WakeupTimerCommand
 					*/
 					uint8_t				d:7;
 			

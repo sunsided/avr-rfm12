@@ -10,7 +10,7 @@
 #define RFM12_SYNCHRONPATTERN_H_
 
 #include <stdint.h>
-#include "ICommand.h"
+#include "ICommand.hpp"
 
 namespace rfm12
 {

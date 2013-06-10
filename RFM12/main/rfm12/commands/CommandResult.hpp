@@ -17,7 +17,7 @@ namespace rfm12
 		*/
 		class CommandResult
 		{
-		private:
+		protected:
 			/**
 			* \brief The result data of a single command call
 			*/
@@ -28,6 +28,13 @@ namespace rfm12
 			* \brief Initializes this instance as empty.
 			*/
 			CommandResult() : _data(0) {}
+			
+			/**
+			* \brief Initializes this instance as empty.
+			*
+			* \param data The data.
+			*/
+			CommandResult(const uint16_t data) : _data(data) {}
 				
 			/**
 			* \brief Initializes this copy from another instance.
@@ -35,6 +42,16 @@ namespace rfm12
 			* \param other The instance to copy
 			*/
 			CommandResult(const CommandResult& other) : _data(other._data) {}
+				
+			/**
+			* \brief Gets the result word.
+			*/
+			inline uint16_t getResultWord() const { return this->_data; }
+				
+			/**
+			* \brief Cast operator
+			*/
+			inline operator uint16_t() const { return this->_data; }
 		};
 	}
 }

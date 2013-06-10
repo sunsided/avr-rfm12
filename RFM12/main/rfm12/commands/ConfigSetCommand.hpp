@@ -10,7 +10,7 @@
 #define RFM12_CONFIGSET_H_
 
 #include <stdint.h>
-#include "ICommand.h"
+#include "ICommand.hpp"
 
 namespace rfm12
 {

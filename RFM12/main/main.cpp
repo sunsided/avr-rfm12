@@ -16,7 +16,7 @@
 
 #include "main.h"
 #include "spi/spi.h"
-#include "rfm12/rfm12.h"
+#include "rfm12/Rfm12.hpp"
 
 using namespace rfm12;
 
@@ -45,13 +45,14 @@ int main()
 	sei();
 		
 	// initialisieren des RFM12
-	_Command(0);
-	_Command(0b1011001000000101); // RF_SLEEP_MODE
-	_Command(0b1011100000000000); // RF_TXREG_WRITE
+	Rfm12 rfm12;
+	rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
+	rfm12.executeCommandRaw(0b1011001000000101); // RF_SLEEP_MODE
+	rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE
 
 	while ((PIND & (1 << PIND2)) == 0)
 	{
-		_Command(0);
+		rfm12.executeCommandRaw(0);
 	}
 	
 	// signal we're ready to go
@@ -61,7 +62,7 @@ int main()
 	// 1000 0000 .... .... Configuration Setting Command
 	uint8_t band			= 0b01; // 433 Mhz
 	uint8_t capacitance		= 0b0111; // 12.0pF 
-	_Command(0b1000000011000000 | (band << 4) | capacitance); // EL (ena TX), EF (ena RX FIFO), 12.0pF 
+	rfm12.executeCommandRaw(0b1000000011000000 | (band << 4) | capacitance); // EL (ena TX), EF (ena RX FIFO), 12.0pF 
 	
 	// 1010 .... .... .... Frequency Setting Command
 	// Bits f0..f11 müssen im Bereich 96 bis 3903 liegen.
@@ -71,17 +72,17 @@ int main()
 	double c2 = 43; // für 433 MHz
 	double frequency = 433.0D; // MHz
 	uint16_t freq_setting = (uint16_t)(10.0D * c1 * (c2 + frequency/4000));
-	_Command(0b1010000000000000 | (freq_setting & 0b0000111111111111));
+	rfm12.executeCommandRaw(0b1010000000000000 | (freq_setting & 0b0000111111111111));
 		
 	// 1100 0110 .... .... Data Rate Command
-	_Command(0b1100011000000110); // approx 49.2 Kbps, i.e. 10000/29/(1+6) Kbps
+	rfm12.executeCommandRaw(0b1100011000000110); // approx 49.2 Kbps, i.e. 10000/29/(1+6) Kbps
 		
 	// 1001 0... .... .... Receiver Control Command
-	_Command(0b1001010010100010); // VDI,FAST,134kHz,0dBm gain,-91dBm RSSI detector
+	rfm12.executeCommandRaw(0b1001010010100010); // VDI,FAST,134kHz,0dBm gain,-91dBm RSSI detector
 	// VDI = Valid Data Indicator
 	
 	// 1100 0010 .... .... Data Filter Command
-	_Command(0b1100001010101100); // AL,!ml,DIG,DQD4
+	rfm12.executeCommandRaw(0b1100001010101100); // AL,!ml,DIG,DQD4
 	// al = 1 -- Clock recovery auto lock control: auto mode
 	// ml = 0 -- Clock recovery lock control: slow mode, slow attack, slow release
 	//  s = 1 -- Digital Filter
@@ -90,35 +91,35 @@ int main()
 	uint8_t group = 212; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
 	if (group != 0) {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
-		_Command(0b1100101010000011); // FIFO8,2-SYNC,!ff,DR
+		rfm12.executeCommandRaw(0b1100101010000011); // FIFO8,2-SYNC,!ff,DR
 		
 		// 1100 1110 .... .... Synchron Pattern Command
-		_Command(0b1100001100000000 | group); // SYNC=2DXX?
+		rfm12.executeCommandRaw(0b1100001100000000 | group); // SYNC=2DXX?
 	} else {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
-		_Command(0b1100101010001000); // FIFO8,1-SYNC,!ff,DR
+		rfm12.executeCommandRaw(0b1100101010001000); // FIFO8,1-SYNC,!ff,DR
 		
 		// 1100 1110 .... .... Synchron Pattern Command
-		_Command(0b1100111000101101); // SYNC=2D?
+		rfm12.executeCommandRaw(0b1100111000101101); // SYNC=2D?
 	}
 	
 	// 1100 0100 .... .... AFC Command
-	_Command(0b1100010010000011); // @PWR,NO RSTRIC,!st,!fi,OE,EN
+	rfm12.executeCommandRaw(0b1100010010000011); // @PWR,NO RSTRIC,!st,!fi,OE,EN
 	
 	// 1001 100. .... .... TX Configuration Command
-	_Command(0b1001100001010000); // !mp,90kHz,MAX OUT
+	rfm12.executeCommandRaw(0b1001100001010000); // !mp,90kHz,MAX OUT
 	
 	// 1100 1100 0.... .... PLL Setting Command
-	_Command(0b1100110001110111); // OB1?OB0, LPX,?ddy?DDIT?BW0
+	rfm12.executeCommandRaw(0b1100110001110111); // OB1?OB0, LPX,?ddy?DDIT?BW0
 	
 	// 111. .... .... ....Wake-Up Timer Command
-	_Command(0b1110000000000000); // NOT USE
+	rfm12.executeCommandRaw(0b1110000000000000); // NOT USE
 	
 	// 1100 1000 .... .... Low Duty-Cycle Command
-	_Command(0b1100100000000000); // NOT USE
+	rfm12.executeCommandRaw(0b1100100000000000); // NOT USE
 	
 	// 1100 0000 .... .... Low Battery Detector and Microcontroller Clock Divider Command
-	_Command(0b1100000001001001); // 1.66MHz,3.1V
+	rfm12.executeCommandRaw(0b1100000001001001); // 1.66MHz,3.1V
 /**/		
 
 	// bye.
@@ -127,39 +128,42 @@ int main()
 		// sendet jeweils ein Byte -- multiple byte write unterstützt!
 		/*
 		// synchronize sender and receiver
-		_Command(0b1011100000000000 | (0xAA & 0b0000000011111111));
-		_Command(0b1011100000000000 | (0xAA & 0b0000000011111111));
-		_Command(0b1011100000000000 | (0xAA & 0b0000000011111111));
-		_Command(0b1011100000000000 | (0xAA & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0xAA & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0xAA & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0xAA & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0xAA & 0b0000000011111111));
 		
 		// synchron pattern
-		_Command(0b1011100000000000 | (0x2D & 0b0000000011111111));
-		_Command(0b1011100000000000 | (0xD4 & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0x2D & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0xD4 & 0b0000000011111111));
 		
 		// payload
 		uint8_t data = 227;
-		_Command(0b1011100000000000 | (data & 0b0000000011111111));
-		_Command(0b1011100000000000 | (data & 0b0000000011111111));
-		_Command(0b1011100000000000 | (data & 0b0000000011111111));
-		_Command(0b1011100000000000 | (data & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (data & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (data & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (data & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (data & 0b0000000011111111));
 		
 		// synchronize sender and receiver
-		_Command(0b1011100000000000 | (0xAA & 0b0000000011111111));
-		_Command(0b1011100000000000 | (0xAA & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0xAA & 0b0000000011111111));
+		rfm12.executeCommandRaw(0b1011100000000000 | (0xAA & 0b0000000011111111));
 		
 		_delay_ms(500);
 		*/
 		// Register lesen
-		// uint16_t values = _Command(0b1011000000000000);
+		// uint16_t values = rfm12.executeCommandRaw(0b1011000000000000);
 		
+		/*
 		uint_least16_t status = rfm12_read_status();
 		usart_comm_send_char(status >> 8);
 		usart_comm_send_char(status & 0xFF);
 		usart_comm_send_zstr("\r\n");
-		/*
+		*/
 		
-		_configset_Command_t cmd;
-		usart_comm_send_char(sizeof(_configset_Command_t));
+		// _configsetrfm12.executeCommandRaw_t cmd;
+		usart_comm_send_char(sizeof(rfm12::commands::StatusCommandResult));
+		
+		/*
 		usart_comm_send_char(cmd.command_word >> 8);
 		usart_comm_send_char(cmd.command_word & 0xFF);
 		usart_comm_send_char(cmd.x);
