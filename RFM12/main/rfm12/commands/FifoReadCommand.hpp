@@ -10,7 +10,7 @@
 #define RFM12_FIFOREAD_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief FIFO Read Command
 		*/
-		class Rfm12FifoReadCommand : public IRfm12Command {
+		class FifoReadCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -44,7 +44,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12FifoReadCommand() 
+			FifoReadCommand() 
 				: command_word(0xB000)
 			{}
 

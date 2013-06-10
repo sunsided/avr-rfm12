@@ -1,13 +1,13 @@
 /* 
-* IRfm12Command.h
+* ICommand.h
 *
 * Created: 10.06.2013 23:55:40
 * Author: Markus
 */
 
 
-#ifndef __IRFM12COMMAND_H__
-#define __IRFM12COMMAND_H__
+#ifndef __ICommand_H__
+#define __ICommand_H__
 
 #include <stdint.h>
 
@@ -18,10 +18,10 @@ namespace rfm12
 		/**
 		* \brief Interface for commands
 		*/
-		class IRfm12Command
+		class ICommand
 		{
 		public:
-			inline virtual ~IRfm12Command(){}
+			inline virtual ~ICommand(){}
 				
 			/**
 			* \brief Gets the command word.
@@ -38,4 +38,4 @@ namespace rfm12
 	}
 }
 
-#endif //__IRFM12COMMAND_H__
+#endif //__ICommand_H__

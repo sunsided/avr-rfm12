@@ -1,12 +1,12 @@
 /*
- * IRfm12CommandResult.h
+ * ICommandResult.h
  *
  * Created: 11.06.2013 00:24:58
  *  Author: Markus
  */ 
 
-#ifndef IRFM12COMMANDRESULT_H_
-#define IRFM12COMMANDRESULT_H_
+#ifndef ICommandRESULT_H_
+#define ICommandRESULT_H_
 
 namespace rfm12
 {
@@ -15,7 +15,7 @@ namespace rfm12
 		/**
 		* \brief Result of an RFM12 command
 		*/
-		class Rfm12CommandResult
+		class CommandResult
 		{
 		private:
 			/**
@@ -27,16 +27,16 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance as empty.
 			*/
-			Rfm12CommandResult() : _data(0) {}
+			CommandResult() : _data(0) {}
 				
 			/**
 			* \brief Initializes this copy from another instance.
 			*
 			* \param other The instance to copy
 			*/
-			Rfm12CommandResult(const Rfm12CommandResult& other) : _data(other._data) {}
+			CommandResult(const CommandResult& other) : _data(other._data) {}
 		};
 	}
 }
 
-#endif /* IRFM12COMMANDRESULT_H_ */
+#endif /* ICommandRESULT_H_ */

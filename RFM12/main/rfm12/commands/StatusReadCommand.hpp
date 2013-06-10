@@ -10,7 +10,7 @@
 #define RFM12_STATUSREAD_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Status Read Command
 		*/
-		class Rfm12StatusReadCommand : public IRfm12Command {
+		class StatusReadCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -44,7 +44,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12StatusReadCommand() 
+			StatusReadCommand() 
 				: command_word(0x0000)
 			{}
 

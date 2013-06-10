@@ -37,7 +37,7 @@ namespace rfm12
 	 *
 	 * \return The result
 	 */
-	uint_least16_t rfm12_command(const uint_least16_t command)
+	uint_least16_t _Command(const uint_least16_t command)
 	{
 		spi_begin();
 		uint_least16_t result  = spi_transmit(command >> 8) << 8;
@@ -53,7 +53,7 @@ namespace rfm12
 	 */
 	uint_least16_t rfm12_read_status()
 	{
-		return rfm12_command((uint_least16_t)0x0000);
+		return _Command((uint_least16_t)0x0000);
 	}
 
 }

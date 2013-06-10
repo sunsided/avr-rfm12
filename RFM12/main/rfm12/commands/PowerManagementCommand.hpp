@@ -10,7 +10,7 @@
 #define RFM12_POWERMGMT_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Power Management Command
 		*/
-		class Rfm12PowerManagementCommand : public IRfm12Command 
+		class PowerManagementCommand : public ICommand 
 		{
 			public:
 			union {
@@ -80,7 +80,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12PowerManagementCommand() 
+			PowerManagementCommand() 
 				: command_word(0x8208)
 			{}
 

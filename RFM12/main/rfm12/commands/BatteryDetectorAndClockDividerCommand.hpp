@@ -10,7 +10,7 @@
 #define RFM12_BATTERYCLOCKDIVIDER_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -56,7 +56,7 @@ namespace rfm12
 		/**
 		* \brief Low Battery Detector and Microcontroller Clock Divider Command
 		*/
-		class Rfm12BatteryDetectorAndClockDividerCommand : public IRfm12Command 
+		class BatteryDetectorAndClockDividerCommand : public ICommand 
 		{
 			public:
 			union {
@@ -101,7 +101,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12BatteryDetectorAndClockDividerCommand() 
+			BatteryDetectorAndClockDividerCommand() 
 				: command_word(0xC000)
 			{}
 

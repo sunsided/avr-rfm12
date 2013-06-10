@@ -10,7 +10,7 @@
 #define RFM12_PLLSETTING_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -38,7 +38,7 @@ namespace rfm12
 		/**
 		* \brief PLL (Phase-Locked Loop) Setting Command
 		*/
-		class Rfm12PllSettingCommand : public IRfm12Command {
+		class PllSettingCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -88,7 +88,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12PllSettingCommand() 
+			PllSettingCommand() 
 				: command_word(0xCC77)
 			{}
 

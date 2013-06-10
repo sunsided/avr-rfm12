@@ -10,7 +10,7 @@
 #define RFM12_AFC_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -43,7 +43,7 @@ namespace rfm12
 		/**
 		* \brief AFC Command
 		*/
-		class Rfm12AfcCommand : public IRfm12Command 
+		class AfcCommand : public ICommand 
 		{
 			public:
 			union {
@@ -94,7 +94,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12AfcCommand() 
+			AfcCommand() 
 				: command_word(0xC4F7)
 			{}
 

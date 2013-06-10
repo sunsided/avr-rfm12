@@ -10,7 +10,7 @@
 #define RFM12_TXCONFIG_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -68,7 +68,7 @@ namespace rfm12
 		/**
 		* \brief TX Configuration Control Command
 		*/
-		class Rfm12TxConfigCommand : public IRfm12Command {
+		class TxConfigCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -122,7 +122,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12TxConfigCommand() 
+			TxConfigCommand() 
 				: command_word(0x9800)
 			{}
 

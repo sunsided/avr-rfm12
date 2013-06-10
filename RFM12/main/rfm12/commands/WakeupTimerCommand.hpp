@@ -10,7 +10,7 @@
 #define RFM12_WAKEUPTIMER_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Wake-up Timer Command
 		*/
-		class Rfm12WakeupTimerCommand : public IRfm12Command {
+		class WakeupTimerCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -47,7 +47,7 @@ namespace rfm12
 					* Twake-up = 1.03 · M · 2R + 0.5 [ms]
 					*
 					* This parameter also indirectly controls the Low Duty-Cycle Command setting d.
-					* \see rfm12_lowdutycycle_command_t
+					* \see _lowdutycycle_Command_t
 					*/
 					uint8_t				m:8;
 				};
@@ -58,7 +58,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12WakeupTimerCommand() 
+			WakeupTimerCommand() 
 				: command_word(0xE196)
 			{}
 

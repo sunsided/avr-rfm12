@@ -10,25 +10,25 @@
 #define RFM12_H_
 
 #include <stdint.h>
-#include "commands/IRfm12Command.h"
-#include "commands/Rfm12CommandResult.h"
-#include "commands/Rfm12ConfigSetCommand.hpp"
-#include "commands/Rfm12PowerManagementCommand.hpp"
-#include "commands/Rfm12FrequencyCommand.hpp"
-#include "commands/Rfm12DataRateCommand.hpp"
-#include "commands/Rfm12ReceiverControlCommand.hpp"
-#include "commands/Rfm12DataFilterCommand.hpp"
-#include "commands/Rfm12FifoAndResetModeCommand.hpp"
-#include "commands/Rfm12SynchronPatternCommand.hpp"
-#include "commands/Rfm12FifoReadCommand.hpp"
-#include "commands/Rfm12AfcCommand.hpp"
-#include "commands/Rfm12TxConfigCommand.hpp"
-#include "commands/Rfm12PllSettingCommand.hpp"
-#include "commands/Rfm12TransmitRegisterWriteCommand.hpp"
-#include "commands/Rfm12WakeupTimerCommand.hpp"
-#include "commands/Rfm12LowDutyCycleCommand.hpp"
-#include "commands/Rfm12BatteryDetectorAndClockDividerCommand.hpp"
-#include "commands/Rfm12StatusReadCommand.hpp"
+#include "commands/ICommand.h"
+#include "commands/CommandResult.h"
+#include "commands/ConfigSetCommand.hpp"
+#include "commands/PowerManagementCommand.hpp"
+#include "commands/FrequencyCommand.hpp"
+#include "commands/DataRateCommand.hpp"
+#include "commands/ReceiverControlCommand.hpp"
+#include "commands/DataFilterCommand.hpp"
+#include "commands/FifoAndResetModeCommand.hpp"
+#include "commands/SynchronPatternCommand.hpp"
+#include "commands/FifoReadCommand.hpp"
+#include "commands/AfcCommand.hpp"
+#include "commands/TxConfigCommand.hpp"
+#include "commands/PllSettingCommand.hpp"
+#include "commands/TransmitRegisterWriteCommand.hpp"
+#include "commands/WakeupTimerCommand.hpp"
+#include "commands/LowDutyCycleCommand.hpp"
+#include "commands/BatteryDetectorAndClockDividerCommand.hpp"
+#include "commands/StatusReadCommand.hpp"
 
 namespace rfm12
 {
@@ -47,7 +47,7 @@ namespace rfm12
 	 *
 	 * \return The result
 	 */
-	uint_least16_t rfm12_command(const uint_least16_t command);
+	uint_least16_t _Command(const uint_least16_t command);
 
 	/**
 	 * \brief Reads the status register from the RFM12.
@@ -67,7 +67,7 @@ namespace rfm12
 		*
 		* \param command The command to execute.
 		*/
-		commands::Rfm12CommandResult executeCommand(const commands::IRfm12Command* command) const;
+		commands::CommandResult executeCommand(const commands::ICommand* command) const;
 	};
 
 }

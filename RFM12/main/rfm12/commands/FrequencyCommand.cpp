@@ -7,7 +7,7 @@
 
 #include <tgmath.h>
 #include <float.h>
-#include "Rfm12FrequencyCommand.hpp"
+#include "FrequencyCommand.hpp"
 
 using namespace rfm12::commands;
 
@@ -20,7 +20,7 @@ using namespace rfm12::commands;
 * \param real_frequency The real calculated target frequency.
 * \return true in case of success, false if the frequency was out of range
 */
-bool Rfm12FrequencyCommand::setByFrequency(const float frequency, float *real_frequency)
+bool FrequencyCommand::setByFrequency(const float frequency, float *real_frequency)
 {
 	// f0 = 10*c1*(c2 + frequency/4000)
 	// F  = (400*(frequency - 10*c1*c2))
@@ -114,7 +114,7 @@ bool Rfm12FrequencyCommand::setByFrequency(const float frequency, float *real_fr
 * \param real_frequency The real calculated target frequency.
 * \return true in case of success, false if the frequency was out of range
 */
-bool Rfm12FrequencyCommand::setByChannel(const uint16_t channel, const frequency_band_t band, float *real_frequency)
+bool FrequencyCommand::setByChannel(const uint16_t channel, const frequency_band_t band, float *real_frequency)
 {
 	// f0 = 10*c1*(c2 + frequency/4000)
 	// F  = (400*(frequency - 10*c1*c2))

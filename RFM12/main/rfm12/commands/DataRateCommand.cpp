@@ -7,7 +7,7 @@
 
 #include <tgmath.h>
 #include <float.h>
-#include "Rfm12DataRateCommand.hpp"
+#include "DataRateCommand.hpp"
 
 using namespace rfm12::commands;
 
@@ -18,7 +18,7 @@ using namespace rfm12::commands;
 *
 * \param bitrate The bitrate in kbps (in range of ]0 to 256.0])
 */
-bool Rfm12DataRateCommand::setBitRate(const float bitrate, float* real_bitrate) 
+bool DataRateCommand::setBitRate(const float bitrate, float* real_bitrate) 
 {
 	bool valid = true;
 	

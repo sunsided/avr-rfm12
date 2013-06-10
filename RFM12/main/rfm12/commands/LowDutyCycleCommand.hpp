@@ -10,7 +10,7 @@
 #define RFM12_LOWDUTYCYCLE_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Low Duty-Cycle Command
 		*/
-		class Rfm12LowDutyCycleCommand : public IRfm12Command {
+		class LowDutyCycleCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -41,7 +41,7 @@ namespace rfm12
 					* duty-cycle = (D · 2 +1) / M · 100%
 					*
 					* This value is also indirectly controlled by Wake-Up Timer setting M.
-					* \see rfm12_wakeuptimer_command_t
+					* \see _wakeuptimer_Command_t
 					*/
 					uint8_t				d:7;
 			
@@ -57,7 +57,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12LowDutyCycleCommand() 
+			LowDutyCycleCommand() 
 				: command_word(0xC80E)
 			{}
 

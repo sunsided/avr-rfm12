@@ -10,7 +10,7 @@
 #define RFM12_TXWRITE_H_
 
 #include <stdint.h>
-#include "IRfm12Command.h"
+#include "ICommand.h"
 
 namespace rfm12
 {
@@ -19,7 +19,7 @@ namespace rfm12
 		/**
 		* \brief Transmit Register Write Command
 		*/
-		class Rfm12TransmitRegisterWriteCommand : public IRfm12Command {
+		class TransmitRegisterWriteCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -44,7 +44,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12TransmitRegisterWriteCommand() 
+			TransmitRegisterWriteCommand() 
 				: command_word(0xB8AA)
 			{}
 

@@ -11,8 +11,8 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include "IRfm12Command.h"
-#include "Rfm12ConfigSetCommand.hpp"
+#include "ICommand.h"
+#include "ConfigSetCommand.hpp"
 
 namespace rfm12
 {
@@ -21,7 +21,7 @@ namespace rfm12
 		/**
 		* \brief Frequency Setting Command
 		*/
-		class Rfm12FrequencyCommand : public IRfm12Command {
+		class FrequencyCommand : public ICommand {
 			public:
 			union {
 				/**
@@ -46,7 +46,7 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			Rfm12FrequencyCommand() 
+			FrequencyCommand() 
 				: command_word(0xA680)
 			{}
 
