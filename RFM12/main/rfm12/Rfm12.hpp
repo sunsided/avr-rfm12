@@ -10,6 +10,7 @@
 #define RFM12_H_
 
 #include <stdint.h>
+#include "ISpi.h"
 
 #include "commands/ICommand.hpp"
 #include "commands/ConfigSetCommand.hpp"
@@ -48,7 +49,20 @@ namespace rfm12
 	*/
 	class Rfm12
 	{
+	private:
+		/**
+		* \brief The SPI interface used for communication.
+		*/
+		const ISpi* _spi;
+	
 	public:
+		/**
+		* \brief Initializes this instance.
+		*
+		* \param spi The SPI interface to use.
+		*/
+		Rfm12(const ISpi* spi) : _spi(spi) {}
+	
 		/**
 		* \brief Executes an RFM12 command.
 		*
