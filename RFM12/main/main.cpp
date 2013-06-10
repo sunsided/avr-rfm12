@@ -69,7 +69,7 @@ int main()
 	double c2 = 43; // für 433 MHz
 	double frequency = 433.0D; // MHz
 	uint16_t freq_setting = (uint16_t)(10.0D * c1 * (c2 + frequency/4000));
-	rfm12_command(0b1010 | (freq_setting & 0b0000111111111111));
+	rfm12_command(0b1010000000000000 | (freq_setting & 0b0000111111111111));
 		
 	// 1100 0110 .... .... Data Rate Command
 	rfm12_command(0b1100011000000110); // approx 49.2 Kbps, i.e. 10000/29/(1+6) Kbps
