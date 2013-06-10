@@ -7,7 +7,7 @@
 
 #include <tgmath.h>
 #include <float.h>
-#include "rfm12_datarate.hpp"
+#include "Rfm12DataRateCommand.hpp"
 
 using namespace rfm12::commands;
 

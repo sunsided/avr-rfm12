@@ -11,8 +11,8 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include "rfm12_configset.hpp"
 #include "../IRfm12Command.h"
+#include "Rfm12ConfigSetCommand.hpp"
 
 namespace rfm12
 {

@@ -7,7 +7,7 @@
 
 #include <tgmath.h>
 #include <float.h>
-#include "rfm12_frequency.hpp"
+#include "Rfm12FrequencyCommand.hpp"
 
 using namespace rfm12::commands;
 

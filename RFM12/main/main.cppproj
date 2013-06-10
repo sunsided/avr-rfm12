@@ -175,61 +175,61 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_afc.hpp">
+    <Compile Include="rfm12\commands\Rfm12AfcCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_batteryclockdivider.hpp">
+    <Compile Include="rfm12\commands\Rfm12BatteryDetectorAndClockDividerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_configset.hpp">
+    <Compile Include="rfm12\commands\Rfm12ConfigSetCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_datafilter.hpp">
+    <Compile Include="rfm12\commands\Rfm12DataFilterCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_datarate.cpp">
+    <Compile Include="rfm12\commands\Rfm12DataRateCommand.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_datarate.hpp">
+    <Compile Include="rfm12\commands\Rfm12DataRateCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_fiforead.hpp">
+    <Compile Include="rfm12\commands\Rfm12FifoReadCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_fiforesetmode.hpp">
+    <Compile Include="rfm12\commands\Rfm12FifoAndResetModeCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_frequency.cpp">
+    <Compile Include="rfm12\commands\Rfm12FrequencyCommand.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_frequency.hpp">
+    <Compile Include="rfm12\commands\Rfm12FrequencyCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_lowdutycycle.hpp">
+    <Compile Include="rfm12\commands\Rfm12LowDutyCycleCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_pllsetting.hpp">
+    <Compile Include="rfm12\commands\Rfm12PllSettingCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_powermgmt.hpp">
+    <Compile Include="rfm12\commands\Rfm12PowerManagementCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_receivercontrol.hpp">
+    <Compile Include="rfm12\commands\Rfm12ReceiverControlCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_statusread.hpp">
+    <Compile Include="rfm12\commands\Rfm12StatusReadCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_synchronpattern.hpp">
+    <Compile Include="rfm12\commands\Rfm12SynchronPatternCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_txconfig.hpp">
+    <Compile Include="rfm12\commands\Rfm12TxConfigCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_txwrite.hpp">
+    <Compile Include="rfm12\commands\Rfm12TransmitRegisterWriteCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\rfm12_wakeuptimer.hpp">
+    <Compile Include="rfm12\commands\Rfm12WakeupTimerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\IRfm12Command.h">
