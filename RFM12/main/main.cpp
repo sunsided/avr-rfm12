@@ -174,45 +174,86 @@ int main()
 	//  s = 1 -- Digital Filter
 	// DQD threshold = 4
 	*/
-	
-	while(1) {};
-	
+		
 	commands::FifoAndResetModeCommand fifoAndResetMode;
-	commands::SynchronPatternCommand synchonPattern;
+	commands::SynchronPatternCommand synchronPattern;
 	
 	uint8_t group = 212; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
 	if (group != 0) {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
-		rfm12.executeCommandRaw(0b1100101010000011); // FIFO8,2-SYNC,!ff,DR
+		fifoAndResetMode.f = 8;
+		fifoAndResetMode.sp = commands::SP_TWO_BYTE;
+		fifoAndResetMode.ff = false;
+		fifoAndResetMode.al = commands::FIFOSTART_SYNCHRON;
+		fifoAndResetMode.dr = commands::RESETMODE_NONSENSITIVE;
+		// rfm12.executeCommandRaw(0b1100101010000001); // FIFO8,2-SYNC,!ff,DR
 		
 		// 1100 1110 .... .... Synchron Pattern Command
-		rfm12.executeCommandRaw(0b1100001100000000 | group); // SYNC=2DXX?
+		synchronPattern.setSynchronByte(group);
+		//rfm12.executeCommandRaw(0b1100001100000000 | group); // SYNC=2DXX?
 	} else {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
-		rfm12.executeCommandRaw(0b1100101010001000); // FIFO8,1-SYNC,!ff,DR
+		fifoAndResetMode.f = 8;
+		fifoAndResetMode.sp = commands::SP_ONE_BYTE;
+		fifoAndResetMode.ff = false;
+		fifoAndResetMode.al = commands::FIFOSTART_SYNCHRON;
+		fifoAndResetMode.dr = commands::RESETMODE_NONSENSITIVE;
+		// rfm12.executeCommandRaw(0b1100101010001000); // FIFO8,1-SYNC,!ff,DR
 		
 		// 1100 1110 .... .... Synchron Pattern Command
-		rfm12.executeCommandRaw(0b1100111000101101); // SYNC=2D?
+		synchronPattern.setSynchronByte(0x2D);
+		// rfm12.executeCommandRaw(0b1100111000101101); // SYNC=2D?
 	}
 	
+	rfm12.executeCommand(fifoAndResetMode);
+	rfm12.executeCommand(synchronPattern);
+	
 	// 1100 0100 .... .... AFC Command
-	rfm12.executeCommandRaw(0b1100010010000011); // @PWR,NO RSTRIC,!st,!fi,OE,EN
+	commands::AfcCommand afcCommand;
+	afcCommand.a = commands::AUTOMODE_ONCE;
+	afcCommand.rl = commands::MAXDEVIATION_UNRESTRICTED;
+	afcCommand.st = false;
+	afcCommand.fi = false;
+	afcCommand.oe = true;
+	afcCommand.en = true;
+	rfm12.executeCommand(afcCommand);
+	//rfm12.executeCommandRaw(0b1100010010000011); // @PWR,NO RSTRIC,!st,!fi,OE,EN
 	
 	// 1001 100. .... .... TX Configuration Command
-	rfm12.executeCommandRaw(0b1001100001010000); // !mp,90kHz,MAX OUT
+	commands::TxConfigCommand txConfig;
+	txConfig.setFsk(commands::FSKDF_90KHZ);
+	txConfig.p = commands::OUTPOW_FULL;
+	rfm12.executeCommand(txConfig);
+	// rfm12.executeCommandRaw(0b1001100001010000); // !mp,90kHz,MAX OUT
 	
 	// 1100 1100 0.... .... PLL Setting Command
-	rfm12.executeCommandRaw(0b1100110001110111); // OB1?OB0, LPX,?ddy?DDIT?BW0
+	commands::PllSettingCommand pllSetting;
+	pllSetting.ob = commands::MCCLKFRQ_5OR10MHZ;
+	pllSetting.dly = false;
+	pllSetting.ddit = true;
+	pllSetting.bw = commands::PLLBW_MAX_2560KBPS;
+	rfm12.executeCommand(pllSetting);
+	// rfm12.executeCommandRaw(0b110011000 11 1 01 1 1); // OB1?OB0, LPX,?ddy?DDIT?BW0
 	
 	// 111. .... .... ....Wake-Up Timer Command
-	rfm12.executeCommandRaw(0b1110000000000000); // NOT USE
+	commands::WakeupTimerCommand wakeupTimer;
+	wakeupTimer.disableWakeupTimer();
+	rfm12.executeCommand(wakeupTimer);
+	// rfm12.executeCommandRaw(0b1110000000000000); // NOT USE
 	
 	// 1100 1000 .... .... Low Duty-Cycle Command
-	rfm12.executeCommandRaw(0b1100100000000000); // NOT USE
+	commands::LowDutyCycleCommand lowDutyCycle;
+	lowDutyCycle.setEnabled(false);
+	rfm12.executeCommand(lowDutyCycle);
+	// rfm12.executeCommandRaw(0b1100100000000000); // NOT USE
 	
 	// 1100 0000 .... .... Low Battery Detector and Microcontroller Clock Divider Command
-	rfm12.executeCommandRaw(0b1100000001001001); // 1.66MHz,3.1V
-/**/		
+	commands::BatteryDetectorAndClockDividerCommand batteryAndClock;
+	batteryAndClock.d = commands::CLKOUTFREQ_1660kHZ;
+	batteryAndClock.v = commands::BATTHRESH_3150mV;
+	rfm12.executeCommand(batteryAndClock);
+	// rfm12.executeCommandRaw(0b1100000001001001); // 1.66MHz,3.1V
+
 
 	// bye.
 	while(1) 
@@ -245,31 +286,12 @@ int main()
 		// Register lesen
 		// uint16_t values = rfm12.executeCommandRaw(0b1011000000000000);
 		
-		/*
-		uint_least16_t status = rfm12_read_status();
-		usart_comm_send_char(status >> 8);
-		usart_comm_send_char(status & 0xFF);
-		usart_comm_send_zstr("\r\n");
-		*/
+		commands::StatusCommandResult status = rfm12.readStatus();
+		uint16_t word = status.getResultWord();
 		
-		// _configsetrfm12.executeCommandRaw_t cmd;
-		usart_comm_send_char(sizeof(rfm12::commands::StatusCommandResult));
-		
-		/*
-		usart_comm_send_char(cmd.command_word >> 8);
-		usart_comm_send_char(cmd.command_word & 0xFF);
-		usart_comm_send_char(cmd.x);
-
-		usart_comm_send_char(cmd.el);
-		usart_comm_send_char(cmd.ef);
-		cmd.enable_data();
-		usart_comm_send_char(cmd.el);
-		usart_comm_send_char(cmd.ef);
-		cmd.enable_fifo();
-		usart_comm_send_char(cmd.el);
-		usart_comm_send_char(cmd.ef);
+		usart_comm_send_char(word >> 8);
+		usart_comm_send_char(word);
 		usart_comm_send_zstr("\r\n");
-		*/
 	}
 }
 
