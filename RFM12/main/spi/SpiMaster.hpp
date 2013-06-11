@@ -20,13 +20,13 @@ namespace spi
 	{
 	private:
 		// http://www.nongnu.org/avr-libc/user-manual/FAQ.html#faq_port_pass
-		volatile uint8_t *ddr_register;
-		volatile uint8_t *input_register;
-		volatile uint8_t *output_register;
-		const uint8_t mosi_bit;
-		const uint8_t miso_bit;
-		const uint8_t sck_bit;
-		const uint8_t ss_bit;
+		volatile uint8_t *_ddr_register;
+		volatile uint8_t *_output_register;
+		volatile uint8_t *_input_register;
+		const uint8_t _mosi_bit;
+		const uint8_t _miso_bit;
+		const uint8_t _sck_bit;
+		const uint8_t _ss_bit;
 	
 	public:
 		/**
@@ -48,13 +48,13 @@ namespace spi
 					const uint8_t miso_bit, 
 					const uint8_t sck_bit, 
 					const uint8_t ss_bit)
-					:	ddr_register(ddr_register),
-						input_register(input_register),
-						output_register(output_register),
-						mosi_bit(mosi_bit),
-						miso_bit(miso_bit),
-						sck_bit(sck_bit),
-						ss_bit(ss_bit)
+					:	_ddr_register(ddr_register),
+						_output_register(output_register),
+						_input_register(input_register),
+						_mosi_bit(mosi_bit),
+						_miso_bit(miso_bit),
+						_sck_bit(sck_bit),
+						_ss_bit(ss_bit)
 					{}
 		inline ~SpiMaster(){}
 		

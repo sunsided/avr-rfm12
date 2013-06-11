@@ -18,6 +18,8 @@
 #include "spi/SpiMaster.hpp"
 #include "rfm12/Rfm12.hpp"
 
+#include "Rfm12SpiAdapter.h"
+
 using namespace rfm12;
 
 #include <util/delay.h> 
@@ -50,6 +52,9 @@ int main()
 	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
 	spi.initialize();
 	
+	// create an SPI adapter for RFM12
+	Rfm12SpiAdapter spiAdapter(&spi);
+	
 	// Prepare SPI and RFM12
 	rfm12_initialize_interrupt();
 	
@@ -57,8 +62,7 @@ int main()
 	sei();
 		
 	// initialisieren des RFM12
-	ISpi *spiInterface = NULL;
-	Rfm12 rfm12(spiInterface);
+	Rfm12 rfm12(&spiAdapter);
 	rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
 	rfm12.executeCommandRaw(0b1011001000000101); // RF_SLEEP_MODE
 	rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE

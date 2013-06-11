@@ -19,7 +19,7 @@ namespace rfm12
 	class ISpi
 	{
 	public:
-		inline virtual ~ISpi(){}
+		// inline virtual ~ISpi(){}
 			
 		/**
 		* \brief Begins a transmission by pulling Slave Select low.

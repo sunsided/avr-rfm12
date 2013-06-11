@@ -16,10 +16,10 @@ namespace spi
 	void SpiMaster::initialize() const
 	{
 		// Set MOSI, SCK and SS output, MISO input
-		*ddr_register |= ((1 << mosi_bit)
-					  | (1 << sck_bit) 
-					  | (1 << ss_bit))
-					  & ~(1 << miso_bit);
+		*_ddr_register |= ((1 << _mosi_bit)
+					  | (1 << _sck_bit) 
+					  | (1 << _ss_bit))
+					  & ~(1 << _miso_bit);
 		
 		// Configure SPI
 		SPCR = ((1 << SPE)	// SPI enabled
@@ -37,7 +37,7 @@ namespace spi
 		SPSR &= ~(1 << SPI2X);
 		
 		// Activate pull ups for SS
-		*input_register |= (1 << ss_bit);
+		*_input_register |= (1 << _ss_bit);
 		
 		// Actively pull high SS
 		endTransmission();
@@ -48,7 +48,7 @@ namespace spi
 	*/
 	void SpiMaster::beginTransmission() const
 	{
-		*output_register &= ~(1 << ss_bit);
+		*_output_register &= ~(1 << _ss_bit);
 	}
 		
 	/**
@@ -56,7 +56,7 @@ namespace spi
 	*/
 	void SpiMaster::endTransmission() const
 	{
-		*output_register |= (1 << ss_bit);
+		*_output_register |= (1 << _ss_bit);
 	}
 
 	/**

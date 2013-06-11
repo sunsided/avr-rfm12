@@ -189,9 +189,6 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Rfm12SpiAdapter.cpp">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Rfm12SpiAdapter.h">
       <SubType>compile</SubType>
     </Compile>
@@ -268,12 +265,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\Rfm12.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="spi\old_spi.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="spi\old_spi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="spi\SpiMaster.cpp">
