@@ -35,11 +35,31 @@ using namespace rfm12;
 #define SPI_BIT_SCK		PORTB5
 #define SPI_BIT_SS		PORTB2
 
+/**
+* \brief Endianess-Überprüfung der Bitfields
+*/
+void checkEndianessAndHangUpOnError()
+{
+	commands::PowerManagementCommand powerMgmt;
+	powerMgmt.eb = true;
+	powerMgmt.ex = false;
+	powerMgmt.dc = true;
+	
+	// if endianness is reversed, hang up.
+	if (0b0101 != (powerMgmt.command_word & 0b0101)) 
+	{
+		while(1) { led_doubleflash_sync(); }
+	}
+}
+
 int main()
 {
 	#if F_CPU != 16000000UL
 	#error Expected F_CPU to be 16MHz; Timer calculation will be wrong!
 	#endif
+
+	// Tja nu.
+	checkEndianessAndHangUpOnError();
 
 	// USART
 	usart_comm_init();
