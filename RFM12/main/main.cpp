@@ -137,7 +137,12 @@ int main()
 	*/
 		
 	// 1100 0110 .... .... Data Rate Command
+	commands::DataRateCommand dataRate;
+	dataRate.setBitRate(49.2F);
+	rfm12.executeCommand(dataRate);
+	/*
 	rfm12.executeCommandRaw(0b1100011000000110); // approx 49.2 Kbps, i.e. 10000/29/(1+6) Kbps
+	*/
 
 	while(1) {};
 		
