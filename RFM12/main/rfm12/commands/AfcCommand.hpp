@@ -55,17 +55,17 @@ namespace rfm12
 					/**
 					* \brief Enable offset frequency calculation.
 					*/
-					uint8_t				en:1;
+					bool				en:1;
 					
 					/**
 					* \brief Enable frequency offset register.
 					*/
-					uint8_t				oe:1;
+					bool				oe:1;
 					
 					/**
 					* \brief Use high-accuracy (fine) mode.
 					*/
-					uint8_t				fi:1;
+					bool				fi:1;
 					
 					/**
 					* \brief Strobed edge.
@@ -102,6 +102,55 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/**
+			* \brief Sets the automatic operation mode.
+			*
+			* \param value The automatic operation mode.
+			*/
+			inline void setAutomaticOperationMode(const automatic_mode_t value = AUTOMODE_VDI_INDEPENDENT) { this->a = value; }
+				
+			/**
+			* \brief Sets the range limits.
+			*
+			* \param value The value, the frequency offset register is limited to.
+			*/
+			inline void setRangeLimit(const range_limit_t value = MAXDEVIATION_NARROW) { this->rl = value; }
+				
+			/**
+			* \brief Enables strobe edge mode.
+			*
+			* Strobe edge, when st goes to high, the actual latest calculated frequency error is stored into the offset register of
+			* the AFC block.
+			*
+			* \param value Strobe edge enabled if true, strobe edge disabled otherwise.
+			*/
+			inline void setStrobeEdgeEnabled(const bool enabled = true) { this->st = enabled; }
+				
+			/**
+			* \brief Switches the circuit to high accuracy (fine) mode.
+			*
+			* In fine mode, the processing time is about twice as long, but the measurement uncertainty is about half.
+			*
+			* \param value true if fine mode is enabled, otherwise false.
+			*/
+			inline void setFineModeEnabled(const bool enabled = true) { this->fi = enabled; }
+				
+			/**
+			* \brief Enables the frequency offset register.
+			*
+			* The offset register allows the addition of the offset register to the frequency control word of the PLL.
+			*
+			* \param value Offset register enabled if true, disabled otherwise.
+			*/
+			inline void setFrequencyOffsetRegisterEnabled(const bool enabled = true) { this->oe = enabled; }
+				
+			/**
+			* \brief Enables the calculation of the offset frequency by the AFC circuit.
+			*
+			* \param value Offset calculation enabled if true, disabled otherwise.
+			*/
+			inline void setFrequencyOffsetCalculationEnabled(const bool enabled = true) { this->en = enabled; }
 		};
 	}
 }

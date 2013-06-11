@@ -130,6 +130,41 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/*
+			* \brief Sets operation mode of Pin 16
+			*
+			* \param mode The mode
+			*/
+			inline void setPin16Mode(const pin16_t mode = PIN16_INTERRUPT_IN) { this->p16 = mode; }
+				
+			/*
+			* \brief Sets the VDI response time
+			*
+			* \param value
+			*/
+			inline void setVdiResponseTime(const vdi_response_t value = VDI_FAST) { this->d = value; }
+				
+			/*
+			* \brief Sets the receiver baseband bandwidth
+			*
+			* \param value
+			*/
+			inline void setReceiverBasebandBandwidth(const baseband_bandwidth_t value = RBBW_200) { this->i = value; }
+				
+			/*
+			* \brief Sets the LNA gain
+			*
+			* \param value
+			*/
+			inline void setLnaGain(const lna_gain_t value = LNGAIN_0) { this->g = value; }
+				
+			/*
+			* \brief Sets the RSSI detector threshold
+			*
+			* \param value
+			*/
+			inline void setRssiDetectorThreshold(const rssi_threshold_t value = RSSI_103) { this->r = value; }
 		};
 	}
 }

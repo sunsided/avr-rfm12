@@ -88,6 +88,64 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/**
+			* \brief Sets whether the whole receiver chain shall be enabled.
+			*
+			* \param enabled Determines if the received chain shall be enabled or disabled.
+			*/
+			inline void setReceiverChainEnabled(const bool enabled = true) { this->er = enabled; }
+				
+			/**
+			* \brief Sets whether the receiver baseband circuitry shall be enabled.
+			*
+			* The receiver baseband circuit can be separately switched on
+			*
+			* \param enabled true for enabled, false for disabled
+			*/
+			inline void setReceiverBasebandCircuitryEnabled(const bool enabled = true) { this->ebb = enabled; }
+				
+			/**
+			* \brief Switches on the PLL, the power amplifier, and starts the transmission (If TX register is enabled)
+			*
+			* \param enabled true for enabled, false for disabled
+			*/
+			inline void setTransmissionEnabled(const bool enabled = true) { this->et = enabled; }
+				
+			/**
+			* \brief Turns on the synthesizer
+			*
+			* \param enabled true for enabled, false for disabled
+			*/
+			inline void setSynthesizerEnabled(const bool enabled = true) { this->es = enabled; }
+				
+			/**
+			* \brief Turns on the crystal oscillator
+			*
+			* \param enabled true for enabled, false for disabled
+			*/
+			inline void setCrystalOscillatorEnabled(const bool enabled = true) { this->ex = enabled; }
+				
+			/**
+			* \brief Enables the low battery detector
+			*
+			* \param enabled true for enabled, false for disabled
+			*/
+			inline void setLowBatteryDetectorEnabled(const bool enabled = true) { this->eb = enabled; }
+			
+			/**
+			* \brief Enables the wake-up timer
+			*
+			* \param enabled true for enabled, false for disabled
+			*/
+			inline void setWakeupTimerEnabled(const bool enabled = true) { this->ew = enabled; }
+				
+			/**
+			* \brief Enables the clock output
+			*
+			* \param enabled true for enabled, false for disabled
+			*/
+			inline void setClockOutputEnabled(const bool enabled = true) { this->dc = !enabled; }
 		};
 	}
 }

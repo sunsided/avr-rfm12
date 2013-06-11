@@ -67,6 +67,17 @@ namespace rfm12
 			inline operator uint16_t() const { return this->command_word; }
 
 			/**
+			* \brief Sets the duty-cycle.
+			*
+			* The duty-cycle can be calculated by using (d6 to d0) and M. (M is parameter in a Wake-Up Timer Command, see
+			* above). The time cycle is determined by the Wake-Up Timer Command.
+			* duty-cycle= (D · 2 +1) / M · 100%
+			*
+			* \param value The duty cycle factor.
+			*/
+			inline void setDutyCycle(const uint8_t value = 7) { this->d = value; }
+
+			/**
 			* \brief Sets the Low Duty-Cycle mode.
 			*
 			* \param enabled true if the Low Duty-Cycle mode should be enabled, false otherwise.

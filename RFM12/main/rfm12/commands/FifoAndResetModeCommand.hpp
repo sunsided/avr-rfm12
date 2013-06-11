@@ -102,6 +102,43 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/**
+			* \brief Sets the synchron pattern length
+			*
+			* \param value The pattern length
+			*/
+			inline void setSynchronPatternLength(const synchron_pattern_mode_t value = SP_TWO_BYTE) { this->sp = value; }
+				
+			/**
+			* \brief Sets the FIFO IT level.
+			* 
+			* The FIFO generates IT when the number of received data bits reaches this level.
+			*
+			* \param value The fill level
+			*/
+			inline void setFifoInterruptFillLevel(const uint8_t value = 8) { this->f = (value < 15 ? value : 15); }
+				
+			/**
+			* \brief Sets the FIFO fill start condition
+			*
+			* \param value The start condition
+			*/
+			inline void setFifoFillStartCondition(const fifo_start_t value = FIFOSTART_SYNCHRON) { this->al = value; }
+				
+			/**
+			* \brief Sets whether the FIFO fill should start after the reception of the synchron pattern.
+			*
+			* \param enabled FIFO fill enabled if true, otherwise FIFO fill is disabled.
+			*/
+			inline void setFifoFillAfterSynchronMatchEnabled(const bool enabled = true) { this->ff = enabled; }
+				
+			/**
+			* \brief Sets the highly sensitive reset mode.
+			*
+			* \param value The reset mode.
+			*/
+			inline void setSensitiveResetMode(const sensitive_reset_t value = RESETMOPDE_SENSITIVE) { this->dr = value; }
 		};
 	}
 }

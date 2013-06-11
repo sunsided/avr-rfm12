@@ -96,6 +96,37 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/**
+			* \brief Microcontroller output clock buffer rise and fall time control.
+			*
+			* The ob1-ob0 bits are changing the output drive current of the CLK pin. 
+			* Higher current provides faster rise and fall times but can cause interference.
+			*
+			* \param value The selected microcontroller clock frequency.
+			*/
+			inline void setOutputClockBufferTimeControl(const microctrl_clkfrq_t value = MCCLKFRQ_5OR10MHZ) { this->ob = value; }
+				
+			/**
+			* \brief Enabled phase detector delay
+			*
+			* \param value Phase detector delay enabled if true, disabled otherwise
+			*/
+			inline void setPhaseDetectorDelayEnabled(const bool enabled = true) { this->dly = enabled; }
+				
+			/**
+			* \brief When set, enables the dithering in the PLL loop.
+			*
+			* \param value PLL dithering enabled if true, disabled otherwise
+			*/
+			inline void setPllDitheringEnabled(const bool enabled = true) { this->ddit = !enabled; }
+				
+			/**
+			* \brief PLL Bandwidth
+			*
+			* \param value The PLL bandwidth
+			*/
+			inline void setPllBandwidth(const pll_bandwidth_t value = PLLBW_MAX_2560KBPS) { this->bw = value; }
 		};
 	}
 }

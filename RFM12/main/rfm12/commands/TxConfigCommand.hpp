@@ -140,6 +140,13 @@ namespace rfm12
 				this->m = frequency;
 				this->mp = inversion;
 			}
+			
+			/**
+			* \brief Sets the relative output power
+			*
+			* \param value The output power value.
+			*/
+			inline void setOutputPower(const output_power_t value = OUTPOW_FULL) { this->p = value; }
 		};
 	}
 }

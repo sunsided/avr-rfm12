@@ -91,6 +91,40 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/**
+			* \brief Clock recovery (CR) auto lock control
+			*
+			* \param enabled auto mode if true, false otherwise
+			*/
+			inline void setClockRecoveryAutoLockModeEnabled(const bool enabled = true) { this->al = enabled; }
+				
+			/**
+			* \brief Clock recovery lock control
+			*
+			* \param enabled fast mode if true, slow mode otherwise
+			*/
+			inline void setClockRecoveryFastLockEnabled(const bool enabled = true) { this->ml = enabled; }
+				
+			/**
+			* \brief Sets the data filter type.
+			*
+			* \param value The filter type
+			*/
+			inline void setDataFilterType(const filter_type_t value = FILTER_DIGITAL) { this->s = value; }
+				
+			/**
+			* \brief DQD threshold parameter.
+			*
+			* Determines the threshold level at which the DQD signal goes high. The
+			* valid range is 0 to 7, but the value should always be larger than or equal to 4 (the default).
+			* It can be calculated using the following formula:
+			*
+			* f = 4 x (deviation – TX-RXoffset ) / bit rate
+			*
+			* \param value The DQD threshold value (in range of 0 to 7).
+			*/
+			inline void setDqdTrheshold(const uint8_t value = 0b100) { this->f = (value < 7 ? value : 7); }
 		};
 	}
 }

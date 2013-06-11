@@ -68,6 +68,21 @@ namespace rfm12
 			inline operator uint16_t() const { return this->command_word; }
 
 			/**
+			* \brief Sets the factors for the wake-up timer.
+			*
+			* The wake-up time period can be calculated by:
+			* Twake-up = 1.03 · M · 2R + 0.5 [ms]
+			*
+			* \param mantissa The mantissa factor
+			* \param exponent The exponential factor
+			*/
+			inline void setWakeupTimerFactors(const uint8_t mantissa = 0x96, const uint8_t exponent = 0x1)
+			{
+				this->m = mantissa;
+				this->r = exponent < 0b11111 ? exponent : 0b11111;
+			}
+
+			/**
 			* \brief Clears the wake-up timer period.
 			*
 			* Sets the wake-up timer period mantissa and exponent to zero,

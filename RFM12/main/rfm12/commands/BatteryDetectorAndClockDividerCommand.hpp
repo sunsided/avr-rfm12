@@ -20,14 +20,14 @@ namespace rfm12
 		* \brief Clock Output Frequency
 		*/
 		typedef enum {
-			CLKOUTFREQ_1000kHZ,				//<! 1 MHz
-			CLKOUTFREQ_1250kHZ,				//<! 1.25 MHz
-			CLKOUTFREQ_1660kHZ,				//<! 1.66 MHz
-			CLKOUTFREQ_2000kHZ,				//<! 2 MHz
-			CLKOUTFREQ_2500kHZ,				//<! 2.5 MHz
-			CLKOUTFREQ_3330kHZ,				//<! 3.33 MHz
-			CLKOUTFREQ_5000kHZ,				//<! 5 MHz
-			CLKOUTFREQ_10000kHZ,			//<! 10 MHz
+			CLKOUTFREQ_1000kHZ = 0b000,		//<! 1 MHz
+			CLKOUTFREQ_1250kHZ = 0b001,		//<! 1.25 MHz
+			CLKOUTFREQ_1660kHZ = 0b010,		//<! 1.66 MHz
+			CLKOUTFREQ_2000kHZ = 0b011,		//<! 2 MHz
+			CLKOUTFREQ_2500kHZ = 0b100,		//<! 2.5 MHz
+			CLKOUTFREQ_3330kHZ = 0b101,		//<! 3.33 MHz
+			CLKOUTFREQ_5000kHZ = 0b110,		//<! 5 MHz
+			CLKOUTFREQ_10000kHZ = 0b111,	//<! 10 MHz
 		} clockout_freq_t;
 
 		/**
@@ -104,6 +104,20 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/**
+			* \brief Sets the clock output frequency
+			*
+			* \param value The clock output frequency
+			*/
+			inline void setClockDivider(const clockout_freq_t value = CLKOUTFREQ_1000kHZ) { this->d = value; }
+				
+			/**
+			* \brief Sets the battery voltage threshold.
+			*
+			* \param value The threshold voltage.
+			*/
+			inline void setVoltageThreshould(const battery_threshold_t value = BATTHRESH_2250mV) { this->v = value; }
 		};
 	}
 }

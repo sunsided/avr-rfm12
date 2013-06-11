@@ -127,14 +127,14 @@ namespace rfm12
 			*	
 			* \param value FIFO enabled.
 			*/
-			inline void enableFifo(const bool value = true) { this->ef = value; }
+			inline void setFifoEnabled(const bool value = true) { this->ef = value; }
 
 			/**
 			* \brief Sets whether the internal data register should be enabled.
 			*	
 			* \param value Data register enabled.
 			*/
-			inline void enableData(const bool value = true) { this->el = value; }
+			inline void setDataRegisterEnabled(const bool value = true) { this->el = value; }
 		};
 	}
 }
