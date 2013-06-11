@@ -103,6 +103,7 @@ int main()
 	// TODO: State machine: Fortfahren, wenn externer Interrupt HIGH.
 	while ((PIND & (1 << PIND2)) == 0)
 	{
+		// status read clears interrupt flags in RFM12
 		rfm12.readStatus();
 	}
 	
@@ -176,6 +177,8 @@ int main()
 	
 	while(1) {};
 	
+	commands::FifoAndResetModeCommand fifoAndResetMode;
+	commands::SynchronPatternCommand synchonPattern;
 	
 	uint8_t group = 212; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
 	if (group != 0) {
