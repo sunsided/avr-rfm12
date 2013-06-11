@@ -64,7 +64,7 @@ int main()
 	// initialisieren des RFM12
 	Rfm12 rfm12(&spiAdapter);
 	rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
-	rfm12.executeCommandRaw(0b1011001000000101); // RF_SLEEP_MODE
+	rfm12.executeCommandRaw(0b1000001000000101); // RF_SLEEP_MODE
 	rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE
 
 	while ((PIND & (1 << PIND2)) == 0)
