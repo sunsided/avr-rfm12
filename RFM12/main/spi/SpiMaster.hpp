@@ -84,6 +84,16 @@ namespace spi
 		*/
 		uint_fast8_t transmitSync(uint_fast8_t data) const;
 
+		/**
+		* \brief Transmits two bytes of data.
+		*
+		* This method sends data synchronously by blocking on the
+		* SPI send register.
+		*
+		* \param data The data to send.
+		* \returns The result.
+		*/
+		uint_fast16_t transmitSync(uint_fast16_t data) const;
 	};
 
 }

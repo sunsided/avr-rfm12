@@ -79,4 +79,31 @@ namespace spi
 		// Output read data
 		return SPDR;
 	}
+	
+	/**
+	* \brief Transmits two bytes of data.
+	*
+	* This method sends data synchronously by blocking on the
+	* SPI send register.
+	*
+	* \param data The data to send.
+	* \returns The result.
+	*/
+	uint_fast16_t SpiMaster::transmitSync(uint_fast16_t data) const
+	{
+		uint16_t result;
+		
+		// Transmit first byte
+		SPDR = (uint8_t)(data >> 8) & 0xFF;
+		while(!(SPSR & (1 << SPIF)));
+		result = SPDR << 8;
+		
+		// Transmit second byte
+		SPDR = (uint8_t)data & 0xFF;
+		while(!(SPSR & (1 << SPIF)));
+		result |= SPDR;
+		
+		// And off we go.
+		return result;
+	}
 }
