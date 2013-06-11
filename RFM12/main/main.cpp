@@ -64,9 +64,6 @@ int main()
 	// USART
 	usart_comm_init();
 	usart_comm_send_zstr("SYSTEM READY\r\n");
-
-	// Initialize status LED
-	// led_flash_sync();
 	
 	// SPI initialisieren
 	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
@@ -85,10 +82,12 @@ int main()
 	Rfm12 rfm12(&spiAdapter);
 	
 	// flush SPI
-	rfm12.readStatus();
-	// rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
+	commands::StatusCommandResult status = rfm12.readStatus();
+	if (status.por) {
+		led_flash_sync();
+	}
 	
-		// Set sleep mode
+	// Set sleep mode
 	commands::PowerManagementCommand powerMgmt; 
 	powerMgmt.eb = true;
 	powerMgmt.ex = false;
@@ -101,6 +100,7 @@ int main()
 	rfm12.executeCommand(txWrite);
 	//rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE
 
+	// TODO: State machine: Fortfahren, wenn externer Interrupt HIGH.
 	while ((PIND & (1 << PIND2)) == 0)
 	{
 		rfm12.readStatus();
@@ -108,9 +108,7 @@ int main()
 	
 	// signal we're ready to go
 	led_doubleflash_sync();
-		
-	while(1) {};
-
+	
 	// 1000 0000 .... .... Configuration Setting Command
 	commands::ConfigSetCommand configSet;
 	configSet.setFrequencyBand(commands::FREQ_BAND_433);
@@ -123,6 +121,11 @@ int main()
 	*/
 	
 	// 1010 .... .... .... Frequency Setting Command
+	commands::FrequencyCommand frequencySetting;
+	frequencySetting.setByFrequency(433.0F);
+	rfm12.executeCommand(frequencySetting);
+	
+	/*
 	// Bits f0..f11 müssen im Bereich 96 bis 3903 liegen.
 	// Mittelfrequenz berechenbar gemäß:
 	// Fm = 10 * C1 * (C2 + F/4000) [MHz]
@@ -131,9 +134,12 @@ int main()
 	double frequency = 433.0D; // MHz
 	uint16_t freq_setting = (uint16_t)(10.0D * c1 * (c2 + frequency/4000));
 	rfm12.executeCommandRaw(0b1010000000000000 | (freq_setting & 0b0000111111111111));
+	*/
 		
 	// 1100 0110 .... .... Data Rate Command
 	rfm12.executeCommandRaw(0b1100011000000110); // approx 49.2 Kbps, i.e. 10000/29/(1+6) Kbps
+
+	while(1) {};
 		
 	// 1001 0... .... .... Receiver Control Command
 	rfm12.executeCommandRaw(0b1001010010100010); // VDI,FAST,134kHz,0dBm gain,-91dBm RSSI detector
