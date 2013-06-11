@@ -83,6 +83,18 @@ namespace rfm12
 		}
 		
 		/**
+		 * \brief Sends a command to the RFM12.
+		 *
+		 * \param command The command word
+		 *
+		 * \return The result
+		 */
+		inline const commands::CommandResult executeCommand(const commands::ICommand& command) const
+		{
+			return executeCommandRaw(command.getCommandWord());
+		}
+		
+		/**
 		 * \brief Reads the status register from the RFM12.
 		 *
 		 * \return The status.

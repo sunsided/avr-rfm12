@@ -21,7 +21,7 @@ namespace rfm12
 		class ICommand
 		{
 		public:
-			inline virtual ~ICommand(){}
+			// inline virtual ~ICommand(){}
 				
 			/**
 			* \brief Gets the command word.

@@ -46,7 +46,7 @@ int main()
 	usart_comm_send_zstr("SYSTEM READY\r\n");
 
 	// Initialize status LED
-	// led_flash_sync();
+	led_flash_sync();
 	
 	// SPI initialisieren
 	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
@@ -77,9 +77,15 @@ int main()
 		
 
 	// 1000 0000 .... .... Configuration Setting Command
+	commands::ConfigSetCommand configSet;
+	configSet.setFrequencyBand(commands::FREQ_BAND_433);
+	configSet.setCrystalCapacitance(commands::CL_120);
+	rfm12.executeCommand(configSet);
+	/*
 	uint8_t band			= 0b01; // 433 Mhz
 	uint8_t capacitance		= 0b0111; // 12.0pF 
 	rfm12.executeCommandRaw(0b1000000011000000 | (band << 4) | capacitance); // EL (ena TX), EF (ena RX FIFO), 12.0pF 
+	*/
 	
 	// 1010 .... .... .... Frequency Setting Command
 	// Bits f0..f11 müssen im Bereich 96 bis 3903 liegen.
