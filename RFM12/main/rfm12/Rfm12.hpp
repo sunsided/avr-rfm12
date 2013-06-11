@@ -10,7 +10,7 @@
 #define RFM12_H_
 
 #include <stdint.h>
-#include "ISpi.h"
+#include "ISpi.hpp"
 
 #include "commands/ICommand.hpp"
 #include "commands/ConfigSetCommand.hpp"

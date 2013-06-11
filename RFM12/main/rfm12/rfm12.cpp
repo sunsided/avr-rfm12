@@ -8,7 +8,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include "../main.h"
-#include "../spi/spi.h"
+#include "ISpi.hpp"
 #include "Rfm12.hpp"
 
 namespace rfm12
@@ -39,10 +39,12 @@ namespace rfm12
 	 */
 	inline const uint_fast16_t Rfm12::executeCommandInternal(const uint_least16_t command_code) const
 	{
-		spi_begin();
-		uint_fast16_t result  = spi_transmit((command_code >> 8) & 0xFF) << 8;
-					   result |= spi_transmit(command_code & 0xFF);
-		spi_end();
+		_spi->beginTransmission();
+		uint_fast16_t result = _spi->transmitWord(command_code);
+		_spi->endTransmission();
+
+		// uint_fast16_t result  = spi_transmit((command_code >> 8) & 0xFF) << 8;
+		// 			   result |= spi_transmit(command_code & 0xFF);
 		
 		return result;
 	}

@@ -9,6 +9,8 @@
 #ifndef __ISPI_H__
 #define __ISPI_H__
 
+#include <stdint.h>
+
 namespace rfm12
 {
 	/**
@@ -17,7 +19,7 @@ namespace rfm12
 	class ISpi
 	{
 	public:
-		virtual ~ISpi(){}
+		inline virtual ~ISpi(){}
 			
 		/**
 		* \brief Begins a transmission by pulling Slave Select low.

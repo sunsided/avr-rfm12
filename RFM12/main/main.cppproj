@@ -189,6 +189,12 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Rfm12SpiAdapter.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Rfm12SpiAdapter.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12\commands\ICommand.hpp">
       <SubType>compile</SubType>
     </Compile>
@@ -255,7 +261,7 @@
     <Compile Include="rfm12\commands\WakeupTimerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\ISpi.h">
+    <Compile Include="rfm12\ISpi.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\Rfm12.cpp">
@@ -264,10 +270,16 @@
     <Compile Include="rfm12\Rfm12.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="spi\spi.cpp">
+    <Compile Include="spi\old_spi.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="spi\spi.h">
+    <Compile Include="spi\old_spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi\SpiMaster.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi\SpiMaster.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="system.h">

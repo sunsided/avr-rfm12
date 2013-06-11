@@ -6,7 +6,7 @@
  */ 
 
 #include <avr/io.h>
-#include "spi.h"
+#include "old_spi.h"
 
 /**
  * \brief Initializes the SPI interface.

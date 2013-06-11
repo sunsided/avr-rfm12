@@ -15,7 +15,7 @@
 #include "comm/command_decoder.h"
 
 #include "main.h"
-#include "spi/spi.h"
+#include "spi/SpiMaster.hpp"
 #include "rfm12/Rfm12.hpp"
 
 using namespace rfm12;
@@ -23,6 +23,15 @@ using namespace rfm12;
 #include <util/delay.h> 
 
 #define BIN(a,b) 0b ## a ## b
+
+#define SPI_DDR			DDRB
+#define SPI_PORT		PORTB
+#define SPI_PIN			PINB
+
+#define SPI_BIT_MOSI	PORTB3
+#define SPI_BIT_MISO	PINB4
+#define SPI_BIT_SCK		PORTB5
+#define SPI_BIT_SS		PORTB2
 
 int main()
 {
@@ -35,18 +44,21 @@ int main()
 	usart_comm_send_zstr("SYSTEM READY\r\n");
 
 	// Initialize status LED
-	led_flash_sync();
+	// led_flash_sync();
+	
+	// SPI initialisieren
+	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
+	spi.initialize();
 	
 	// Prepare SPI and RFM12
-	spi_initialize();
 	rfm12_initialize_interrupt();
 	
 	// Fire and go.
 	sei();
 		
 	// initialisieren des RFM12
-	ISpi *spi = NULL;
-	Rfm12 rfm12(spi);
+	ISpi *spiInterface = NULL;
+	Rfm12 rfm12(spiInterface);
 	rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
 	rfm12.executeCommandRaw(0b1011001000000101); // RF_SLEEP_MODE
 	rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE
