@@ -144,18 +144,38 @@ int main()
 	rfm12.executeCommandRaw(0b1100011000000110); // approx 49.2 Kbps, i.e. 10000/29/(1+6) Kbps
 	*/
 
-	while(1) {};
-		
 	// 1001 0... .... .... Receiver Control Command
+	commands::ReceiverControlCommand receiverControl;
+	receiverControl.p16 = commands::PIN16_VDI_OUT;
+	receiverControl.d = commands::VDI_FAST;
+	receiverControl.i = commands::RBBW_134;
+	receiverControl.g = commands::LNGAIN_0;
+	receiverControl.r = commands::RSSI_91;
+	rfm12.executeCommand(receiverControl);
+	
+	/*
 	rfm12.executeCommandRaw(0b1001010010100010); // VDI,FAST,134kHz,0dBm gain,-91dBm RSSI detector
 	// VDI = Valid Data Indicator
+	*/
 	
 	// 1100 0010 .... .... Data Filter Command
+	commands::DataFilterCommand dataFilter;
+	dataFilter.al = true;
+	dataFilter.ml = false;
+	dataFilter.s = commands::FILTER_DIGITAL;
+	dataFilter.f = 4;
+	rfm12.executeCommand(dataFilter);
+	
+	/*
 	rfm12.executeCommandRaw(0b1100001010101100); // AL,!ml,DIG,DQD4
 	// al = 1 -- Clock recovery auto lock control: auto mode
 	// ml = 0 -- Clock recovery lock control: slow mode, slow attack, slow release
 	//  s = 1 -- Digital Filter
 	// DQD threshold = 4
+	*/
+	
+	while(1) {};
+	
 	
 	uint8_t group = 212; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
 	if (group != 0) {
