@@ -77,10 +77,27 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
+					* \brief Relative antenna output power.
+			
+					* The relative output in multiples of -2.5 dB, where 0b000 means full power (-0 dB).
 					*/
-					const uint8_t		command_code:7;		
-
+					output_power_t		p:3;
+					
+								/**
+					* \brief Padding bit
+					*/
+					const uint8_t		:1;
+					
+					/**
+					* \brief FSK (Frequency Shift Keying) Modulation: Delta f_fsk
+					*
+					* This value controls the frequency deviation from the channel center frequency
+					* at which data bits will be modulated. At FSKDF_15KHZ, data bits will be modulated
+					* to channel center frequency f0 +/- 15 kHz, depending on the sign of the data bit
+					* and the inversion mode.
+					*/
+					fsk_deltaffsk_t		m:4;
+					
 					/**
 					* \brief FSK (Frequency Shift Keying) Modulation: Invert frequencies
 					*
@@ -91,29 +108,11 @@ namespace rfm12
 					* If mp is FSKMODE_INVERTED, a logic HIGH will be modulated to a frequency below f0.
 					*/
 					fsk_invert_t		mp:1;
-			
+					
 					/**
-					* \brief FSK (Frequency Shift Keying) Modulation: Delta f_fsk
-					*
-					* This value controls the frequency deviation from the channel center frequency
-					* at which data bits will be modulated. At FSKDF_15KHZ, data bits will be modulated
-					* to channel center frequency f0 +/- 15 kHz, depending on the sign of the data bit
-					* and the inversion mode.
+					* \brief The command code.
 					*/
-					fsk_deltaffsk_t		m:4;
-			
-			
-					/**
-					* \brief Padding bit
-					*/
-					const uint8_t		:1;
-			
-					/**
-					* \brief Relative antenna output power.
-			
-					* The relative output in multiples of -2.5 dB, where 0b000 means full power (-0 dB).
-					*/
-					output_power_t		p:3;
+					const uint8_t		command_code:7;		
 				};
 			};
 	

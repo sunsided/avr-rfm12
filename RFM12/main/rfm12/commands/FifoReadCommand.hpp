@@ -28,14 +28,14 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
+					* \brief Padding.
+					*/
+					const uint8_t		:8;
+					
+					/**
 					* \brief The command code.
 					*/
 					const uint8_t		command_code:8;		
-
-					/**
-					* \brief Padding.
-					*/
-					const uint8_t		:8;		
 				};
 			};
 	

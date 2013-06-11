@@ -47,39 +47,39 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
+					* \brief PLL bandwidth control for optimal RX/TX performance
 					*/
-					const uint16_t		command_code:9;
-
-					/**
-					* \brief Micro controller output clock buffer rise and fall time control.
-					*/
-					microctrl_clkfrq_t	ob:2;
-			
-					/**
-					* \brief Padding
-					*/
-					const uint8_t		:1;
-			
-					/**
-					* \brief Switches on the delay in the phase detector when this bit is set.
-					*/
-					bool				dly:1;
-			
-					/**
-					* \brief When set, disables the dithering in the PLL loop.
-					*/
-					bool				ddit:1;
-			
+					pll_bandwidth_t		bw:1;
+					
 					/**
 					* \brief Padding
 					*/
 					uint8_t				:1;
-			
+					
 					/**
-					* \brief PLL bandwidth control for optimal RX/TX performance
+					* \brief When set, disables the dithering in the PLL loop.
 					*/
-					pll_bandwidth_t		bw:1;
+					bool				ddit:1;
+					
+					/**
+					* \brief Switches on the delay in the phase detector when this bit is set.
+					*/
+					bool				dly:1;
+					
+					/**
+					* \brief Padding
+					*/
+					const uint8_t		:1;
+					
+					/**
+					* \brief Micro controller output clock buffer rise and fall time control.
+					*/
+					microctrl_clkfrq_t	ob:2;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint16_t		command_code:9;
 				};
 			};
 	

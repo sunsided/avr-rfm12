@@ -26,12 +26,12 @@ namespace rfm12
 				* \brief The raw command word.
 				*/
 				const uint16_t command_word;
-				struct {
+				struct {	
 					/**
-					* \brief The command code.
+					* \brief Enables the low duty-cycle command
 					*/
-					const uint8_t		command_code:8;		
-
+					bool				en:1;
+					
 					/**
 					* \brief Low duty-cycle percentage control.
 					*
@@ -44,11 +44,11 @@ namespace rfm12
 					* \see WakeupTimerCommand
 					*/
 					uint8_t				d:7;
-			
+					
 					/**
-					* \brief Enables the low duty-cycle command
+					* \brief The command code.
 					*/
-					bool				en:1;
+					const uint8_t		command_code:8;		
 				};
 			};
 	

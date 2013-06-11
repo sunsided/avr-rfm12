@@ -28,14 +28,14 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
+					* \brief Transmission data
+					*/
+					uint8_t				t:8;					
+					
+					/**
 					* \brief The command code.
 					*/
 					const uint8_t		command_code:8;		
-
-					/**
-					* \brief Transmission data
-					*/
-					uint8_t				t:8;
 				};
 			};
 	

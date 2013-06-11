@@ -84,36 +84,36 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
-					*/
-					const uint8_t			command_code:5;		
-
-					/**
-					* \brief Pin 16 Function Select
-					*/
-					pin16_t					p16:1;
-			
-					/**
-					* \brief VDI (valid data indicator) signal response time setting.
-					*/
-					vdi_response_t			d:2;
-			
-					/**
-					* \brief Receiver baseband bandwidth (BW) select
-					*/
-					baseband_bandwidth_t	i:3;
-			
-					/**
-					* \brief LNA gain select:
-					*/
-					lna_gain_t				g:2;
-			
-					/**
 					* \brief RSSI detector threshold base setting.
 					*
 					* Real RSSI threshold depends on LNA gain setting.
 					*/
 					rssi_threshold_t		r:3;
+					
+					/**
+					* \brief LNA gain select:
+					*/
+					lna_gain_t				g:2;
+					
+					/**
+					* \brief Receiver baseband bandwidth (BW) select
+					*/
+					baseband_bandwidth_t	i:3;
+					
+					/**
+					* \brief VDI (valid data indicator) signal response time setting.
+					*/
+					vdi_response_t			d:2;
+					
+					/**
+					* \brief Pin 16 Function Select
+					*/
+					pin16_t					p16:1;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t			command_code:5;		
 				};
 			};
 	

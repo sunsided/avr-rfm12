@@ -68,9 +68,10 @@ int main()
 	rfm12.readStatus();
 	// rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
 	
-	// Set sleep mode
+		// Set sleep mode
 	commands::PowerManagementCommand powerMgmt; 
 	powerMgmt.eb = true;
+	powerMgmt.ex = false;
 	powerMgmt.dc = true;
 	rfm12.executeCommand(powerMgmt);
 	//rfm12.executeCommandRaw(0b1000001000000101); // RF_SLEEP_MODE

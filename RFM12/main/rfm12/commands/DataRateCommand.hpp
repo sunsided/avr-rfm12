@@ -29,19 +29,19 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
+					* \brief Expected bit rate R values
 					*/
-					const uint8_t		command_code:8;		
-
+					uint8_t				r:7;
+					
 					/**
 					* \brief Expected bit rate CS value
 					*/
 					uint8_t				cs:1;
-			
+					
 					/**
-					* \brief Expected bit rate R values
+					* \brief The command code.
 					*/
-					uint8_t				r:7;
+					const uint8_t		command_code:8;		
 				};
 			};
 	

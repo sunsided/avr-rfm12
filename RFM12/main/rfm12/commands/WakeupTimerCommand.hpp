@@ -28,20 +28,6 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
-					*/
-					const uint8_t		command_code:3;
-
-					/**
-					* \brief Wake-up time period exponential factor.
-					*
-					* Twake-up = 1.03 · M · 2R + 0.5 [ms]
-					*
-					* For future compatibility, r should be in range 0..29 inclusive.
-					*/
-					uint8_t				r:5;
-			
-					/**
 					* \brief Wake-up time period mantissa factor.
 					*
 					* Twake-up = 1.03 · M · 2R + 0.5 [ms]
@@ -50,6 +36,20 @@ namespace rfm12
 					* \see LowDutyCycleCommand
 					*/
 					uint8_t				m:8;
+					
+					/**
+					* \brief Wake-up time period exponential factor.
+					*
+					* Twake-up = 1.03 · M · 2R + 0.5 [ms]
+					*
+					* For future compatibility, r should be in range 0..29 inclusive.
+					*/
+					uint8_t				r:5;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:3;
 				};
 			};
 	

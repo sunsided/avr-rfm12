@@ -28,16 +28,16 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
-					*/
-					const uint8_t		command_code:8;		
-
-					/**
 					* \brief Synchron pattern byte zero.
 					*
 					* For RFM12 (i.e. not RFM12B), this value must always be 0xD4.
 					*/
-					uint8_t				b:8;		
+					uint8_t				b:8;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:8;		
 				};
 			};
 	

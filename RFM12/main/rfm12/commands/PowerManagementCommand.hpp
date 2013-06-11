@@ -29,49 +29,49 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
+					* \brief Disables the clock output (pin 8)
 					*/
-					const uint8_t		command_code:8;		
-
+					bool				dc:1;
+					
 					/**
-					* \brief Enables the whole receiver chain.
+					* \brief Enables the wake-up timer
 					*/
-					bool				er:1;
+					bool				ew:1;
+					
+					/**
+					* \brief Enables the low battery detector
+					*/
+					bool				eb:1;
+					
+					/**
+					* \brief Turns on the crystal oscillator
+					*/
+					bool				ex:1;
+					
+					/**
+					* \brief Turns on the synthesizer
+					*/
+					bool				es:1;
+					
+					/**
+					* \brief Switches on the PLL, the power amplifier, and starts the transmission (If TX register is enabled)
+					*/
+					bool				et:1;
 
 					/**
 					* \brief The receiver baseband circuit can be separately switched on
 					*/
 					bool				ebb:1;
-			
+					
 					/**
-					* \brief Switches on the PLL, the power amplifier, and starts the transmission (If TX register is enabled)
+					* \brief Enables the whole receiver chain.
 					*/
-					bool				et:1;
-			
+					bool				er:1;
+																														
 					/**
-					* \brief Turns on the synthesizer
+					* \brief The command code.
 					*/
-					bool				es:1;
-			
-					/**
-					* \brief Turns on the crystal oscillator
-					*/
-					bool				ex:1;
-			
-					/**
-					* \brief Enables the low battery detector
-					*/
-					bool				eb:1;
-			
-					/**
-					* \brief Enables the wake-up timer
-					*/
-					bool				ew:1;
-			
-					/**
-					* \brief Disables the clock output (pin 8)
-					*/
-					bool				dc:1;
+					const uint8_t		command_code:8;		
 				};
 			};
 	

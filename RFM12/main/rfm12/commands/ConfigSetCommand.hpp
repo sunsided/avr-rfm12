@@ -63,30 +63,30 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
+					* \brief The crystal load capacitance.
 					*/
-					const uint8_t		command_code:8;		
-
+					crystal_load_t		x:4;
+					
+					/**
+					* \brief The frequency band.
+					*/
+					frequency_band_t	b:2;	
+					
+					/**
+					* \brief Frequency band selection.
+					*/
+					bool				ef:1;
+					
 					/**
 					* \brief Enable internal data register.
 					* \default 0
 					*/
 					bool				el:1;
-			
+					
 					/**
-					* \brief Frequency band selection.
+					* \brief The command code.
 					*/
-					bool				ef:1;
-
-					/**
-					* \brief The frequency band.
-					*/
-					frequency_band_t	b:2;	
-
-					/**
-					* \brief The crystal load capacitance.
-					*/
-					crystal_load_t		x:4;
+					const uint8_t		command_code:8;		
 				};
 			};
 	

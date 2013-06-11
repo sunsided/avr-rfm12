@@ -36,36 +36,6 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
-					*/
-					const uint8_t		command_code:8;		
-
-					/**
-					* \brief Clock recovery (CR) auto lock enable
-					*/
-					bool				al:1;
-			
-					/**
-					* \brief Clock recovery lock control
-					*/
-					uint8_t				lm:1;
-			
-					/**
-					* \brief Padding bit
-					*/
-					const uint8_t		:1;
-
-					/**
-					* \brief Filter Type
-					*/
-					filter_type_t		s:1;
-			
-					/**
-					* \brief Padding bit
-					*/
-					const uint8_t		:1;
-			
-					/**
 					* \brief DQD threshold parameter.
 					*
 					* Determines the threshold level at which the DQD signal goes high. The 
@@ -75,6 +45,36 @@ namespace rfm12
 					* f = 4 x (deviation – TX-RXoffset ) / bit rate
 					*/
 					uint8_t				f:3;
+					
+					/**
+					* \brief Padding bit
+					*/
+					const uint8_t		:1;
+					
+					/**
+					* \brief Filter Type
+					*/
+					filter_type_t		s:1;
+					
+					/**
+					* \brief Padding bit
+					*/
+					const uint8_t		:1;
+					
+					/**
+					* \brief Clock recovery lock control
+					*/
+					uint8_t				ml:1;
+					
+					/**
+					* \brief Clock recovery (CR) auto lock enable
+					*/
+					bool				al:1;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:8;		
 				};
 			};
 	

@@ -30,59 +30,9 @@ namespace rfm12
 				const uint16_t result_word;
 				struct {
 					/**
-					* \brief RGIT (when in transmit mode) / FFIT (when in receive mode)
+					* \brief AFC offset value (to be added to the value of the frequency control parameter)
 					*/
-					const uint8_t rgit_ffit:1;
-					
-					/**
-					* \brief Power-on Reset
-					*/
-					const uint8_t por:1;
-					
-					/**
-					* \brief FFOV (when in receive mode) / RGUR (when in transmit mode)
-					*/
-					const uint8_t ffov_rgur:1;
-					
-					/**
-					* \brief Wake-up timer overflow
-					*/
-					const uint8_t wkup:1;
-					
-					/**
-					* \brief Logic level on interrupt pin (16) changed to low
-					*/
-					const uint8_t ext:1;
-					
-					/**
-					* \brief Low battery detect
-					*/
-					const uint8_t lbd:1;
-					
-					/**
-					* \brief FIFO is empty
-					*/
-					const uint8_t ffem:1;
-					
-					/**
-					* \brief RSSI (when in receive mode) / ATS (when in transmit mode)
-					*/
-					const uint8_t rssi_ats:1;
-					
-					/**
-					* \brief Data Quality Detector output
-					*/
-					const uint8_t dqd:1;
-					
-					/**
-					* \brief Clock recovery locked
-					*/
-					const uint8_t crl:1;
-					
-					/**
-					* \brief Toggling in each AFC cycle
-					*/
-					const uint8_t atgl:1;
+					const uint8_t offs:4;
 					
 					/**
 					* \brief AFC offset sign bit (MSB)
@@ -90,9 +40,59 @@ namespace rfm12
 					const uint8_t offs_sign:1;
 					
 					/**
-					* \brief AFC offset value (to be added to the value of the frequency control parameter)
+					* \brief Toggling in each AFC cycle
 					*/
-					const uint8_t offs:4;
+					const uint8_t atgl:1;
+					
+					/**
+					* \brief Clock recovery locked
+					*/
+					const uint8_t crl:1;
+					
+					/**
+					* \brief Data Quality Detector output
+					*/
+					const uint8_t dqd:1;
+					
+					/**
+					* \brief RSSI (when in receive mode) / ATS (when in transmit mode)
+					*/
+					const uint8_t rssi_ats:1;
+					
+					/**
+					* \brief FIFO is empty
+					*/
+					const uint8_t ffem:1;
+					
+					/**
+					* \brief Low battery detect
+					*/
+					const uint8_t lbd:1;
+					
+					/**
+					* \brief Logic level on interrupt pin (16) changed to low
+					*/
+					const uint8_t ext:1;
+					
+					/**
+					* \brief Wake-up timer overflow
+					*/
+					const uint8_t wkup:1;
+					
+					/**
+					* \brief FFOV (when in receive mode) / RGUR (when in transmit mode)
+					*/
+					const uint8_t ffov_rgur:1;
+					
+					/**
+					* \brief Power-on Reset
+					*/
+					const uint8_t por:1;
+					
+					/**
+					* \brief RGIT (when in transmit mode) / FFIT (when in receive mode)
+					*/
+					const uint8_t rgit_ffit:1;
 				};
 			};
 		public:

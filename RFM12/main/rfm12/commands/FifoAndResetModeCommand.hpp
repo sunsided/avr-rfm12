@@ -53,27 +53,12 @@ namespace rfm12
 				* \brief The raw command word.
 				*/
 				const uint16_t command_word;
-				struct {
+				struct {		
 					/**
-					* \brief The command code.
+					* \brief Highly Sensitive Reset mode
 					*/
-					const uint8_t			command_code:8;		
-
-					/**
-					* \brief FIFO fill level required for interrupt.
-					*/
-					uint8_t					f:4;
-			
-					/**
-					* \brief Synchron pattern mode
-					*/
-					synchron_pattern_mode_t sp:1;
-			
-					/**
-					* \brief FIFO fill start condition
-					*/
-					fifo_start_t			al:1;
-			
+					sensitive_reset_t		dr:1;
+					
 					/**
 					* \brief Enable FIFO fill after synchron pattern reception.
 					*
@@ -81,11 +66,26 @@ namespace rfm12
 					* To restart the synchron pattern recognition, this value should be toggled (i.e. cleared, then set).
 					*/
 					bool					ff:1;
-			
+					
 					/**
-					* \brief Highly Sensitive Reset mode
+					* \brief FIFO fill start condition
 					*/
-					sensitive_reset_t		dr:1;
+					fifo_start_t			al:1;
+					
+					/**
+					* \brief Synchron pattern mode
+					*/
+					synchron_pattern_mode_t sp:1;
+					
+					/**
+					* \brief FIFO fill level required for interrupt.
+					*/
+					uint8_t					f:4;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t			command_code:8;		
 				};
 			};
 	

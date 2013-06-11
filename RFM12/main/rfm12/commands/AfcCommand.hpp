@@ -53,39 +53,39 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
+					* \brief Enable offset frequency calculation.
 					*/
-					const uint8_t		command_code:8;		
-
-					/**
-					* \brief Automatic operatiopn mode selector
-					*/
-					automatic_mode_t	a:2;
-			
-					/**
-					* \brief Range limit / maximum frequency deviation.
-					*/
-					range_limit_t		rl:2;
-			
-					/**
-					* \brief Strobed edge.
-					*/
-					bool				st:1;
-			
-					/**
-					* \brief Use high-accuracy (fine) mode.
-					*/
-					uint8_t				fi:1;
-			
+					uint8_t				en:1;
+					
 					/**
 					* \brief Enable frequency offset register.
 					*/
 					uint8_t				oe:1;
-			
+					
 					/**
-					* \brief Enable offset frequency calculation.
+					* \brief Use high-accuracy (fine) mode.
 					*/
-					uint8_t				en:1;
+					uint8_t				fi:1;
+					
+					/**
+					* \brief Strobed edge.
+					*/
+					bool				st:1;
+					
+					/**
+					* \brief Range limit / maximum frequency deviation.
+					*/
+					range_limit_t		rl:2;
+					
+					/**
+					* \brief Automatic operatiopn mode selector
+					*/
+					automatic_mode_t	a:2;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:8;		
 				};
 			};
 	

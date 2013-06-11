@@ -66,33 +66,28 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
+					* \brief Battery threshold voltage.
+					*
+					* V = 2.25 + V · 0.1 [V]
 					*/
-					const uint8_t		command_code:8;		
-
+					battery_threshold_t	v:4;
+					
+					/**
+					* \brief Padding
+					*/
+					const uint8_t		:1;
+					
 					/**
 					* \brief Clock divider configuration.
 					*
 					* Controls the clock output frequency.
 					*/
 					clockout_freq_t		d:3;
-			
+					
 					/**
-					* \brief Padding
+					* \brief The command code.
 					*/
-					const uint8_t		:1;
-			
-					/**
-					* \brief Battery threshold voltage.
-					*
-					* V = 2.25 + V · 0.1 [V]
-					*/
-					battery_threshold_t	v:4;
-			
-					/**
-					* \brief Padding
-					*/
-					const uint8_t		:1;
+					const uint8_t		command_code:8;		
 				};
 			};
 	

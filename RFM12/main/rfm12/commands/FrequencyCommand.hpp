@@ -30,14 +30,14 @@ namespace rfm12
 				const uint16_t command_word;
 				struct {
 					/**
-					* \brief The command code.
-					*/
-					const uint8_t		command_code:4;
-
-					/**
 					* \brief The frequency parameter F.
 					*/
 					uint16_t			f:12;
+					
+					/**
+					* \brief The command code.
+					*/
+					const uint8_t		command_code:4;
 				};
 			};
 	
