@@ -46,7 +46,7 @@ int main()
 	usart_comm_send_zstr("SYSTEM READY\r\n");
 
 	// Initialize status LED
-	led_flash_sync();
+	// led_flash_sync();
 	
 	// SPI initialisieren
 	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
@@ -63,18 +63,32 @@ int main()
 		
 	// initialisieren des RFM12
 	Rfm12 rfm12(&spiAdapter);
-	rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
-	rfm12.executeCommandRaw(0b1000001000000101); // RF_SLEEP_MODE
-	rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE
+	
+	// flush SPI
+	rfm12.readStatus();
+	// rfm12::commands::CommandResult result = rfm12.executeCommandRaw(0);
+	
+	// Set sleep mode
+	commands::PowerManagementCommand powerMgmt; 
+	powerMgmt.eb = true;
+	powerMgmt.dc = true;
+	rfm12.executeCommand(powerMgmt);
+	//rfm12.executeCommandRaw(0b1000001000000101); // RF_SLEEP_MODE
+	
+	commands::TransmitRegisterWriteCommand txWrite;
+	txWrite.setData(0x0);
+	rfm12.executeCommand(txWrite);
+	//rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE
 
 	while ((PIND & (1 << PIND2)) == 0)
 	{
-		rfm12.executeCommandRaw(0);
+		rfm12.readStatus();
 	}
 	
 	// signal we're ready to go
 	led_doubleflash_sync();
 		
+	while(1) {};
 
 	// 1000 0000 .... .... Configuration Setting Command
 	commands::ConfigSetCommand configSet;

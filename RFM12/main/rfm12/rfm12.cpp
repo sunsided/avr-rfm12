@@ -72,7 +72,7 @@ namespace rfm12
 	 */
 	const commands::StatusCommandResult Rfm12::readStatus() const
 	{
-		static commands::StatusReadCommand readCommand;
+		commands::StatusReadCommand readCommand;
 		const uint16_t result = executeCommandInternal(readCommand.getCommandWord());
 		
 		// wrap in beautiful paper
