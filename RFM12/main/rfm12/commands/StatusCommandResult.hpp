@@ -108,7 +108,7 @@ namespace rfm12
 			*
 			* \param data The data.
 			*/
-			StatusCommandResult(const uint16_t data = 0) : result_word(data) {}
+			StatusCommandResult(const uint16_t data) : result_word(data) {}
 				
 			/**
 			* \brief Initializes this copy from another instance.

@@ -17,9 +17,9 @@ namespace spi
 	{
 		// Set MOSI, SCK and SS output, MISO input
 		*_ddr_register |= ((1 << _mosi_bit)
-					  | (1 << _sck_bit) 
-					  | (1 << _ss_bit))
-					  & ~(1 << _miso_bit);
+					   |  (1 << _sck_bit) 
+					   |  (1 << _ss_bit))
+					   & ~(1 << _miso_bit);
 		
 		// Configure SPI
 		SPCR = ((1 << SPE)	// SPI enabled

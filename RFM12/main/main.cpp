@@ -24,8 +24,6 @@ using namespace rfm12;
 
 #include <util/delay.h> 
 
-#define BIN(a,b) 0b ## a ## b
-
 #define SPI_DDR			DDRB
 #define SPI_PORT		PORTB
 #define SPI_PIN			PINB
@@ -80,180 +78,133 @@ int main()
 		
 	// initialisieren des RFM12
 	Rfm12 rfm12(&spiAdapter);
+			
+	// TODO: State machine: Fortfahren, wenn externer Interrupt HIGH.
+	using namespace rfm12::commands;
 	
-	// flush SPI
-	commands::StatusCommandResult status = rfm12.readStatus();
-	if (status.por) {
-		led_flash_sync();
+	// check interrupt pin
+	StatusCommandResult status;
+	while ((PIND & (1 << PIND2)) == 0)
+	{
+		// status read clears interrupt flags in RFM12
+		status = rfm12.readStatus();
 	}
-	
+		
+	// signal we're ready to go
+	usart_comm_send_zstr("power-on reset cleared\r\n");
+	led_doubleflash_sync();
+	usart_comm_send_zstr("configuring ...\r\n");
+		
 	// Set sleep mode
-	commands::PowerManagementCommand powerMgmt; 
+	PowerManagementCommand powerMgmt;
 	powerMgmt.setLowBatteryDetectorEnabled(true);
 	powerMgmt.setCrystalOscillatorEnabled(false);
 	powerMgmt.setClockOutputEnabled(false);
 	rfm12.executeCommand(powerMgmt);
-	//rfm12.executeCommandRaw(0b1000001000000101); // RF_SLEEP_MODE
-	
-	commands::TransmitRegisterWriteCommand txWrite;
-	txWrite.setData(0x0);
-	rfm12.executeCommand(txWrite);
-	//rfm12.executeCommandRaw(0b1011100000000000); // RF_TXREG_WRITE
-
-	// TODO: State machine: Fortfahren, wenn externer Interrupt HIGH.
-	while ((PIND & (1 << PIND2)) == 0)
-	{
-		// status read clears interrupt flags in RFM12
-		rfm12.readStatus();
-	}
-	
-	// signal we're ready to go
-	led_doubleflash_sync();
 	
 	// 1000 0000 .... .... Configuration Setting Command
-	commands::ConfigSetCommand configSet;
-	configSet.setFrequencyBand(commands::FREQ_BAND_433);
-	configSet.setCrystalCapacitance(commands::CL_120);
+	ConfigSetCommand configSet;
+	configSet.setFrequencyBand(FREQ_BAND_433);
+	configSet.setCrystalCapacitance(CL_120);
+	configSet.setDataRegisterEnabled(true);
+	configSet.setFifoEnabled(true);
 	rfm12.executeCommand(configSet);
-	/*
-	uint8_t band			= 0b01; // 433 Mhz
-	uint8_t capacitance		= 0b0111; // 12.0pF 
-	rfm12.executeCommandRaw(0b1000000011000000 | (band << 4) | capacitance); // EL (ena TX), EF (ena RX FIFO), 12.0pF 
-	*/
 	
 	// 1010 .... .... .... Frequency Setting Command
-	commands::FrequencyCommand frequencySetting;
+	FrequencyCommand frequencySetting;
 	frequencySetting.setByFrequency(433.0F);
 	rfm12.executeCommand(frequencySetting);
-	
-	/*
-	// Bits f0..f11 müssen im Bereich 96 bis 3903 liegen.
-	// Mittelfrequenz berechenbar gemäß:
-	// Fm = 10 * C1 * (C2 + F/4000) [MHz]
-	double c1 =  1; // für 433 MHz
-	double c2 = 43; // für 433 MHz
-	double frequency = 433.0D; // MHz
-	uint16_t freq_setting = (uint16_t)(10.0D * c1 * (c2 + frequency/4000));
-	rfm12.executeCommandRaw(0b1010000000000000 | (freq_setting & 0b0000111111111111));
-	*/
 		
 	// 1100 0110 .... .... Data Rate Command
-	commands::DataRateCommand dataRate;
+	DataRateCommand dataRate;
 	dataRate.setBitRate(49.2F);
 	rfm12.executeCommand(dataRate);
-	/*
-	rfm12.executeCommandRaw(0b1100011000000110); // approx 49.2 Kbps, i.e. 10000/29/(1+6) Kbps
-	*/
 
 	// 1001 0... .... .... Receiver Control Command
-	commands::ReceiverControlCommand receiverControl;
-	receiverControl.setPin16Mode(commands::PIN16_VDI_OUT);
-	receiverControl.setVdiResponseTime(commands::VDI_FAST);
-	receiverControl.setReceiverBasebandBandwidth(commands::RBBW_134);
-	receiverControl.setLnaGain(commands::LNGAIN_0);
-	receiverControl.setRssiDetectorThreshold(commands::RSSI_91);
+	ReceiverControlCommand receiverControl;
+	receiverControl.setPin16Mode(PIN16_VDI_OUT);
+	receiverControl.setVdiResponseTime(VDI_FAST);
+	receiverControl.setReceiverBasebandBandwidth(RBBW_134);
+	receiverControl.setLnaGain(LNGAIN_0);
+	receiverControl.setRssiDetectorThreshold(RSSI_91);
 	rfm12.executeCommand(receiverControl);
 	
-	/*
-	rfm12.executeCommandRaw(0b1001010010100010); // VDI,FAST,134kHz,0dBm gain,-91dBm RSSI detector
-	// VDI = Valid Data Indicator
-	*/
-	
 	// 1100 0010 .... .... Data Filter Command
-	commands::DataFilterCommand dataFilter;
+	DataFilterCommand dataFilter;
 	dataFilter.setClockRecoveryAutoLockModeEnabled(true);
 	dataFilter.setClockRecoveryFastLockEnabled(false);
-	dataFilter.setDataFilterType(commands::FILTER_DIGITAL);
+	dataFilter.setDataFilterType(FILTER_DIGITAL);
 	dataFilter.setDqdTrheshold(4);
 	rfm12.executeCommand(dataFilter);
-	
-	/*
-	rfm12.executeCommandRaw(0b1100001010101100); // AL,!ml,DIG,DQD4
-	// al = 1 -- Clock recovery auto lock control: auto mode
-	// ml = 0 -- Clock recovery lock control: slow mode, slow attack, slow release
-	//  s = 1 -- Digital Filter
-	// DQD threshold = 4
-	*/
 		
-	commands::FifoAndResetModeCommand fifoAndResetMode;
-	commands::SynchronPatternCommand synchronPattern;
-	
+	FifoAndResetModeCommand fifoAndResetMode;
+	SynchronPatternCommand synchronPattern;
+
 	uint8_t group = 212; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
 	if (group != 0) {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode.setFifoInterruptFillLevel(8);
-		fifoAndResetMode.setSynchronPatternLength(commands::SP_TWO_BYTE);
+		fifoAndResetMode.setSynchronPatternLength(SP_TWO_BYTE);
 		fifoAndResetMode.setFifoFillAfterSynchronMatchEnabled(false);
-		fifoAndResetMode.setFifoFillStartCondition(commands::FIFOSTART_SYNCHRON);
-		fifoAndResetMode.setSensitiveResetMode(commands::RESETMODE_NONSENSITIVE);
-		// rfm12.executeCommandRaw(0b1100101010000001); // FIFO8,2-SYNC,!ff,DR
+		fifoAndResetMode.setFifoFillStartCondition(FIFOSTART_SYNCHRON);
+		fifoAndResetMode.setSensitiveResetMode(RESETMODE_NONSENSITIVE);
 		
 		// 1100 1110 .... .... Synchron Pattern Command
 		synchronPattern.setSynchronByte(group);
-		//rfm12.executeCommandRaw(0b1100001100000000 | group); // SYNC=2DXX?
 	} else {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode.setFifoInterruptFillLevel(8);
-		fifoAndResetMode.setSynchronPatternLength(commands::SP_ONE_BYTE);
+		fifoAndResetMode.setSynchronPatternLength(SP_ONE_BYTE);
 		fifoAndResetMode.setFifoFillAfterSynchronMatchEnabled(false);
-		fifoAndResetMode.setFifoFillStartCondition(commands::FIFOSTART_SYNCHRON);
-		fifoAndResetMode.setSensitiveResetMode(commands::RESETMODE_NONSENSITIVE);
-		// rfm12.executeCommandRaw(0b1100101010001000); // FIFO8,1-SYNC,!ff,DR
+		fifoAndResetMode.setFifoFillStartCondition(FIFOSTART_SYNCHRON);
+		fifoAndResetMode.setSensitiveResetMode(RESETMODE_NONSENSITIVE);
 		
 		// 1100 1110 .... .... Synchron Pattern Command
 		synchronPattern.setSynchronByte(0x2D);
-		// rfm12.executeCommandRaw(0b1100111000101101); // SYNC=2D?
 	}
 	
 	rfm12.executeCommand(fifoAndResetMode);
 	rfm12.executeCommand(synchronPattern);
 	
 	// 1100 0100 .... .... AFC Command
-	commands::AfcCommand afcCommand;
-	afcCommand.setAutomaticOperationMode(commands::AUTOMODE_ONCE);
-	afcCommand.setRangeLimit(commands::MAXDEVIATION_UNRESTRICTED);
+	AfcCommand afcCommand;
+	afcCommand.setAutomaticOperationMode(AUTOMODE_VDI_HIGH);
+	afcCommand.setRangeLimit(MAXDEVIATION_UNRESTRICTED);
 	afcCommand.setStrobeEdgeEnabled(false);
 	afcCommand.setFineModeEnabled(false);
 	afcCommand.setFrequencyOffsetRegisterEnabled(true);
 	afcCommand.setFrequencyOffsetCalculationEnabled(true);
 	rfm12.executeCommand(afcCommand);
-	//rfm12.executeCommandRaw(0b1100010010000011); // @PWR,NO RSTRIC,!st,!fi,OE,EN
 	
 	// 1001 100. .... .... TX Configuration Command
-	commands::TxConfigCommand txConfig;
-	txConfig.setFsk(commands::FSKDF_90KHZ);
-	txConfig.setOutputPower(commands::OUTPOW_FULL);
+	TxConfigCommand txConfig;
+	txConfig.setFsk(FSKDF_90KHZ);
+	txConfig.setOutputPower(OUTPOW_FULL);
 	rfm12.executeCommand(txConfig);
-	// rfm12.executeCommandRaw(0b1001100001010000); // !mp,90kHz,MAX OUT
 	
 	// 1100 1100 0.... .... PLL Setting Command
-	commands::PllSettingCommand pllSetting;
-	pllSetting.setOutputClockBufferTimeControl(commands::MCCLKFRQ_5OR10MHZ);
+	PllSettingCommand pllSetting;
+	pllSetting.setOutputClockBufferTimeControl(MCCLKFRQ_5OR10MHZ);
 	pllSetting.setPhaseDetectorDelayEnabled(false);
 	pllSetting.setPllDitheringEnabled(false);
-	pllSetting.setPllBandwidth(commands::PLLBW_MAX_2560KBPS);
+	pllSetting.setPllBandwidth(PLLBW_MAX_2560KBPS);
 	rfm12.executeCommand(pllSetting);
-	// rfm12.executeCommandRaw(0b110011000 11 1 01 1 1); // OB1?OB0, LPX,?ddy?DDIT?BW0
 	
 	// 111. .... .... ....Wake-Up Timer Command
-	commands::WakeupTimerCommand wakeupTimer;
+	WakeupTimerCommand wakeupTimer;
 	wakeupTimer.disableWakeupTimer();
 	rfm12.executeCommand(wakeupTimer);
-	// rfm12.executeCommandRaw(0b1110000000000000); // NOT USE
 	
 	// 1100 1000 .... .... Low Duty-Cycle Command
-	commands::LowDutyCycleCommand lowDutyCycle;
+	LowDutyCycleCommand lowDutyCycle;
 	lowDutyCycle.setEnabled(false);
 	rfm12.executeCommand(lowDutyCycle);
-	// rfm12.executeCommandRaw(0b1100100000000000); // NOT USE
 	
 	// 1100 0000 .... .... Low Battery Detector and Microcontroller Clock Divider Command
-	commands::BatteryDetectorAndClockDividerCommand batteryAndClock;
-	batteryAndClock.setClockDivider(commands::CLKOUTFREQ_1660kHZ);
-	batteryAndClock.setVoltageThreshould(commands::BATTHRESH_3150mV);
+	BatteryDetectorAndClockDividerCommand batteryAndClock;
+	batteryAndClock.setClockDivider(CLKOUTFREQ_1660kHZ);
+	batteryAndClock.setVoltageThreshould(BATTHRESH_3150mV);
 	rfm12.executeCommand(batteryAndClock);
-	// rfm12.executeCommandRaw(0b1100000001001001); // 1.66MHz,3.1V
-
 
 	// bye.
 	while(1) 
@@ -286,12 +237,16 @@ int main()
 		// Register lesen
 		// uint16_t values = rfm12.executeCommandRaw(0b1011000000000000);
 		
-		commands::StatusCommandResult status = rfm12.readStatus();
-		uint16_t word = status.getResultWord();
+		StatusCommandResult current_status = rfm12.readStatus();
+		if (current_status.getResultWord() != status.getResultWord())
+		{
+			status = current_status;
+			uint16_t word = status.getResultWord();
 		
-		usart_comm_send_char(word >> 8);
-		usart_comm_send_char(word);
-		usart_comm_send_zstr("\r\n");
+			usart_comm_send_char(word >> 8);
+			usart_comm_send_char(word);
+			usart_comm_send_zstr("\r\n");
+		}
 	}
 }
 
