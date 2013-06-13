@@ -117,7 +117,8 @@ int main()
 		
 	// 1100 0110 .... .... Data Rate Command
 	DataRateCommand dataRate;
-	dataRate.setBitRate(49.2F);
+	//dataRate.setBitRate(49.2F);
+	dataRate.setBitRate(0.6F);
 	rfm12.executeCommand(dataRate);
 
 	// 1001 0... .... .... Receiver Control Command
@@ -244,18 +245,79 @@ int main()
 		// Register lesen
 		// uint16_t values = rfm12.executeCommandRaw(0b1011000000000000);
 		
+		// enable transmission
+		powerMgmt.setTransmissionEnabled(true);
+		rfm12.executeCommand(powerMgmt);
+		
+		// sleep for some time
+		for (uint8_t i = 0; i < 10; ++i){
+			_delay_ms(100);
+		}
+		
 		// wait until send register is empty
 		StatusCommandResult current_status;
-		do {
-			current_status = rfm12.readStatus();
-		}
-		while (!current_status.rgit_ffit);
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
 		
 		// transmit a byte
 		TransmitRegisterWriteCommand txWrite;
 		txWrite.setData(0xAA);
 		rfm12.executeCommand(txWrite);
 		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+		
+		// transmit 0x2D
+		txWrite.setData(0x2D);
+		rfm12.executeCommand(txWrite);
+		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+		
+		// transmit 0xD4
+		txWrite.setData(0xD4);
+		rfm12.executeCommand(txWrite);
+		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0x42);
+		rfm12.executeCommand(txWrite);
+			
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0xB0);
+		rfm12.executeCommand(txWrite);
+		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0x0B);
+		rfm12.executeCommand(txWrite);
+			
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0xAA);
+		rfm12.executeCommand(txWrite);
+			
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+		
+		// sleep for some time
+		for (uint8_t i = 0; i < 10; ++i){
+			_delay_ms(100);
+		}
+		
+		// disable transmission
+		powerMgmt.setTransmissionEnabled(false);
+		rfm12.executeCommand(powerMgmt);
+		
+		/*
 		// output data
 		if (current_status.getResultWord() != status.getResultWord())
 		{
@@ -265,6 +327,13 @@ int main()
 			usart_comm_send_char(word >> 8);
 			usart_comm_send_char(word);
 			usart_comm_send_zstr("\r\n");
+		}
+		*/
+		usart_comm_send_zstr("data sent\r\n");
+		
+		// sleep for some time
+		for (uint8_t i = 0; i < 50; ++i){
+			_delay_ms(100);
 		}
 	}
 }
