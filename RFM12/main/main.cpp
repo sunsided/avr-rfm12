@@ -206,6 +206,13 @@ int main()
 	batteryAndClock.setVoltageThreshould(BATTHRESH_3150mV);
 	rfm12.executeCommand(batteryAndClock);
 
+	powerMgmt.setReceiverChainEnabled(false);
+	powerMgmt.setReceiverBasebandCircuitryEnabled(true);
+	powerMgmt.setSynthesizerEnabled(true);
+	powerMgmt.setCrystalOscillatorEnabled(true);
+	powerMgmt.setTransmissionEnabled(true);
+	rfm12.executeCommand(powerMgmt);
+
 	// bye.
 	while(1) 
 	{
@@ -237,7 +244,19 @@ int main()
 		// Register lesen
 		// uint16_t values = rfm12.executeCommandRaw(0b1011000000000000);
 		
-		StatusCommandResult current_status = rfm12.readStatus();
+		// wait until send register is empty
+		StatusCommandResult current_status;
+		do {
+			current_status = rfm12.readStatus();
+		}
+		while (!current_status.rgit_ffit);
+		
+		// transmit a byte
+		TransmitRegisterWriteCommand txWrite;
+		txWrite.setData(0xAA);
+		rfm12.executeCommand(txWrite);
+		
+		// output data
 		if (current_status.getResultWord() != status.getResultWord())
 		{
 			status = current_status;
