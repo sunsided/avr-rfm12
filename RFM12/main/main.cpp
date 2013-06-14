@@ -123,7 +123,7 @@ int main()
 	sei();
 		
 	// initialisieren des RFM12
-	Rfm12 rfm12(&spiAdapter);
+	Rfm12 rfm12(&spiAdapter, NULL, NULL);
 			
 	// TODO: State machine: Fortfahren, wenn externer Interrupt HIGH.
 	using namespace rfm12::commands;

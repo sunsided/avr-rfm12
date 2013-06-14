@@ -49,6 +49,13 @@ namespace rfm12
 			inline uint16_t getResultWord() const { return this->_data; }
 				
 			/**
+			* \brief Applies a result to the status word
+			*
+			* \param result The value to set.
+			*/
+			inline void applyResult(const uint16_t result) { this->_data = result; }
+				
+			/**
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->_data; }

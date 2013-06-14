@@ -56,13 +56,13 @@ namespace rfm12
 	 *
 	 * \return The result
 	 */
-	const commands::CommandResult Rfm12::executeCommandRaw(const uint_least16_t command_code) const
+	const commands::CommandResult& Rfm12::executeCommandRaw(const uint_least16_t command_code)
 	{
-		const uint16_t result = executeCommandInternal(command_code);
+		const uint_fast16_t result = executeCommandInternal(command_code);
 		
 		// wrap in beautiful paper
-		commands::CommandResult commandResult(result);
-		return commandResult;
+		_lastCommandResult.applyResult(result);
+		return _lastCommandResult;
 	}
 
 	/**
@@ -70,14 +70,13 @@ namespace rfm12
 	 *
 	 * \return Status byte
 	 */
-	const commands::StatusCommandResult Rfm12::readStatus() const
+	const commands::StatusCommandResult& Rfm12::readStatus()
 	{
-		commands::StatusReadCommand readCommand;
-		const uint16_t result = executeCommandInternal(readCommand.getCommandWord());
+		const uint16_t result = executeCommandInternal(this->_statusCommand);
 		
 		// wrap in beautiful paper
-		commands::StatusCommandResult commandResult(result);
-		return commandResult;
+		_lastStatus.applyResult(result);
+		return this->_lastStatus;
 	}
 
 }

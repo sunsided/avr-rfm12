@@ -27,7 +27,7 @@ namespace rfm12
 				/**
 				* \brief The result word.
 				*/
-				const uint16_t result_word;
+				uint16_t result_word;
 				struct {
 					/**
 					* \brief AFC offset value (to be added to the value of the frequency control parameter)
@@ -116,6 +116,13 @@ namespace rfm12
 			* \param other The instance to copy
 			*/
 			StatusCommandResult(const StatusCommandResult& other) : result_word(other.result_word) {}
+					
+			/**
+			* \brief Applies a result to the status word
+			*
+			* \param result The value to set.
+			*/
+			inline void applyResult(const uint16_t result) { this->result_word = result; }
 					
 			/**
 			* \brief Gets the result word.

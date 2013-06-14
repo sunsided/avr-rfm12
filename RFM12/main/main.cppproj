@@ -264,6 +264,12 @@
     <Compile Include="rfm12\commands\WakeupTimerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rfm12\IReceiveBuffer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\ISendBuffer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12\ISpi.hpp">
       <SubType>compile</SubType>
     </Compile>
