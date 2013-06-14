@@ -56,8 +56,7 @@ void checkEndianessAndHangUpOnError()
 
 int main()
 {
-	rbdata_t trololo[16];
-	RingBuffer *buffer = RingBuffer::create(trololo, 3);
+	RingBuffer *buffer = RingBuffer::create(16);
 	
 	rbdata_t value;
 	bool success = buffer->tryRead(value);
@@ -81,7 +80,6 @@ int main()
 
 	success = buffer->tryWrite(44);
 	assert(true == success);
-	assert(trololo[0] = 44);
 
 	success = buffer->tryRead(value);
 	assert (42 == value);

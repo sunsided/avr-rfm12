@@ -26,11 +26,16 @@ typedef uint_least8_t rbdata_t;
 */
 typedef uint_least8_t rbsize_t;
 
+/**
+* \brief Ring buffer base class and factory.
+*/
 class RingBuffer
 {
 public:
 	/**
 	* Creates a new ring buffer instance
+	*
+	* An optimized specialization will be instanciated if the buffer size is a power of two.
 	*
 	* \param backingArray	The array to be used for the buffer
 	* \param size			The size of the array
@@ -40,6 +45,8 @@ public:
 
 	/**
 	* Creates a new ring buffer instance
+	*
+	* An optimized specialization will be instanciated if the buffer size is a power of two.
 	*
 	* \param size			The size of the array
 	*/

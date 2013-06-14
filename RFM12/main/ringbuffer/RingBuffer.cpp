@@ -38,6 +38,13 @@ RingBuffer::~RingBuffer()
 	}
 }
 
+/**
+* Creates a new ring buffer instance
+*
+* \param backingArray	The array to be used for the buffer
+* \param size			The size of the array
+* \param free_on_delete Sets whether the backing array should be freed during destruction
+*/
 RingBuffer* RingBuffer::create(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete) {
 	// select the buffer strategy
 	bool sizeIsPowerOfTwo = ((size & (size - 1)) == 0);
@@ -51,6 +58,11 @@ RingBuffer* RingBuffer::create(rbdata_t *backingArray, const rbsize_t size, bool
 	}
 }
 
+/**
+* Creates a new ring buffer instance
+*
+* \param size			The size of the array
+*/
 RingBuffer* RingBuffer::create(const rbsize_t size) {
 	rbdata_t *buffer = static_cast<rbdata_t *>(malloc(size * sizeof(rbsize_t)));
 	return create(buffer, size, true);
