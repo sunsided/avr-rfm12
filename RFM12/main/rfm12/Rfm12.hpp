@@ -150,6 +150,13 @@ namespace rfm12
 		 */
 		inline const commands::StatusCommandResult& getLastStatus() const { return this->_lastStatus; }
 
+		/**
+		* \brief Gets the command defined by the id given.
+		*
+		* \param id The command id.
+		*/
+		commands::ICommand getCommand() const;
+
 	private:
 		/**
 		 * \brief Sends a command to the RFM12.
