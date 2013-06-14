@@ -141,7 +141,7 @@ namespace ringbuffer
 		*
 		* \param item The item to write.
 		*/
-		inline void writeSync(const rbdata_t item) {
+		inline void writeSync(register const rbdata_t item) {
 			// loop until the buffer has a free slot
 			do {} while (!tryWrite(item)) ;
 		}
