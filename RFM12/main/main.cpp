@@ -56,25 +56,48 @@ int main()
 {
 	rbdata_t trololo[16];
 	RingBuffer buffer(trololo, 4);
-	buffer.writeSync(227);
-	buffer.writeSync(228);
-	buffer.writeSync(229);
-	buffer.writeSync(230);
+	
+	rbdata_t value;
+	bool success = buffer.tryRead(value);
+	assert (false == success);
+	
+	success = buffer.tryWrite(227);
+	assert(true == success);
+	
+	success = buffer.tryWrite(42);
+	assert(true == success);
+	
+	success = buffer.tryWrite(43);
+	assert(true == success);
+	
+	success = buffer.tryWrite(44);
+	assert(true == success);
 
-	rbdata_t value = buffer.readSync();
+	success = buffer.tryWrite(45);
+	assert(false == success);
+
+	success = buffer.tryRead(value);
+	assert (true == success);
 	assert (227 == value);
 
-	buffer.writeSync(231);
+	success = buffer.tryWrite(45);
+	assert(true == success);
 
-	value = buffer.readSync();
-	assert (228 == value);
-	value = buffer.readSync();
-	assert (229 == value);
-	value = buffer.readSync();
-	assert (230 == value);
+	success = buffer.tryRead(value);
+	assert (42 == value);
+	assert(true == success);
 	
-	value = buffer.readSync();
-	assert (231 == value);
+	success = buffer.tryRead(value);
+	assert(true == success);
+	assert (43 == value);
+	
+	success = buffer.tryRead(value);
+	assert(true == success);
+	assert (44 == value);
+	
+	success = buffer.tryRead(value);
+	assert(true == success);
+	assert (45 == value);
 	
 	usart_comm_send_char(value);
 	

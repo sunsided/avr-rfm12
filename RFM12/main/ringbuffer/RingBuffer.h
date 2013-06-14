@@ -115,15 +115,17 @@ public:
 	}
 
 	/**
-	* \brief Writes an item to the buffer.
+	* \brief Tries to write an item to the buffer.
 	*
-	* If the buffer cannot currently be written to, this operation blocks.
+	* If the buffer cannot currently be written to, this operation returns
+	* with an appropriate status code.
 	*
 	* \param item The item to write.
+	* \returns true if the write operation succeeded, false otherwise
 	*/
-	inline void writeSync(rbdata_t item) {
-		// loop until the buffer has a free slot
-		while (!canWrite()) ;
+	inline bool tryWrite(register rbdata_t item) {
+		// test if the buffer has a free slot
+		if (!canWrite()) return false;
 		
 		// since we write, the capacity will be reduced
 		--_capacity;
@@ -136,6 +138,50 @@ public:
 		
 		// since we write, the fill level will be increased
 		++_fillLevel;
+		
+		return true;
+	}
+
+	/**
+	* \brief Writes an item to the buffer.
+	*
+	* If the buffer cannot currently be written to, this operation blocks.
+	*
+	* \param item The item to write.
+	*/
+	inline void writeSync(rbdata_t item) {
+		// loop until the buffer has a free slot
+		while (!tryWrite(item)) ;
+	}
+	
+	/**
+	* \brief Tries to reads an item from the buffer.
+	*
+	* If the buffer cannot currently be read from, this operation returns
+	* with an appropriate status code.
+	*
+	* \param item out: The read item. If the return code is false, the 
+	*				value is undefined.
+	* \returns true if an item was read, false otherwise
+	*/
+	inline bool tryRead(register rbdata_t &item) { 
+		// loop until the buffer has a full slot
+		if (!canRead()) return false;
+
+		// since we read, the fill level will be decreased
+		--_fillLevel;
+				
+		// write to the current write index
+		item = _buffer[_read_index];
+		
+		// advance the write pointer
+		(this->*this->advance)(&_read_index);
+		
+		// since we read, the capacity will be increased
+		++_capacity;
+		
+		// there we go
+		return true;
 	}
 	
 	/**
@@ -145,21 +191,10 @@ public:
 	*
 	* \returns The read item.
 	*/
-	inline rbdata_t readSync() { 
+	inline rbdata_t readSync() { 	
 		// loop until the buffer has a full slot
-		while (!canRead()) ;
-
-		// since we read, the fill level will be decreased
-		--_fillLevel;
-				
-		// write to the current write index
-		rbdata_t item = _buffer[_read_index];
-		
-		// advance the write pointer
-		(this->*this->advance)(&_read_index);
-		
-		// since we read, the capacity will be increased
-		++_capacity;
+		rbdata_t item;
+		while (!tryRead(item)) ;
 		
 		// there we go
 		return item;
