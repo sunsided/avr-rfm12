@@ -41,13 +41,6 @@ namespace rfm12
 {
 
 	/**
-	 * \brief Initializes the RFM12 interrupt pin.
-	 * 
-	 * \return void
-	 */
-	void rfm12_initialize_interrupt();
-
-	/**
 	* \brief Implementation of RFM12
 	*/
 	class Rfm12

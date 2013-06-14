@@ -18,29 +18,27 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>
-    </OverrideVtorValue>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <CacheFlash>true</CacheFlash>
     <UncachedRange />
     <BootSegment>2</BootSegment>
-    <avrtool>com.atmel.avrdbg.tool.simulator</avrtool>
-    <avrtoolinterface>
-    </avrtoolinterface>
+    <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
+    <avrtoolinterface>ISP</avrtoolinterface>
     <com_atmel_avrdbg_tool_ispmk2>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.ispmk2</ToolType>
-      <ToolName xmlns="">AVRISP mkII</ToolName>
-      <ToolNumber xmlns="">000200133403</ToolNumber>
-      <StimuliFile xmlns="">
+      <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
+      <ToolName>AVRISP mkII</ToolName>
+      <ToolNumber>000200133403</ToolNumber>
+      <StimuliFile>
       </StimuliFile>
-      <Channel xmlns="">
+      <Channel>
         <host>127.0.0.1</host>
-        <port>36520</port>
+        <port>11368</port>
         <ssl>False</ssl>
       </Channel>
-      <ToolOptions xmlns="">
+      <ToolOptions>
         <InterfaceName>ISP</InterfaceName>
         <InterfaceProperties>
           <JtagDbgClock>249000</JtagDbgClock>
@@ -77,7 +75,7 @@
       </StimuliFile>
       <Channel>
         <host>127.0.0.1</host>
-        <port>4341</port>
+        <port>11368</port>
         <ssl>False</ssl>
       </Channel>
     </com_atmel_avrdbg_tool_simulator>
@@ -162,6 +160,15 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="adapters\Rfm12ReceiveBuffer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="adapters\Rfm12SendBuffer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="adapters\Rfm12SpiAdapter.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="avrgcc-compat.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -195,7 +202,10 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Rfm12SpiAdapter.h">
+    <Compile Include="rfm12configuration.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12configuration.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\commands\ICommand.hpp">
@@ -306,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="comm" />
+    <Folder Include="adapters" />
     <Folder Include="ringbuffer" />
     <Folder Include="ringbuffer\specializations" />
     <Folder Include="spi" />

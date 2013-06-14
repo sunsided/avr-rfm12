@@ -21,7 +21,10 @@ namespace rfm12
 		class ICommand
 		{
 		public:
-			// inline virtual ~ICommand(){}
+			/**
+			* Virtual destructor
+			*/
+			inline virtual ~ICommand(){}
 				
 			/**
 			* \brief Gets the command word.
