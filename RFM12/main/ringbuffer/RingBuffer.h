@@ -217,10 +217,10 @@ private:
 	* \brief Conditional advance strategy
 	*/
 	inline void advanceConditional(register rbsize_t volatile *pointer) {
-		if (*pointer == this->_size)
-			*pointer = 0;
-		else
-			++*pointer;
+		++*pointer;
+		if (*pointer == this->_size) {
+			*pointer = 0;			
+		}
 	}
 
 }; //IRingBuffer

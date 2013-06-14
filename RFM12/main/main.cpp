@@ -55,7 +55,7 @@ void checkEndianessAndHangUpOnError()
 int main()
 {
 	rbdata_t trololo[16];
-	RingBuffer buffer(trololo, 4);
+	RingBuffer buffer(trololo, 3);
 	
 	rbdata_t value;
 	bool success = buffer.tryRead(value);
@@ -71,17 +71,15 @@ int main()
 	assert(true == success);
 	
 	success = buffer.tryWrite(44);
-	assert(true == success);
-
-	success = buffer.tryWrite(45);
 	assert(false == success);
 
 	success = buffer.tryRead(value);
 	assert (true == success);
 	assert (227 == value);
 
-	success = buffer.tryWrite(45);
+	success = buffer.tryWrite(44);
 	assert(true == success);
+	assert(trololo[0] = 44);
 
 	success = buffer.tryRead(value);
 	assert (42 == value);
@@ -96,8 +94,7 @@ int main()
 	assert (44 == value);
 	
 	success = buffer.tryRead(value);
-	assert(true == success);
-	assert (45 == value);
+	assert(false == success);
 	
 	usart_comm_send_char(value);
 	
