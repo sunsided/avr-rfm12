@@ -20,6 +20,8 @@
 
 #include "Rfm12SpiAdapter.h"
 
+#include "ringbuffer/RingBuffer.h"
+
 using namespace rfm12;
 
 #include <util/delay.h> 
@@ -52,6 +54,30 @@ void checkEndianessAndHangUpOnError()
 
 int main()
 {
+	rbdata_t trololo[16];
+	RingBuffer buffer(trololo, 4);
+	buffer.writeSync(227);
+	buffer.writeSync(228);
+	buffer.writeSync(229);
+	buffer.writeSync(230);
+
+	rbdata_t value = buffer.readSync();
+	assert (227 == value);
+
+	buffer.writeSync(231);
+
+	value = buffer.readSync();
+	assert (228 == value);
+	value = buffer.readSync();
+	assert (229 == value);
+	value = buffer.readSync();
+	assert (230 == value);
+	
+	value = buffer.readSync();
+	assert (231 == value);
+	
+	usart_comm_send_char(value);
+	
 	#if F_CPU != 16000000UL
 	#error Expected F_CPU to be 16MHz; Timer calculation will be wrong!
 	#endif
@@ -117,7 +143,8 @@ int main()
 		
 	// 1100 0110 .... .... Data Rate Command
 	DataRateCommand dataRate;
-	dataRate.setBitRate(49.2F);
+	//dataRate.setBitRate(49.2F);
+	dataRate.setBitRate(0.6F);
 	rfm12.executeCommand(dataRate);
 
 	// 1001 0... .... .... Receiver Control Command
@@ -206,6 +233,13 @@ int main()
 	batteryAndClock.setVoltageThreshould(BATTHRESH_3150mV);
 	rfm12.executeCommand(batteryAndClock);
 
+	powerMgmt.setReceiverChainEnabled(false);
+	powerMgmt.setReceiverBasebandCircuitryEnabled(true);
+	powerMgmt.setSynthesizerEnabled(true);
+	powerMgmt.setCrystalOscillatorEnabled(true);
+	powerMgmt.setTransmissionEnabled(true);
+	rfm12.executeCommand(powerMgmt);
+
 	// bye.
 	while(1) 
 	{
@@ -237,7 +271,80 @@ int main()
 		// Register lesen
 		// uint16_t values = rfm12.executeCommandRaw(0b1011000000000000);
 		
-		StatusCommandResult current_status = rfm12.readStatus();
+		// enable transmission
+		powerMgmt.setTransmissionEnabled(true);
+		rfm12.executeCommand(powerMgmt);
+		
+		// sleep for some time
+		for (uint8_t i = 0; i < 10; ++i){
+			_delay_ms(100);
+		}
+		
+		// wait until send register is empty
+		StatusCommandResult current_status;
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+		
+		// transmit a byte
+		TransmitRegisterWriteCommand txWrite;
+		txWrite.setData(0xAA);
+		rfm12.executeCommand(txWrite);
+		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+		
+		// transmit 0x2D
+		txWrite.setData(0x2D);
+		rfm12.executeCommand(txWrite);
+		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+		
+		// transmit 0xD4
+		txWrite.setData(0xD4);
+		rfm12.executeCommand(txWrite);
+		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0x42);
+		rfm12.executeCommand(txWrite);
+			
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0xB0);
+		rfm12.executeCommand(txWrite);
+		
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0x0B);
+		rfm12.executeCommand(txWrite);
+			
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+			
+		// transmit payload
+		txWrite.setData(0xAA);
+		rfm12.executeCommand(txWrite);
+			
+		// wait until send register is empty
+		do { current_status = rfm12.readStatus(); } while (!current_status.rgit_ffit);
+		
+		// sleep for some time
+		for (uint8_t i = 0; i < 10; ++i){
+			_delay_ms(100);
+		}
+		
+		// disable transmission
+		powerMgmt.setTransmissionEnabled(false);
+		rfm12.executeCommand(powerMgmt);
+		
+		/*
+		// output data
 		if (current_status.getResultWord() != status.getResultWord())
 		{
 			status = current_status;
@@ -246,6 +353,13 @@ int main()
 			usart_comm_send_char(word >> 8);
 			usart_comm_send_char(word);
 			usart_comm_send_zstr("\r\n");
+		}
+		*/
+		usart_comm_send_zstr("data sent\r\n");
+		
+		// sleep for some time
+		for (uint8_t i = 0; i < 50; ++i){
+			_delay_ms(100);
 		}
 	}
 }
