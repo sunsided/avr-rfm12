@@ -20,7 +20,7 @@
 
 #include "Rfm12SpiAdapter.h"
 
-#include "ringbuffer/RingBuffer.h"
+#include "ringbuffer/RingBuffer.hpp"
 
 using namespace rfm12;
 
@@ -52,48 +52,50 @@ void checkEndianessAndHangUpOnError()
 	}
 }
 
+#include <assert.h>
+
 int main()
 {
 	rbdata_t trololo[16];
-	RingBuffer buffer(trololo, 3);
+	RingBuffer *buffer = RingBuffer::create(trololo, 3);
 	
 	rbdata_t value;
-	bool success = buffer.tryRead(value);
+	bool success = buffer->tryRead(value);
 	assert (false == success);
 	
-	success = buffer.tryWrite(227);
+	success = buffer->tryWrite(227);
 	assert(true == success);
 	
-	success = buffer.tryWrite(42);
+	success = buffer->tryWrite(42);
 	assert(true == success);
 	
-	success = buffer.tryWrite(43);
+	success = buffer->tryWrite(43);
 	assert(true == success);
 	
-	success = buffer.tryWrite(44);
+	success = buffer->tryWrite(44);
 	assert(false == success);
 
-	success = buffer.tryRead(value);
+	success = buffer->tryRead(value);
 	assert (true == success);
 	assert (227 == value);
 
-	success = buffer.tryWrite(44);
+	success = buffer->tryWrite(44);
 	assert(true == success);
 	assert(trololo[0] = 44);
 
-	success = buffer.tryRead(value);
+	success = buffer->tryRead(value);
 	assert (42 == value);
 	assert(true == success);
 	
-	success = buffer.tryRead(value);
+	success = buffer->tryRead(value);
 	assert(true == success);
 	assert (43 == value);
 	
-	success = buffer.tryRead(value);
+	success = buffer->tryRead(value);
 	assert(true == success);
 	assert (44 == value);
 	
-	success = buffer.tryRead(value);
+	success = buffer->tryRead(value);
 	assert(false == success);
 	
 	usart_comm_send_char(value);
