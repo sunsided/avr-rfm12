@@ -14,6 +14,11 @@ namespace rfm12
 	namespace commands
 	{
 		/**
+		* \brief The number of defined commands for the RFM12
+		*/
+		#define RFM12_COMMAND_COUNT (16U)
+		
+		/**
 		* \brief Enumeration of all commands
 		*/
 		typedef enum {

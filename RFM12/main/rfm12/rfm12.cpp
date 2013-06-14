@@ -14,6 +14,38 @@
 using namespace rfm12;
 using namespace commands;
 
+Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer)
+: _spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer)
+{
+	assert(NULL != spi);
+	assert(NULL != receiveBuffer);
+	assert(NULL != sendBuffer);
+	
+	_commands[RFM12CMD_CONFIGURATION_SETTING] = new ConfigSetCommand();
+	_commands[RFM12CMD_POWERMANAGEMENT] = new PowerManagementCommand();
+	_commands[RFM12CMD_FREQUENCYSETTING] = new FrequencyCommand();
+	_commands[RFM12CMD_DATARATE] = new DataRateCommand();
+	_commands[RFM12CMD_RECEIVERCONTROL] = new ReceiverControlCommand();
+	_commands[RFM12CMD_DATAFILTER] = new DataFilterCommand();
+	_commands[RFM12CMD_FIFOANDRESETMODE] = new FifoAndResetModeCommand();
+	_commands[RFM12CMD_SYNCHRONPATTERN] = new SynchronPatternCommand();
+	_commands[RFM12CMD_RECEIVERFIFO] = new FifoReadCommand();
+	_commands[RFM12CMD_AFC] = new AfcCommand();
+	_commands[RFM12CMD_TXCONFIGURATION] = new TxConfigCommand();
+	_commands[RFM12CMD_PLLSETTING] = new PllSettingCommand();
+	_commands[RFM12CMD_TRANSMITTERWRITE] = new TransmitRegisterWriteCommand();
+	_commands[RFM12CMD_WAKEUPTIMER] = new WakeupTimerCommand();
+	_commands[RFM12CMD_LOWDUTYCYCLE] = new LowDutyCycleCommand();
+	_commands[RFM12CMD_LOWBATTERY_MCCLOCKDIVDER] = new BatteryDetectorAndClockDividerCommand();
+	_commands[RFM12CMD_STATUS_READ] = new StatusReadCommand();
+	
+	#ifdef DEBUG
+	for (uint8_t i=0; i<RFM12_COMMAND_COUNT; ++i) {
+		assert(_commands[i] != NULL);
+	}
+	#endif
+}
+
 /**
 	* \brief Sends a command to the RFM12.
 	*
@@ -56,7 +88,7 @@ const CommandResult& Rfm12::executeCommandRaw(const uint_least16_t command_code)
 	*/
 const StatusCommandResult& Rfm12::readStatus()
 {
-	const uint16_t result = executeCommandInternal(this->_statusCommand);
+	const uint16_t result = executeCommandInternal(*this->_commands[RFM12CMD_STATUS_READ]);
 		
 	// wrap in beautiful paper
 	_lastStatus.applyResult(result);
@@ -69,60 +101,7 @@ const StatusCommandResult& Rfm12::readStatus()
 * \param id The command id.
 */
 ICommand* Rfm12::getCommand(const commandtype_t type) {
-	switch (type)
-	{
-		case RFM12CMD_CONFIGURATION_SETTING:
-			return &this->_configSetCommand;
-			
-		case RFM12CMD_POWERMANAGEMENT:
-			return &this->_powerManagementCommand;
-			
-		case RFM12CMD_FREQUENCYSETTING:
-			return &this->_frequencyCommand;
-			
-		case RFM12CMD_DATARATE:
-			return &this->_dataRateCommand;
-			
-		case RFM12CMD_RECEIVERCONTROL:
-			return &this->_receiverControlCommand;
-			
-		case RFM12CMD_DATAFILTER:
-			return &this->_dataFilterCommand;
-			
-		case RFM12CMD_FIFOANDRESETMODE:
-			return &this->_fifoAndResetModeCommand;
-			
-		case RFM12CMD_SYNCHRONPATTERN:
-			return &this->_synchronPatternCommand;
-			
-		case RFM12CMD_RECEIVERFIFO:
-			return &this->_fifoReadCommand;
-			
-		case RFM12CMD_AFC:
-			return &this->_afcCommand;
-			
-		case RFM12CMD_TXCONFIGURATION:
-			return &this->_txConfigCommand;
-			
-		case RFM12CMD_PLLSETTING:
-			return &this->_pllSettingCommand;
-			
-		case RFM12CMD_TRANSMITTERWRITE:
-			return &this->_txWriteCommand;
-		
-		case RFM12CMD_WAKEUPTIMER:
-			return &this->_wakeUpTimerCommand;
-		
-		case RFM12CMD_LOWDUTYCYCLE:
-			return &this->_lowDutyCycleCommand;
-		
-		case RFM12CMD_LOWBATTERY_MCCLOCKDIVDER:
-			return &this->_batteryAndMicroCommand;
-		
-		case RFM12CMD_STATUS_READ:
-			return &this->_statusCommand;
-	}
-	return NULL;
+	return _commands[type];
 }
 
 /**

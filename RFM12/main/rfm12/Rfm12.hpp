@@ -63,9 +63,9 @@ namespace rfm12
 		
 	private:
 		/**
-		* \brief The status command
+		* \brief The command array
 		*/
-		commands::StatusReadCommand _statusCommand;
+		commands::ICommand* _commands[RFM12_COMMAND_COUNT];
 	
 		/**
 		* \brief Results of the last status command
@@ -77,99 +77,13 @@ namespace rfm12
 		*/
 		commands::CommandResult _lastCommandResult;
 
-		/**
-		* \brief Configuration Setting Command
-		*/
-		commands::ConfigSetCommand _configSetCommand;
-		
-		/**
-		* \brief Power Management Command
-		*/
-		commands::PowerManagementCommand _powerManagementCommand;
-		
-		/**
-		* \brief Frequency Setting Command
-		*/
-		commands::FrequencyCommand _frequencyCommand;
-		
-		/**
-		* \brief Data Rate Command
-		*/
-		commands::DataRateCommand _dataRateCommand;	
-		
-		/**
-		* \brief Receiver Control Command
-		*/
-		commands::ReceiverControlCommand _receiverControlCommand;	
-		
-		/**
-		* \brief Data Filter Command
-		*/
-		commands::DataFilterCommand _dataFilterCommand;	
-		
-		/**
-		* \brief FIFO and Reset Mode Command
-		*/
-		commands::FifoAndResetModeCommand _fifoAndResetModeCommand;	
-		
-		/**
-		* \brief Synchron Pattern Command
-		*/
-		commands::SynchronPatternCommand _synchronPatternCommand;	
-		
-		/**
-		* \brief Receiver FIFO Read Command
-		*/
-		commands::FifoReadCommand _fifoReadCommand;	
-		
-		/**
-		* \brief AFC Command
-		*/
-		commands::AfcCommand _afcCommand;	
-		
-		/**
-		* \brief TX Configuration Control Command
-		*/
-		commands::TxConfigCommand _txConfigCommand;	
-		
-		/**
-		* \brief PLL Setting Command
-		*/
-		commands::PllSettingCommand _pllSettingCommand;	
-		
-		/**
-		* \brief Transmitter Register Write Command
-		*/
-		commands::TransmitRegisterWriteCommand _txWriteCommand;	
-		
-		/**
-		* \brief Wake-Up Timer Command
-		*/
-		commands::WakeupTimerCommand _wakeUpTimerCommand;	
-		
-		/**
-		* \brief Low Duty-Cycle Command
-		*/
-		commands::LowDutyCycleCommand _lowDutyCycleCommand;	
-		
-		/**
-		* \brief Low Battery Detector and Microcontroller Clock Divider Command
-		*/
-		commands::BatteryDetectorAndClockDividerCommand _batteryAndMicroCommand;
-		
 	public:
 		/**
 		* \brief Initializes this instance.
 		*
 		* \param spi The SPI interface to use.
 		*/
-		inline Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer) 
-		: _spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer)
-		{
-			assert(NULL != spi);
-			assert(NULL != receiveBuffer);
-			assert(NULL != sendBuffer);
-		}
+		Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer);
 		
 		/**
 		* \brief Drives the internal communication system.
@@ -235,87 +149,121 @@ namespace rfm12
 		/**
 		* \brief The status command
 		*/
-		const inline commands::StatusReadCommand* getStatusCommand() const { return &this->_statusCommand; }
+		const inline commands::StatusReadCommand* getStatusCommand() const { 
+			return static_cast<commands::StatusReadCommand*>(this->_commands[commands::RFM12CMD_STATUS_READ]); 
+		}
 			
 		/**
 		* \brief Configuration Setting Command
 		*/
-		inline commands::ConfigSetCommand* getConfigSetCommand() { return &this->_configSetCommand; }
+		inline commands::ConfigSetCommand* getConfigSetCommand() {
+			return static_cast<commands::ConfigSetCommand*>(this->_commands[commands::RFM12CMD_CONFIGURATION_SETTING]);
+		}
 		
 		/**
 		* \brief Power Management Command
 		*/
-		inline commands::PowerManagementCommand* getPowerManagementCommand() { return &this->_powerManagementCommand; }
+		inline commands::PowerManagementCommand* getPowerManagementCommand() {
+			return static_cast<commands::PowerManagementCommand*>(this->_commands[commands::RFM12CMD_POWERMANAGEMENT]);
+		}
 		
 		/**
 		* \brief Frequency Setting Command
 		*/
-		inline commands::FrequencyCommand* getFrequencyCommand() { return &this->_frequencyCommand; }
+		inline commands::FrequencyCommand* getFrequencyCommand() {
+			return static_cast<commands::FrequencyCommand*>(this->_commands[commands::RFM12CMD_FREQUENCYSETTING]);
+		}
 		
 		/**
 		* \brief Data Rate Command
 		*/
-		inline commands::DataRateCommand* getDataRateCommand() { return &this->_dataRateCommand; }
+		inline commands::DataRateCommand* getDataRateCommand() {
+			return static_cast<commands::DataRateCommand*>(this->_commands[commands::RFM12CMD_DATARATE]);
+		}
 		
 		/**
 		* \brief Receiver Control Command
 		*/
-		inline commands::ReceiverControlCommand* getReceiverControlCommand() { return &this->_receiverControlCommand; }
+		inline commands::ReceiverControlCommand* getReceiverControlCommand() {
+			return static_cast<commands::ReceiverControlCommand*>(this->_commands[commands::RFM12CMD_RECEIVERCONTROL]);
+		}
 		
 		/**
 		* \brief Data Filter Command
 		*/
-		inline commands::DataFilterCommand* getDataFilterCommand() { return &this->_dataFilterCommand; }
+		inline commands::DataFilterCommand* getDataFilterCommand() {
+			return static_cast<commands::DataFilterCommand*>(this->_commands[commands::RFM12CMD_DATAFILTER]);
+		}
 		
 		/**
 		* \brief FIFO and Reset Mode Command
 		*/
-		inline commands::FifoAndResetModeCommand* getFifoAndResetModeCommand() { return &this->_fifoAndResetModeCommand; }
+		inline commands::FifoAndResetModeCommand* getFifoAndResetModeCommand() {
+			return static_cast<commands::FifoAndResetModeCommand*>(this->_commands[commands::RFM12CMD_FIFOANDRESETMODE]);
+		}
 		
 		/**
 		* \brief Synchron Pattern Command
 		*/
-		inline commands::SynchronPatternCommand* getSynchronPatternCommand() { return &this->_synchronPatternCommand; }
+		inline commands::SynchronPatternCommand* getSynchronPatternCommand() {
+			return static_cast<commands::SynchronPatternCommand*>(this->_commands[commands::RFM12CMD_SYNCHRONPATTERN]);
+		}
 		
 		/**
 		* \brief Receiver FIFO Read Command
 		*/
-		inline commands::FifoReadCommand* getFifoReadCommand() { return &this->_fifoReadCommand; }
+		const inline commands::FifoReadCommand* getFifoReadCommand() const {
+			return static_cast<commands::FifoReadCommand*>(this->_commands[commands::RFM12CMD_RECEIVERFIFO]);
+		}
 		
 		/**
 		* \brief AFC Command
 		*/
-		inline commands::AfcCommand* getAfcCommand() { return &this->_afcCommand; }
+		inline commands::AfcCommand* getAfcCommand() {
+			return static_cast<commands::AfcCommand*>(this->_commands[commands::RFM12CMD_AFC]);
+		}
 		
 		/**
 		* \brief TX Configuration Control Command
 		*/
-		inline commands::TxConfigCommand* getTxConfigCommand() { return &this->_txConfigCommand; }
+		inline commands::TxConfigCommand* getTxConfigCommand() {
+			return static_cast<commands::TxConfigCommand*>(this->_commands[commands::RFM12CMD_TXCONFIGURATION]);
+		}
 		
 		/**
 		* \brief PLL Setting Command
 		*/
-		inline commands::PllSettingCommand* getPllSettingCommand() { return &this->_pllSettingCommand; }
+		inline commands::PllSettingCommand* getPllSettingCommand() {
+			return static_cast<commands::PllSettingCommand*>(this->_commands[commands::RFM12CMD_PLLSETTING]);
+		}
 		
 		/**
 		* \brief Transmitter Register Write Command
 		*/
-		inline commands::TransmitRegisterWriteCommand* TransmitRegisterWrite() { return &this->_txWriteCommand; }
+		inline commands::TransmitRegisterWriteCommand* TransmitRegisterWrite() {
+			return static_cast<commands::TransmitRegisterWriteCommand*>(this->_commands[commands::RFM12CMD_TRANSMITTERWRITE]);
+		}
 		
 		/**
 		* \brief Wake-Up Timer Command
 		*/
-		inline commands::WakeupTimerCommand* getWakeUpTimerCommand() { return &this->_wakeUpTimerCommand; }
+		inline commands::WakeupTimerCommand* getWakeUpTimerCommand() {
+			return static_cast<commands::WakeupTimerCommand*>(this->_commands[commands::RFM12CMD_WAKEUPTIMER]);
+		}
 		
 		/**
 		* \brief Low Duty-Cycle Command
 		*/
-		inline commands::LowDutyCycleCommand* getLowDutyCycleCommand() { return &this->_lowDutyCycleCommand; }
+		inline commands::LowDutyCycleCommand* getLowDutyCycleCommand() {
+			return static_cast<commands::LowDutyCycleCommand*>(this->_commands[commands::RFM12CMD_LOWDUTYCYCLE]);
+		}
 		
 		/**
 		* \brief Low Battery Detector and Microcontroller Clock Divider Command
 		*/
-		inline commands::BatteryDetectorAndClockDividerCommand* getBatteryAndMicroCommand() { return &this->_batteryAndMicroCommand; }
+		inline commands::BatteryDetectorAndClockDividerCommand* getBatteryAndMicroCommand() {
+			return static_cast<commands::BatteryDetectorAndClockDividerCommand*>(this->_commands[commands::RFM12CMD_LOWBATTERY_MCCLOCKDIVDER]);
+		}
 
 	private:
 		/**
