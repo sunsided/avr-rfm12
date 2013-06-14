@@ -12,6 +12,9 @@
 #include "specializations/RingBufferAnySize.hpp"
 #include "specializations/RingBufferPow2.hpp"
 
+using namespace ringbuffer;
+using namespace ringbuffer::specializations;
+
 RingBuffer::RingBuffer(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete)
 :	_buffer(backingArray), _size(size), _capacity(size), _fillLevel(0), _read_index(0), _write_index(0), _free_on_delete(free_on_delete)
 {
