@@ -11,6 +11,11 @@
 
 #include <stdint.h>
 
+// #include <avr/cpufunc.h> 
+#ifndef _MemoryBarrier
+#define _MemoryBarrier() __asm__ __volatile__("":::"memory")
+#endif
+
 /**
 * \brief Ring buffer data type
 */
@@ -24,13 +29,27 @@ typedef uint_least8_t rbsize_t;
 class RingBuffer
 {
 public:
-	static RingBuffer* create(rbdata_t *backingArray, const rbsize_t size);
+	/**
+	* Creates a new ring buffer instance
+	*
+	* \param backingArray	The array to be used for the buffer
+	* \param size			The size of the array
+	* \param free_on_delete Sets whether the backing array should be freed during destruction
+	*/
+	static RingBuffer* create(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete = false);
+
+	/**
+	* Creates a new ring buffer instance
+	*
+	* \param size			The size of the array
+	*/
+	static RingBuffer* create(const rbsize_t size);
 
 protected:
 	/**
 	* \brief The actual data buffer
 	*/
-	rbdata_t volatile *_buffer;
+	rbdata_t *_buffer;
 
 	/**
 	* \brief The actual size of the ring buffer
@@ -50,12 +69,17 @@ protected:
 	/**
 	* \brief The current read index (in the _buffer array)
 	*/
-	volatile rbsize_t _read_index;
+	rbsize_t _read_index;
 	
 	/**
 	* \brief The current write index (in the _buffer array)
 	*/
-	volatile rbsize_t _write_index;
+	rbsize_t _write_index;
+
+	/**
+	* \brief Sets whether the buffer should be freed during instance destruction
+	*/
+	bool _free_on_delete;
 
 protected:
 
@@ -64,12 +88,16 @@ protected:
 	*
 	* \param backingArray	The array to be used for the buffer
 	* \param size			The size of the array
+	* \param free_on_delete Sets whether the backing array should be freed during destruction
 	*/
-	RingBuffer(rbdata_t *backingArray, const rbsize_t size);
+	RingBuffer(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete);
 
 public:
-
-	// virtual ~RingBuffer(){}
+	
+	/**
+	* \brief Destructs in instance
+	*/
+	virtual ~RingBuffer();
 		
 	/**
 	* \brief Determines if an item can be read from this buffer.
@@ -81,7 +109,7 @@ public:
 	/**
 	* \brief Determines if an item can be read written to this buffer.
 	*/
-	inline bool canWrite() const { 
+	inline bool canWrite() const {
 		return _capacity > 0;
 	}
 
@@ -105,7 +133,7 @@ public:
 	*/
 	inline void writeSync(const rbdata_t item) {
 		// loop until the buffer has a free slot
-		while (!tryWrite(item)) ;
+		do {} while (!tryWrite(item)) ;
 	}
 	
 	/**
@@ -130,7 +158,7 @@ public:
 	inline rbdata_t readSync() { 	
 		// loop until the buffer has a full slot
 		rbdata_t item;
-		while (!tryRead(item)) ;
+		do {} while (!tryRead(item));
 		
 		// there we go
 		return item;

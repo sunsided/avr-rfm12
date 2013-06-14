@@ -22,9 +22,10 @@ public:
 	*
 	* \param backingArray	The array to be used for the buffer
 	* \param size			The size of the array
+	* \param free_on_delete Sets whether the backing array should be freed during destruction
 	*/
-	inline RingBufferAnySize(rbdata_t *backingArray, const rbsize_t size)
-	:	RingBuffer(backingArray, size)
+	inline RingBufferAnySize(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete)
+	:	RingBuffer(backingArray, size, free_on_delete)
 	{
 	}
 
@@ -43,6 +44,9 @@ public:
 		// test if the buffer has a free slot
 		if (!canWrite()) return false;
 		
+		// fetch fresh
+		_MemoryBarrier();
+		
 		// since we write, the capacity will be reduced
 		--_capacity;
 		
@@ -51,12 +55,14 @@ public:
 		
 		// advance the write pointer
 		if (++_write_index == this->_size) {
-			_write_index = 0;
+			_write_index ^= _write_index;
 		}
 		
 		// since we write, the fill level will be increased
 		++_fillLevel;
 		
+		// there we go
+		_MemoryBarrier();
 		return true;
 	}
 	
@@ -74,6 +80,9 @@ public:
 		// loop until the buffer has a full slot
 		if (!canRead()) return false;
 
+		// fetch fresh
+		_MemoryBarrier();
+
 		// since we read, the fill level will be decreased
 		--_fillLevel;
 				
@@ -82,13 +91,14 @@ public:
 		
 		// advance the read pointer
 		if (++_read_index == this->_size) {
-			_read_index = 0;
+			_read_index ^= _read_index;
 		}
 		
 		// since we read, the capacity will be increased
 		++_capacity;
 		
 		// there we go
+		_MemoryBarrier();
 		return true;
 	}
 
