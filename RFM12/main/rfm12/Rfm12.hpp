@@ -236,6 +236,93 @@ namespace rfm12
 		* \param id The command id.
 		*/
 		commands::ICommand* getCommand(const commands::commandtype_t type);
+		
+	public:
+	
+		/**
+		* \brief The status command
+		*/
+		const inline commands::StatusReadCommand* getStatusCommand() const { return &this->_statusCommand; }
+			
+		/**
+		* \brief Configuration Setting Command
+		*/
+		inline commands::ConfigSetCommand* getConfigSetCommand() { return &this->_configSetCommand; }
+		
+		/**
+		* \brief Power Management Command
+		*/
+		inline commands::PowerManagementCommand* getPowerManagementCommand() { return &this->_powerManagementCommand; }
+		
+		/**
+		* \brief Frequency Setting Command
+		*/
+		inline commands::FrequencyCommand* getFrequencyCommand() { return &this->_frequencyCommand; }
+		
+		/**
+		* \brief Data Rate Command
+		*/
+		inline commands::DataRateCommand* getDataRateCommand() { return &this->_dataRateCommand; }
+		
+		/**
+		* \brief Receiver Control Command
+		*/
+		inline commands::ReceiverControlCommand* getReceiverControlCommand() { return &this->_receiverControlCommand; }
+		
+		/**
+		* \brief Data Filter Command
+		*/
+		inline commands::DataFilterCommand* getDataFilterCommand() { return &this->_dataFilterCommand; }
+		
+		/**
+		* \brief FIFO and Reset Mode Command
+		*/
+		inline commands::FifoAndResetModeCommand* getFifoAndResetModeCommand() { return &this->_fifoAndResetModeCommand; }
+		
+		/**
+		* \brief Synchron Pattern Command
+		*/
+		inline commands::SynchronPatternCommand* getSynchronPatternCommand() { return &this->_synchronPatternCommand; }
+		
+		/**
+		* \brief Receiver FIFO Read Command
+		*/
+		inline commands::FifoReadCommand* getFifoReadCommand() { return &this->_fifoReadCommand; }
+		
+		/**
+		* \brief AFC Command
+		*/
+		inline commands::AfcCommand* getAfcCommand() { return &this->_afcCommand; }
+		
+		/**
+		* \brief TX Configuration Control Command
+		*/
+		inline commands::TxConfigCommand* getTxConfigCommand() { return &this->_txConfigCommand; }
+		
+		/**
+		* \brief PLL Setting Command
+		*/
+		inline commands::PllSettingCommand* getPllSettingCommand() { return &this->_pllSettingCommand; }
+		
+		/**
+		* \brief Transmitter Register Write Command
+		*/
+		inline commands::TransmitRegisterWriteCommand* TransmitRegisterWrite() { return &this->_txWriteCommand; }
+		
+		/**
+		* \brief Wake-Up Timer Command
+		*/
+		inline commands::WakeupTimerCommand* getWakeUpTimerCommand() { return &this->_wakeUpTimerCommand; }
+		
+		/**
+		* \brief Low Duty-Cycle Command
+		*/
+		inline commands::LowDutyCycleCommand* getLowDutyCycleCommand() { return &this->_lowDutyCycleCommand; }
+		
+		/**
+		* \brief Low Battery Detector and Microcontroller Clock Divider Command
+		*/
+		inline commands::BatteryDetectorAndClockDividerCommand* getBatteryAndMicroCommand() { return &this->_batteryAndMicroCommand; }
 
 	private:
 		/**

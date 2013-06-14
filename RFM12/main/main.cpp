@@ -142,7 +142,7 @@ int main()
 	configureRfm12(rfm12);
 	
 	// enable transceiver
-	PowerManagementCommand *powerMgmt = static_cast<PowerManagementCommand*>(rfm12->getCommand(RFM12CMD_POWERMANAGEMENT));
+	PowerManagementCommand *powerMgmt = rfm12->getPowerManagementCommand();
 	powerMgmt->setReceiverChainEnabled(false);
 	powerMgmt->setReceiverBasebandCircuitryEnabled(true);
 	powerMgmt->setSynthesizerEnabled(true);
@@ -173,7 +173,7 @@ int main()
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 		
 		// transmit a byte
-		TransmitRegisterWriteCommand *txWrite = static_cast<TransmitRegisterWriteCommand*>(rfm12->getCommand(RFM12CMD_TRANSMITTERWRITE));
+		TransmitRegisterWriteCommand *txWrite = rfm12->TransmitRegisterWrite();
 		txWrite->setData(0xAA);
 		rfm12->executeCommand(txWrite);
 		
