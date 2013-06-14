@@ -10,6 +10,7 @@
 #define RFM12_H_
 
 #include <stdint.h>
+#include <assert.h>
 #include "ISpi.hpp"
 #include "IReceiveBuffer.hpp"
 #include "ISendBuffer.hpp"
@@ -91,7 +92,11 @@ namespace rfm12
 		*/
 		inline Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer) 
 		: _spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer)
-		{}
+		{
+			assert(NULL != spi);
+			assert(NULL != receiveBuffer);
+			assert(NULL != sendBuffer);
+		}
 		
 		/**
 		* \brief Drives the internal communication system.
