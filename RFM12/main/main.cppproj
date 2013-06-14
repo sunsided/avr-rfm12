@@ -26,8 +26,9 @@
     <CacheFlash>true</CacheFlash>
     <UncachedRange />
     <BootSegment>2</BootSegment>
-    <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
-    <avrtoolinterface>ISP</avrtoolinterface>
+    <avrtool>com.atmel.avrdbg.tool.simulator</avrtool>
+    <avrtoolinterface>
+    </avrtoolinterface>
     <com_atmel_avrdbg_tool_ispmk2>
       <ToolType xmlns="">com.atmel.avrdbg.tool.ispmk2</ToolType>
       <ToolName xmlns="">AVRISP mkII</ToolName>
@@ -68,15 +69,15 @@
       </framework-data>
     </AsfFrameworkConfig>
     <com_atmel_avrdbg_tool_simulator>
-      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
-      <ToolName xmlns="">Simulator</ToolName>
-      <ToolNumber xmlns="">
+      <ToolType>com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolName>Simulator</ToolName>
+      <ToolNumber>
       </ToolNumber>
-      <StimuliFile xmlns="">
+      <StimuliFile>
       </StimuliFile>
-      <Channel xmlns="">
+      <Channel>
         <host>127.0.0.1</host>
-        <port>49226</port>
+        <port>4341</port>
         <ssl>False</ssl>
       </Channel>
     </com_atmel_avrdbg_tool_simulator>
@@ -161,6 +162,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="avrgcc-compat.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="avrgcc-compat.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="comm\char_ringbuffer.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -266,6 +273,18 @@
     <Compile Include="rfm12\Rfm12.hpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ringbuffer\RingBuffer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ringbuffer\RingBuffer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ringbuffer\specializations\RingBufferAnySize.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ringbuffer\specializations\RingBufferPow2.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="spi\SpiMaster.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -281,6 +300,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="comm" />
+    <Folder Include="ringbuffer" />
+    <Folder Include="ringbuffer\specializations" />
     <Folder Include="spi" />
     <Folder Include="rfm12" />
     <Folder Include="rfm12\commands" />

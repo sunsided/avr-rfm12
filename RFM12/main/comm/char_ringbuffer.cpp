@@ -30,7 +30,7 @@ void rb_reset(char_ringbuffer_t* buffer)
 	// TODO: Debug only
 	for (uint_least8_t i=0; i<buffer->size; ++i)
 	{
-		buffer->data[0] = '#';
+		buffer->data[i] = '#';
 	}
 }
 

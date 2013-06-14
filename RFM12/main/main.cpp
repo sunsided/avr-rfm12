@@ -20,6 +20,8 @@
 
 #include "Rfm12SpiAdapter.h"
 
+#include "ringbuffer/RingBuffer.hpp"
+
 using namespace rfm12;
 
 #include <util/delay.h> 
@@ -50,8 +52,52 @@ void checkEndianessAndHangUpOnError()
 	}
 }
 
+#include <assert.h>
+
 int main()
 {
+	ringbuffer::RingBuffer *buffer = ringbuffer::RingBuffer::create(16);
+	
+	ringbuffer::rbdata_t value;
+	bool success = buffer->tryRead(value);
+	assert (false == success);
+	
+	success = buffer->tryWrite(227);
+	assert(true == success);
+	
+	success = buffer->tryWrite(42);
+	assert(true == success);
+	
+	success = buffer->tryWrite(43);
+	assert(true == success);
+	
+	success = buffer->tryWrite(44);
+	assert(false == success);
+
+	success = buffer->tryRead(value);
+	assert (true == success);
+	assert (227 == value);
+
+	success = buffer->tryWrite(44);
+	assert(true == success);
+
+	success = buffer->tryRead(value);
+	assert (42 == value);
+	assert(true == success);
+	
+	success = buffer->tryRead(value);
+	assert(true == success);
+	assert (43 == value);
+	
+	success = buffer->tryRead(value);
+	assert(true == success);
+	assert (44 == value);
+	
+	success = buffer->tryRead(value);
+	assert(false == success);
+	
+	usart_comm_send_char(value);
+	
 	#if F_CPU != 16000000UL
 	#error Expected F_CPU to be 16MHz; Timer calculation will be wrong!
 	#endif
