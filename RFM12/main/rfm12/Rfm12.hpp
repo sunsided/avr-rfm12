@@ -177,14 +177,7 @@ namespace rfm12
 		* This method should be called on every interrupt event from the RFM12's nIRQ line.
 		*/	
 		void pulse();
-	
-		/**
-		* \brief Executes an RFM12 command.
-		*
-		* \param command_code The command to execute.
-		*/
-		const commands::CommandResult& executeCommandRaw(const uint_least16_t command_code);
-	
+		
 		/**
 		 * \brief Sends a command to the RFM12.
 		 *
@@ -325,6 +318,13 @@ namespace rfm12
 		inline commands::BatteryDetectorAndClockDividerCommand* getBatteryAndMicroCommand() { return &this->_batteryAndMicroCommand; }
 
 	private:
+		/**
+		* \brief Executes an RFM12 command.
+		*
+		* \param command_code The command to execute.
+		*/
+		const commands::CommandResult& executeCommandRaw(const uint_least16_t command_code);
+	
 		/**
 		 * \brief Sends a command to the RFM12.
 		 *
