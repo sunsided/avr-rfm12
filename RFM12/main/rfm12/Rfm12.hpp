@@ -65,7 +65,7 @@ namespace rfm12
 		/**
 		* \brief The status command
 		*/
-		commands::StatusCommandResult _statusCommand;
+		commands::StatusReadCommand _statusCommand;
 	
 		/**
 		* \brief Results of the last status command
@@ -76,7 +76,87 @@ namespace rfm12
 		* \brief The last command result
 		*/
 		commands::CommandResult _lastCommandResult;
-	
+
+		/**
+		* \brief Configuration Setting Command
+		*/
+		commands::ConfigSetCommand _configSetCommand;
+		
+		/**
+		* \brief Power Management Command
+		*/
+		commands::PowerManagementCommand _powerManagementCommand;
+		
+		/**
+		* \brief Frequency Setting Command
+		*/
+		commands::FrequencyCommand _frequencyCommand;
+		
+		/**
+		* \brief Data Rate Command
+		*/
+		commands::DataRateCommand _dataRateCommand;	
+		
+		/**
+		* \brief Receiver Control Command
+		*/
+		commands::ReceiverControlCommand _receiverControlCommand;	
+		
+		/**
+		* \brief Data Filter Command
+		*/
+		commands::DataFilterCommand _dataFilterCommand;	
+		
+		/**
+		* \brief FIFO and Reset Mode Command
+		*/
+		commands::FifoAndResetModeCommand _fifoAndResetModeCommand;	
+		
+		/**
+		* \brief Synchron Pattern Command
+		*/
+		commands::SynchronPatternCommand _synchronPatternCommand;	
+		
+		/**
+		* \brief Receiver FIFO Read Command
+		*/
+		commands::FifoReadCommand _fifoReadCommand;	
+		
+		/**
+		* \brief AFC Command
+		*/
+		commands::AfcCommand _afcCommand;	
+		
+		/**
+		* \brief TX Configuration Control Command
+		*/
+		commands::TxConfigCommand _txConfigCommand;	
+		
+		/**
+		* \brief PLL Setting Command
+		*/
+		commands::PllSettingCommand _pllSettingCommand;	
+		
+		/**
+		* \brief Transmitter Register Write Command
+		*/
+		commands::TransmitRegisterWriteCommand _txWriteCommand;	
+		
+		/**
+		* \brief Wake-Up Timer Command
+		*/
+		commands::WakeupTimerCommand _wakeUpTimerCommand;	
+		
+		/**
+		* \brief Low Duty-Cycle Command
+		*/
+		commands::LowDutyCycleCommand _lowDutyCycleCommand;	
+		
+		/**
+		* \brief Low Battery Detector and Microcontroller Clock Divider Command
+		*/
+		commands::BatteryDetectorAndClockDividerCommand _batteryAndMicroCommand;
+		
 	public:
 		/**
 		* \brief Initializes this instance.
@@ -155,7 +235,7 @@ namespace rfm12
 		*
 		* \param id The command id.
 		*/
-		commands::ICommand getCommand() const;
+		commands::ICommand* getCommand(const commands::commandtype_t type);
 
 	private:
 		/**

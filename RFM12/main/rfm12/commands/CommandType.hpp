@@ -23,57 +23,57 @@ namespace rfm12
 			RFM12CMD_CONFIGURATION_SETTING = 1,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief Power Management Command
 			*/
 			RFM12CMD_POWERMANAGEMENT = 2,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief Frequency Setting Command
 			*/
 			RFM12CMD_FREQUENCYSETTING = 3,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief Data Rate Command
 			*/
 			RFM12CMD_DATARATE = 4,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief Receiver Control Command
 			*/
 			RFM12CMD_RECEIVERCONTROL = 5,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief Data Filter Command
 			*/
 			RFM12CMD_DATAFILTER = 6,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief FIFO and Reset Mode Command
 			*/
 			RFM12CMD_FIFOANDRESETMODE = 7,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief Synchron Pattern Command
 			*/
 			RFM12CMD_SYNCHRONPATTERN = 8,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief Receiver FIFO Read Command
 			*/
 			RFM12CMD_RECEIVERFIFO = 9,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief AFC Command
 			*/
 			RFM12CMD_AFC = 10,
 			
 			/**
-			* \brief PLL Setting Command
+			* \brief TX Configuration Control Command
 			*/
 			RFM12CMD_TXCONFIGURATION = 11,
 			
 			/**
-			* \brief Configuration Setting Command
+			* \brief PLL Setting Command
 			*/
 			RFM12CMD_PLLSETTING = 12,
 			
