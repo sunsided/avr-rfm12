@@ -14,12 +14,16 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
 		* \brief Synchron Pattern Command
 		*/
 		class SynchronPatternCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -41,7 +45,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -49,6 +53,8 @@ namespace rfm12
 			SynchronPatternCommand() 
 				: command_word(0xCED4)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -61,6 +67,15 @@ namespace rfm12
 			* For RFM12 (i.e. not RFM12B), this value must always be 0xD4.
 			*/
 			inline void setSynchronByte(const uint8_t byte = 0xD4) { this->b = byte; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_SYNCHRONPATTERN;
+			}
 		};
 	}
 }

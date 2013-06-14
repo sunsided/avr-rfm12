@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -21,6 +23,8 @@ namespace rfm12
 		*/
 		class PowerManagementCommand : public ICommand 
 		{
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -75,7 +79,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -83,6 +87,8 @@ namespace rfm12
 			PowerManagementCommand() 
 				: command_word(0x8208)
 			{}
+				
+			public:				
 
 			/**
 			* \brief Cast operator
@@ -146,6 +152,15 @@ namespace rfm12
 			* \param enabled true for enabled, false for disabled
 			*/
 			inline void setClockOutputEnabled(const bool enabled = true) { this->dc = !enabled; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_POWERMANAGEMENT;
+			}
 		};
 	}
 }

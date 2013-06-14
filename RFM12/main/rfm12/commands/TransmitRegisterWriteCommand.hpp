@@ -14,12 +14,16 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
 		* \brief Transmit Register Write Command
 		*/
 		class TransmitRegisterWriteCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -39,7 +43,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -47,6 +51,8 @@ namespace rfm12
 			TransmitRegisterWriteCommand() 
 				: command_word(0xB8AA)
 			{}
+				
+			public:				
 
 			/**
 			* \brief Cast operator
@@ -57,6 +63,15 @@ namespace rfm12
 			* \brief Sets the data for transmission.
 			*/
 			inline void setData(uint8_t byte = 0xAA) { this->t = byte; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_TRANSMITTERWRITE;
+			}
 		};
 	}
 }

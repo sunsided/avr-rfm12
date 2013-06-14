@@ -14,12 +14,16 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
 		* \brief FIFO Read Command
 		*/
 		class FifoReadCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -39,7 +43,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -47,11 +51,22 @@ namespace rfm12
 			FifoReadCommand() 
 				: command_word(0xB000)
 			{}
+				
+			public:				
 
 			/**
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->command_word; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_RECEIVERFIFO;
+			}
 		};
 	}
 }

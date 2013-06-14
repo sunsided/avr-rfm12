@@ -14,12 +14,16 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
 		* \brief Wake-up Timer Command
 		*/
 		class WakeupTimerCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -53,7 +57,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -61,6 +65,8 @@ namespace rfm12
 			WakeupTimerCommand() 
 				: command_word(0xE196)
 			{}
+				
+			public:				
 
 			/**
 			* \brief Cast operator
@@ -89,6 +95,15 @@ namespace rfm12
 			* effectively resulting in a wake-up time of 0.5ms.
 			*/
 			inline void disableWakeupTimer() { this->r = 0; this->m = 0; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_WAKEUPTIMER;
+			}
 		};
 	}
 }

@@ -10,6 +10,7 @@
 #define __ICommand_H__
 
 #include <stdint.h>
+#include "CommandType.hpp"
 
 namespace rfm12 
 {
@@ -36,6 +37,12 @@ namespace rfm12
 			*/
 			virtual operator uint16_t() const = 0;
 
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			virtual commandtype_t getCommandType() const = 0;
 		};
 
 	}

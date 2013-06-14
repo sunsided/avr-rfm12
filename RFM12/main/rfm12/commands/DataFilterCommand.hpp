@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -28,6 +30,8 @@ namespace rfm12
 		* \brief Data Filter Command
 		*/
 		class DataFilterCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -78,7 +82,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -86,6 +90,8 @@ namespace rfm12
 			DataFilterCommand () 
 				: command_word(0xC22C)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -125,6 +131,15 @@ namespace rfm12
 			* \param value The DQD threshold value (in range of 0 to 7).
 			*/
 			inline void setDqdTrheshold(const uint8_t value = 0b100) { this->f = (value < 7 ? value : 7); }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_DATAFILTER;
+			}
 		};
 	}
 }

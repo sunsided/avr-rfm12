@@ -10,6 +10,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -17,6 +19,8 @@ namespace rfm12
 		*/
 		class CommandResult
 		{
+			friend class rfm12::Rfm12;
+			
 		protected:
 			/**
 			* \brief The result data of a single command call

@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -25,7 +27,6 @@ namespace rfm12
 			MCCLKFRQ_2POINT5MHZ		= 0b01,		//<! 2.5 MHz or less
 			MCCLKFRQ_LOWEST			= 0b00,		//<! 2.5 MHz or less (same as MCCLKFRQ_2POINT5MHZ)
 		} microctrl_clkfrq_t;
-
 
 		/**
 		* \brief PLL Bandwidth Control
@@ -39,6 +40,8 @@ namespace rfm12
 		* \brief PLL (Phase-Locked Loop) Setting Command
 		*/
 		class PllSettingCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -83,7 +86,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -91,6 +94,8 @@ namespace rfm12
 			PllSettingCommand() 
 				: command_word(0xCC77)
 			{}
+				
+			public:				
 
 			/**
 			* \brief Cast operator
@@ -127,6 +132,15 @@ namespace rfm12
 			* \param value The PLL bandwidth
 			*/
 			inline void setPllBandwidth(const pll_bandwidth_t value = PLLBW_MAX_2560KBPS) { this->bw = value; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_PLLSETTING;
+			}
 		};
 	}
 }

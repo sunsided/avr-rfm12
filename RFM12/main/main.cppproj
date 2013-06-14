@@ -208,6 +208,9 @@
     <Compile Include="rfm12configuration.hpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rfm12\commands\CommandType.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="rfm12\commands\ICommand.hpp">
       <SubType>compile</SubType>
     </Compile>

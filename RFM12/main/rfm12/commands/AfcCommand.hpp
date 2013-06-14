@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -45,6 +47,8 @@ namespace rfm12
 		*/
 		class AfcCommand : public ICommand 
 		{
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -89,7 +93,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -97,6 +101,8 @@ namespace rfm12
 			AfcCommand() 
 				: command_word(0xC4F7)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -151,6 +157,16 @@ namespace rfm12
 			* \param value Offset calculation enabled if true, disabled otherwise.
 			*/
 			inline void setFrequencyOffsetCalculationEnabled(const bool enabled = true) { this->en = enabled; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_AFC;
+			}
+			
 		};
 	}
 }

@@ -16,12 +16,16 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
 		* \brief Frequency Setting Command
 		*/
 		class FrequencyCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -41,7 +45,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -49,6 +53,8 @@ namespace rfm12
 			FrequencyCommand() 
 				: command_word(0xA680)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -77,6 +83,15 @@ namespace rfm12
 			* \return true in case of success, false if the channel was out of range
 			*/
 			bool setByChannel(const uint16_t channel = 1200, const frequency_band_t band = FREQ_BAND_433, float *real_frequency = NULL);
+			
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_FREQUENCYSETTING;
+			}
 		};
 	}
 }

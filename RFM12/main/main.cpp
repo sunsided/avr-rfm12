@@ -51,6 +51,7 @@ static volatile bool _rfm12PulseRequired = false;
 */
 void checkEndianessAndHangUpOnError()
 {
+	/*
 	commands::PowerManagementCommand powerMgmt;
 	powerMgmt.eb = true;
 	powerMgmt.ex = false;
@@ -61,6 +62,7 @@ void checkEndianessAndHangUpOnError()
 	{
 		while(1) { led_doubleflash_sync(); }
 	}
+	*/
 }
 
 /**
@@ -140,12 +142,12 @@ int main()
 	configureRfm12(rfm12);
 	
 	// enable transceiver
-	PowerManagementCommand powerMgmt; // TODO: Retrieve the current setting from the rfm12 controller!
-	powerMgmt.setReceiverChainEnabled(false);
-	powerMgmt.setReceiverBasebandCircuitryEnabled(true);
-	powerMgmt.setSynthesizerEnabled(true);
-	powerMgmt.setCrystalOscillatorEnabled(true);
-	powerMgmt.setTransmissionEnabled(true);
+	PowerManagementCommand *powerMgmt = static_cast<PowerManagementCommand*>(rfm12->getCommand(RFM12CMD_POWERMANAGEMENT));
+	powerMgmt->setReceiverChainEnabled(false);
+	powerMgmt->setReceiverBasebandCircuitryEnabled(true);
+	powerMgmt->setSynthesizerEnabled(true);
+	powerMgmt->setCrystalOscillatorEnabled(true);
+	powerMgmt->setTransmissionEnabled(true);
 	rfm12->executeCommand(powerMgmt);
 
 	// loopity loop.
@@ -158,7 +160,7 @@ int main()
 		*/
 		
 		// enable transmission
-		powerMgmt.setTransmissionEnabled(true);
+		powerMgmt->setTransmissionEnabled(true);
 		rfm12->executeCommand(powerMgmt);
 		
 		// sleep for some time
@@ -171,50 +173,50 @@ int main()
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 		
 		// transmit a byte
-		TransmitRegisterWriteCommand txWrite;
-		txWrite.setData(0xAA);
+		TransmitRegisterWriteCommand *txWrite = static_cast<TransmitRegisterWriteCommand*>(rfm12->getCommand(RFM12CMD_TRANSMITTERWRITE));
+		txWrite->setData(0xAA);
 		rfm12->executeCommand(txWrite);
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 		
 		// transmit 0x2D
-		txWrite.setData(0x2D);
+		txWrite->setData(0x2D);
 		rfm12->executeCommand(txWrite);
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 		
 		// transmit 0xD4
-		txWrite.setData(0xD4);
+		txWrite->setData(0xD4);
 		rfm12->executeCommand(txWrite);
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 			
 		// transmit payload
-		txWrite.setData(0x42);
+		txWrite->setData(0x42);
 		rfm12->executeCommand(txWrite);
 			
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 			
 		// transmit payload
-		txWrite.setData(0xB0);
+		txWrite->setData(0xB0);
 		rfm12->executeCommand(txWrite);
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 			
 		// transmit payload
-		txWrite.setData(0x0B);
+		txWrite->setData(0x0B);
 		rfm12->executeCommand(txWrite);
 			
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
 			
 		// transmit payload
-		txWrite.setData(0xAA);
+		txWrite->setData(0xAA);
 		rfm12->executeCommand(txWrite);
 			
 		// wait until send register is empty
@@ -226,7 +228,7 @@ int main()
 		}
 		
 		// disable transmission
-		powerMgmt.setTransmissionEnabled(false);
+		powerMgmt->setTransmissionEnabled(false);
 		rfm12->executeCommand(powerMgmt);
 		
 

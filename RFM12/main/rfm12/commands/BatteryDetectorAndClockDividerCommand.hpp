@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -58,6 +60,8 @@ namespace rfm12
 		*/
 		class BatteryDetectorAndClockDividerCommand : public ICommand 
 		{
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -91,7 +95,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -99,6 +103,8 @@ namespace rfm12
 			BatteryDetectorAndClockDividerCommand() 
 				: command_word(0xC000)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -118,6 +124,15 @@ namespace rfm12
 			* \param value The threshold voltage.
 			*/
 			inline void setVoltageThreshould(const battery_threshold_t value = BATTHRESH_2250mV) { this->v = value; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_LOWBATTERY_MCCLOCKDIVDER;
+			}
 		};
 	}
 }

@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -47,6 +49,8 @@ namespace rfm12
 		* \brief FIFO and Reset Mode Command
 		*/
 		class FifoAndResetModeCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -89,7 +93,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -97,6 +101,8 @@ namespace rfm12
 			FifoAndResetModeCommand() 
 				: command_word(0xCA80)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -139,6 +145,15 @@ namespace rfm12
 			* \param value The reset mode.
 			*/
 			inline void setSensitiveResetMode(const sensitive_reset_t value = RESETMOPDE_SENSITIVE) { this->dr = value; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_FIFOANDRESETMODE;
+			}
 		};
 	}
 }

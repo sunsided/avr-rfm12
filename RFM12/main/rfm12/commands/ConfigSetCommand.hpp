@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -55,6 +57,8 @@ namespace rfm12
 		*/
 		class ConfigSetCommand : public ICommand 
 		{
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -90,7 +94,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -98,6 +102,8 @@ namespace rfm12
 			ConfigSetCommand() 
 				: command_word(0x8008)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -135,6 +141,15 @@ namespace rfm12
 			* \param value Data register enabled.
 			*/
 			inline void setDataRegisterEnabled(const bool value = true) { this->el = value; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_CONFIGURATION_SETTING;
+			}
 		};
 	}
 }

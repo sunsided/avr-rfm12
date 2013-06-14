@@ -14,6 +14,8 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
@@ -76,6 +78,8 @@ namespace rfm12
 		* \brief Receiver Control Command
 		*/
 		class ReceiverControlCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -117,7 +121,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -125,6 +129,8 @@ namespace rfm12
 			ReceiverControlCommand() 
 				: command_word(0x9080)
 			{}
+
+			public:
 
 			/**
 			* \brief Cast operator
@@ -165,6 +171,15 @@ namespace rfm12
 			* \param value
 			*/
 			inline void setRssiDetectorThreshold(const rssi_threshold_t value = RSSI_103) { this->r = value; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_RECEIVERCONTROL;
+			}
 		};
 	}
 }

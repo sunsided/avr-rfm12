@@ -14,12 +14,16 @@
 
 namespace rfm12
 {
+	class Rfm12;
+	
 	namespace commands
 	{
 		/**
 		* \brief Low Duty-Cycle Command
 		*/
 		class LowDutyCycleCommand : public ICommand {
+			friend class rfm12::Rfm12;
+			
 			public:
 			union {
 				/**
@@ -52,7 +56,7 @@ namespace rfm12
 				};
 			};
 	
-			public:
+			private:
 
 			/**
 			* \brief Initializes this instance to default values (POR)
@@ -60,6 +64,8 @@ namespace rfm12
 			LowDutyCycleCommand() 
 				: command_word(0xC80E)
 			{}
+				
+			public:
 
 			/**
 			* \brief Cast operator
@@ -83,6 +89,15 @@ namespace rfm12
 			* \param enabled true if the Low Duty-Cycle mode should be enabled, false otherwise.
 			*/
 			inline void setEnabled(const bool enabled = false) { this->en = enabled; }
+				
+			/**
+			* \brief Gets this command's type.
+			*
+			* \return The command type
+			*/
+			inline commandtype_t getCommandType() const {
+				return RFM12CMD_LOWDUTYCYCLE;
+			}
 		};
 	}
 }
