@@ -21,6 +21,8 @@ Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBu
 	assert(NULL != receiveBuffer);
 	assert(NULL != sendBuffer);
 	
+	// TODO: Extrahieren und komplettes Konfigurationsverhalten under the hood lösen
+	
 	_commands[RFM12CMD_CONFIGURATION_SETTING]	= new ConfigSetCommand();
 	_commands[RFM12CMD_POWERMANAGEMENT]			= new PowerManagementCommand();
 	_commands[RFM12CMD_FREQUENCYSETTING]		= new FrequencyCommand();
