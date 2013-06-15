@@ -110,6 +110,16 @@ namespace ringbuffer
 		virtual ~RingBuffer();
 		
 		/**
+		* \brief Resets the buffer
+		*/
+		inline void reset() {
+			_capacity = _size;
+			_fillLevel ^= _fillLevel;
+			// _read_index = 0;
+			// _write_index = 0;
+		}
+		
+		/**
 		* \brief Determines if an item can be read from this buffer.
 		*/
 		inline bool canRead() const { 
