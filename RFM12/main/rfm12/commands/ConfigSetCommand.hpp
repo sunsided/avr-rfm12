@@ -99,8 +99,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			ConfigSetCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0x8008)
+			ConfigSetCommand() 
+				: command_word(0x8008)
 			{}
 
 			public:

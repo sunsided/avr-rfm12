@@ -50,8 +50,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			SynchronPatternCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xCED4)
+			SynchronPatternCommand()
+				: command_word(0xCED4)
 			{}
 
 			public:

@@ -100,8 +100,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			BatteryDetectorAndClockDividerCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xC000)
+			BatteryDetectorAndClockDividerCommand()
+				: command_word(0xC000)
 			{}
 
 			public:

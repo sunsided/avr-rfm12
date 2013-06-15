@@ -48,8 +48,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			TransmitRegisterWriteCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xB8AA)
+			TransmitRegisterWriteCommand()
+				: command_word(0xB8AA)
 			{}
 				
 			public:				

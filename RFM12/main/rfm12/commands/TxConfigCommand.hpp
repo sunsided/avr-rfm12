@@ -125,8 +125,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			TxConfigCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0x9800)
+			TxConfigCommand()
+				: command_word(0x9800)
 			{}
 				
 			public:

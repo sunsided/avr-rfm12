@@ -98,8 +98,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			AfcCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xC4F7)
+			AfcCommand()
+				: command_word(0xC4F7)
 			{}
 
 			public:

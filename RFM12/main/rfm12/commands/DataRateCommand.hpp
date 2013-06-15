@@ -54,8 +54,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			DataRateCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xC623)
+			DataRateCommand()
+				: command_word(0xC623)
 			{}
 
 			public:

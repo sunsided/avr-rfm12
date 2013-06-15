@@ -149,7 +149,7 @@ int main()
 	powerMgmt->setSynthesizerEnabled(true);
 	powerMgmt->setCrystalOscillatorEnabled(true);
 	powerMgmt->setTransmissionEnabled(true);
-	powerMgmt->execute();
+	rfm12->executeCommand(powerMgmt);
 
 	usart_comm_send_zstr("transmitter configured.\r\n");
 	sleep(1);
@@ -165,7 +165,7 @@ int main()
 		
 		// enable transmission
 		powerMgmt->setTransmissionEnabled(true);
-		powerMgmt->execute();
+		rfm12->executeCommand(powerMgmt);
 		usart_comm_send_zstr("transmitter on ...\r\n");
 				
 		sleep(1);	
@@ -183,7 +183,7 @@ int main()
 		LED_ASSERT(txWrite != NULL, 2);
 		
 		txWrite->setData(0xAA);
-		txWrite->execute();
+		rfm12->executeCommand(txWrite);
 		usart_comm_send_char(0xAA);
 		
 		// wait until send register is empty
@@ -191,7 +191,7 @@ int main()
 		
 		// transmit 0x2D
 		txWrite->setData(0x2D);
-		txWrite->execute();
+		rfm12->executeCommand(txWrite);
 		usart_comm_send_char(0x2D);
 		
 		// wait until send register is empty
@@ -199,7 +199,7 @@ int main()
 		
 		// transmit 0xD4
 		txWrite->setData(0xD4);
-		txWrite->execute();
+		rfm12->executeCommand(txWrite);
 		usart_comm_send_char(0xD4);
 		
 		// wait until send register is empty
@@ -207,7 +207,7 @@ int main()
 			
 		// transmit payload
 		txWrite->setData(0x42);
-		txWrite->execute();
+		rfm12->executeCommand(txWrite);
 		usart_comm_send_char(0x42);
 			
 		// wait until send register is empty
@@ -215,7 +215,7 @@ int main()
 			
 		// transmit payload
 		txWrite->setData(0xB0);
-		txWrite->execute();
+		rfm12->executeCommand(txWrite);
 		usart_comm_send_char(0xB0);
 		
 		// wait until send register is empty
@@ -223,7 +223,7 @@ int main()
 			
 		// transmit payload
 		txWrite->setData(0x0B);
-		txWrite->execute();
+		rfm12->executeCommand(txWrite);
 		usart_comm_send_char(0x0B);
 			
 		// wait until send register is empty
@@ -231,7 +231,7 @@ int main()
 			
 		// transmit payload
 		txWrite->setData(0xAA);
-		txWrite->execute();
+		rfm12->executeCommand(txWrite);
 		usart_comm_send_char(0xAA);
 			
 		// wait until send register is empty
@@ -243,7 +243,7 @@ int main()
 		
 		// disable transmission
 		powerMgmt->setTransmissionEnabled(false);
-		powerMgmt->execute();
+		rfm12->executeCommand(powerMgmt);
 
 		usart_comm_send_zstr("transmitter off.\r\n");
 		

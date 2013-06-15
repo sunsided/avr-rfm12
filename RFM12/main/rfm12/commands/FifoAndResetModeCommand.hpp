@@ -98,8 +98,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			FifoAndResetModeCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xCA80)
+			FifoAndResetModeCommand()
+				: command_word(0xCA80)
 			{}
 
 			public:

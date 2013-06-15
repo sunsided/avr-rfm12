@@ -62,8 +62,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			WakeupTimerCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xE196)
+			WakeupTimerCommand()
+				: command_word(0xE196)
 			{}
 				
 			public:				

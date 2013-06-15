@@ -48,8 +48,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			StatusReadCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0x0000)
+			StatusReadCommand()
+				: command_word(0x0000)
 			{}
 
 			public:

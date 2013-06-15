@@ -48,8 +48,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			FifoReadCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xB000)
+			FifoReadCommand()
+				: command_word(0xB000)
 			{}
 				
 			public:				

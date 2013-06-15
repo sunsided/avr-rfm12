@@ -91,8 +91,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			PllSettingCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xCC77)
+			PllSettingCommand()
+				: command_word(0xCC77)
 			{}
 				
 			public:				

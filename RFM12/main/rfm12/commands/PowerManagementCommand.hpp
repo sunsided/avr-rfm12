@@ -84,8 +84,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			PowerManagementCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0x8208)
+			PowerManagementCommand()
+				: command_word(0x8208)
 			{}
 				
 			public:				

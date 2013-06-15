@@ -50,8 +50,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			FrequencyCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xA680)
+			FrequencyCommand()
+				: command_word(0xA680)
 			{}
 
 			public:

@@ -126,8 +126,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			ReceiverControlCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0x9080)
+			ReceiverControlCommand()
+				: command_word(0x9080)
 			{}
 
 			public:

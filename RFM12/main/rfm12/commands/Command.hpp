@@ -11,12 +11,9 @@
 
 #include <stdint.h>
 #include "CommandType.hpp"
-// #include "CommandResult.hpp"
 
 namespace rfm12 
 {
-	class Rfm12;
-	
 	namespace commands
 	{
 		class CommandResult;
@@ -26,17 +23,12 @@ namespace rfm12
 		*/
 		class Command
 		{
-			friend class Rfm12;
-			
-		private:
-			Rfm12 *_owner;
-			
+		
 		public:
 			/**
 			* Virtual destructor
 			*/
-			inline Command(Rfm12 *owner) : _owner(owner)
-			{}
+			inline Command() {}
 		
 			/**
 			* Virtual destructor
@@ -59,13 +51,6 @@ namespace rfm12
 			* \return The command type
 			*/
 			virtual commandtype_t getCommandType() const = 0;
-			
-			/**
-			* \brief Executes the command.
-			*
-			* \returns The result
-			*/
-			const CommandResult* execute();
 		};
 
 	}

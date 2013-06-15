@@ -87,8 +87,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			DataFilterCommand (Rfm12 *owner) 
-				: Command(owner), command_word(0xC22C)
+			DataFilterCommand ()
+				: command_word(0xC22C)
 			{}
 
 			public:

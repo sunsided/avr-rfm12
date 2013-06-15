@@ -61,8 +61,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			LowDutyCycleCommand(Rfm12 *owner) 
-				: Command(owner), command_word(0xC80E)
+			LowDutyCycleCommand()
+				: command_word(0xC80E)
 			{}
 				
 			public:
