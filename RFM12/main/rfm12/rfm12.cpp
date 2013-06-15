@@ -32,7 +32,7 @@ Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBu
 	_commands[RFM12CMD_RECEIVERFIFO]			= new FifoReadCommand();
 	_commands[RFM12CMD_AFC]						= new AfcCommand();
 	_commands[RFM12CMD_TXCONFIGURATION]			= new TxConfigCommand();
-	_commands[RFM12CMD_PLLSETTING				= new PllSettingCommand();
+	_commands[RFM12CMD_PLLSETTING]				= new PllSettingCommand();
 	_commands[RFM12CMD_TRANSMITTERWRITE]		= new TransmitRegisterWriteCommand();
 	_commands[RFM12CMD_WAKEUPTIMER]				= new WakeupTimerCommand();
 	_commands[RFM12CMD_LOWDUTYCYCLE]			= new LowDutyCycleCommand();
