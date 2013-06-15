@@ -38,6 +38,7 @@
 #include "commands/StatusCommandResult.hpp"
 
 #include "TransceiverStrategy.hpp"
+#include "TransceiverMode.hpp"
 
 namespace rfm12
 {
@@ -82,6 +83,11 @@ namespace rfm12
 		* \brief The transceiver strategy
 		*/
 		transceiverstrategy_t _transceiverStrategy;
+		
+		/**
+		* \brief The transceiver mode
+		*/
+		transceivermode_t _transceiverMode;
 
 	public:
 		/**
@@ -132,6 +138,51 @@ namespace rfm12
 		 * \return The result.
 		 */
 		inline const commands::CommandResult* getCommandResult() const { return &_lastCommandResult; }
+
+		/**
+		* \brief Gets the transceiver mode.
+		*
+		* \returns The transceiver mode.
+		*/
+		inline const transceivermode_t getMode() const { return _transceiverMode; }
+
+		/**
+		* \brief Sets the transceiver strategy.
+		*
+		* \param strategy The selected mode
+		*/
+		inline void setTransceiverStrategy(register const transceiverstrategy_t strategy = RXTXSTRATEGY_FAST_SWITCHING) {
+			_transceiverStrategy = strategy;
+		}
+
+		/**
+		* \brief Adjusts the Power Management Command for the given transceiver strategy.
+		*
+		* \param command The command
+		* \param mode The selected mode
+		*/
+		void setTransceiverMode(register const transceivermode_t mode = RXTXMODE_RX);
+
+		/**
+		* \brief Enters transmit (TX) mode
+		*
+		* This implicitly issues an SPI transmission.
+		*/
+		inline void enterTransmitterMode() { setTransceiverMode(RXTXMODE_TX); }
+		
+		/**
+		* \brief Enters receive (RX) mode
+		*
+		* This implicitly issues an SPI transmission.
+		*/
+		void enterReceiverMode() { setTransceiverMode(RXTXMODE_RX); }
+		
+		/**
+		* \brief Enters idle mode (i.e. leaves transmitter and receiver mode)
+		*
+		* This implicitly issues an SPI transmission.
+		*/
+		void enterIdleMode() { setTransceiverMode(RXTXMODE_IDLE); }
 
 	public:
 	

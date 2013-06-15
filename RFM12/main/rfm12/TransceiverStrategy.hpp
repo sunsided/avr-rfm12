@@ -14,13 +14,20 @@
 */
 typedef enum {
 	/**
+	* \brief Do not apply any strategy
+	*
+	* This strategy will not interfere with any user settings.
+	*/
+	RXTXSTRATEGY_IGNORE = 0,
+	
+	/**
 	* \brief Assume fast RX/TX switching.
 	*
 	* This strategy will try to leave the synthesizer, crystal oscillator 
 	* and receiver baseband block enabled when switching RX and TX to
 	* minimize startup time.
 	*/
-	RXTXSTRATEGY_FAST_SWITCHING = 0
+	RXTXSTRATEGY_FAST_SWITCHING = 1
 	
 } transceiverstrategy_t;
 

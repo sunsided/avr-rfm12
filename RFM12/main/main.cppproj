@@ -18,15 +18,17 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <OverrideVtorValue>
+    </OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <CacheFlash>true</CacheFlash>
     <UncachedRange />
     <BootSegment>2</BootSegment>
-    <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
-    <avrtoolinterface>ISP</avrtoolinterface>
+    <avrtool>com.atmel.avrdbg.tool.simulator</avrtool>
+    <avrtoolinterface>
+    </avrtoolinterface>
     <com_atmel_avrdbg_tool_ispmk2>
       <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
       <ToolName>AVRISP mkII</ToolName>
@@ -75,7 +77,7 @@
       </StimuliFile>
       <Channel>
         <host>127.0.0.1</host>
-        <port>11368</port>
+        <port>56073</port>
         <ssl>False</ssl>
       </Channel>
     </com_atmel_avrdbg_tool_simulator>
@@ -299,6 +301,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\Rfm12.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rfm12\TransceiverMode.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12\TransceiverStrategy.hpp">

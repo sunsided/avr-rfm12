@@ -15,7 +15,9 @@ using namespace rfm12;
 using namespace commands;
 
 Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer)
-: _spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer), _transceiverStrategy(RXTXSTRATEGY_FAST_SWITCHING)
+:	_spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer), 
+	_transceiverStrategy(RXTXSTRATEGY_IGNORE),
+	_transceiverMode(RXTXMODE_IDLE)
 {
 	assert(NULL != spi);
 	assert(NULL != receiveBuffer);
@@ -74,6 +76,33 @@ inline const uint_fast16_t Rfm12::executeCommandInternalRaw(const uint_least16_t
 	return result;
 }
 
+
+/**
+* \brief Adjusts the Power Management Command for the given transceiver strategy.
+*
+* \param command The command
+* \param strategy The selected strategy.
+*/
+static inline void adjustForTransceiverStrategy(register PowerManagementCommand *command, register const transceiverstrategy_t strategy)
+{
+	switch (strategy)
+	{
+		default:
+		case RXTXSTRATEGY_IGNORE:
+		{
+			break;	
+		}
+		
+		case RXTXSTRATEGY_FAST_SWITCHING: 
+		{
+			command->setSynthesizerEnabled(true);
+			command->setCrystalOscillatorEnabled(true);
+			command->setReceiverBasebandCircuitryEnabled(true);
+			break;
+		}
+	}
+}
+
 /**
 * \brief Sends a command to the RFM12.
 *
@@ -83,14 +112,26 @@ inline const uint_fast16_t Rfm12::executeCommandInternalRaw(const uint_least16_t
 */
 const CommandResult* Rfm12::executeCommand(const Command* command)
 {
-	uint16_t command_code = command->getCommandWord();
+	const uint16_t command_code = command->getCommandWord();
 	
 	// apply the command word to the internal values if they match
-	Command* token = _commands[command->getCommandType()];
+	const commandtype_t type = command->getCommandType();
+	Command* token = _commands[type];
 	bool match = (command == token || token->applyCommandWord(command_code));
 	
 	// no matching command was found, abort.
 	if (!match) return NULL;
+	
+	// if it is a power management command, fetch the current transceiver mode
+	if (type == RFM12CMD_POWERMANAGEMENT) {
+		PowerManagementCommand *mgmt = static_cast<PowerManagementCommand*>(token);
+		_transceiverMode = mgmt->er ? RXTXMODE_RX : (mgmt->et ? RXTXMODE_TX : RXTXMODE_IDLE);
+		
+		// apply transceiver strategy here.
+		// if the strategy is set to RXTXSTRATEGY_IGNORE,
+		// the user settings will not be overwritten.
+		adjustForTransceiverStrategy(mgmt, _transceiverStrategy);
+	}
 	
 	// execute
 	const uint_fast16_t result = executeCommandInternalRaw(command_code);
@@ -112,6 +153,24 @@ const StatusCommandResult* Rfm12::readStatus()
 	// wrap in beautiful paper
 	_lastStatus.applyResult(result);
 	return &_lastStatus;
+}
+
+/**
+* \brief Adjusts the Power Management Command for the given transceiver strategy.
+*
+* \param command The command
+* \param mode The selected mode
+*/
+inline void Rfm12::setTransceiverMode(register const transceivermode_t mode) 
+{
+	if (mode == _transceiverMode) return;
+	
+	PowerManagementCommand *command = getPowerManagementCommand();
+	command->setReceiverBasebandCircuitryEnabled(RXTXMODE_RX == mode);
+	command->setTransmissionEnabled(RXTXMODE_TX == mode);
+
+	// NOTE: strategy adjustment is done in the command execution phase.
+	executeCommand(command);
 }
 
 /**
