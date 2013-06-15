@@ -15,7 +15,7 @@ using namespace rfm12;
 using namespace commands;
 
 Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer)
-: _spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer)
+: _spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer), _transceiverStrategy(RXTXSTRATEGY_FAST_SWITCHING)
 {
 	assert(NULL != spi);
 	assert(NULL != receiveBuffer);

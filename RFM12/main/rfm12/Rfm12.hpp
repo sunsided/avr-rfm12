@@ -37,6 +37,8 @@
 #include "commands/CommandResult.hpp"
 #include "commands/StatusCommandResult.hpp"
 
+#include "TransceiverStrategy.hpp"
+
 namespace rfm12
 {
 
@@ -61,7 +63,6 @@ namespace rfm12
 		*/
 		const ISendBuffer* _sendBuffer;
 		
-	private:
 		/**
 		* \brief The command array
 		*/
@@ -76,6 +77,11 @@ namespace rfm12
 		* \brief The last command result
 		*/
 		commands::CommandResult _lastCommandResult;
+
+		/**
+		* \brief The transceiver strategy
+		*/
+		transceiverstrategy_t _transceiverStrategy;
 
 	public:
 		/**

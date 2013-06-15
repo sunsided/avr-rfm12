@@ -301,6 +301,9 @@
     <Compile Include="rfm12\Rfm12.hpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="rfm12\TransceiverStrategy.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="ringbuffer\RingBuffer.cpp">
       <SubType>compile</SubType>
     </Compile>
