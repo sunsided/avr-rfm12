@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -22,7 +22,7 @@ namespace rfm12
 		/**
 		* \brief Data Rate Command
 		*/
-		class DataRateCommand : public ICommand {
+		class DataRateCommand : public Command {
 			friend class rfm12::Rfm12;
 			
 			public:
@@ -54,8 +54,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			DataRateCommand() 
-				: command_word(0xC623)
+			DataRateCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0xC623)
 			{}
 
 			public:

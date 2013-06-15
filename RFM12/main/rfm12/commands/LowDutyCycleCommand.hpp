@@ -10,7 +10,7 @@
 #define RFM12_LOWDUTYCYCLE_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -21,7 +21,7 @@ namespace rfm12
 		/**
 		* \brief Low Duty-Cycle Command
 		*/
-		class LowDutyCycleCommand : public ICommand {
+		class LowDutyCycleCommand : public Command {
 			friend class rfm12::Rfm12;
 			
 			public:
@@ -61,8 +61,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			LowDutyCycleCommand() 
-				: command_word(0xC80E)
+			LowDutyCycleCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0xC80E)
 			{}
 				
 			public:

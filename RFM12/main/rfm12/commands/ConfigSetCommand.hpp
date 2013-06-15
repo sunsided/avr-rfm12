@@ -10,7 +10,7 @@
 #define RFM12_CONFIGSET_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -55,7 +55,7 @@ namespace rfm12
 		/**
 		* \brief Configuration Setting Command.
 		*/
-		class ConfigSetCommand : public ICommand 
+		class ConfigSetCommand : public Command 
 		{
 			friend class rfm12::Rfm12;
 			
@@ -99,8 +99,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			ConfigSetCommand() 
-				: command_word(0x8008)
+			ConfigSetCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0x8008)
 			{}
 
 			public:

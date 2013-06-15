@@ -10,7 +10,7 @@
 #define RFM12_WAKEUPTIMER_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -21,7 +21,7 @@ namespace rfm12
 		/**
 		* \brief Wake-up Timer Command
 		*/
-		class WakeupTimerCommand : public ICommand {
+		class WakeupTimerCommand : public Command {
 			friend class rfm12::Rfm12;
 			
 			public:
@@ -62,8 +62,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			WakeupTimerCommand() 
-				: command_word(0xE196)
+			WakeupTimerCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0xE196)
 			{}
 				
 			public:				

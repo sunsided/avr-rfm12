@@ -8,10 +8,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/atomic.h>
-#include <assert.h>
-
-#include "system.h"
-#include <util/delay.h> 
+#include <avr/wdt.h>
 
 #include "comm/usart_comm.h"
 #include "comm/command_decoder.h"
@@ -84,14 +81,17 @@ void rfm12_initialize_interrupt()
 
 int main()
 {
+	wdt_disable();
+	
+	sleep(10);
+	led_doubleflash_sync();
+	
 	#if F_CPU != 16000000UL
 	#error Expected F_CPU to be 16MHz; Timer calculation will be wrong!
 	#endif
 
 	// Tja nu.
 	checkEndianessAndHangUpOnError();
-	
-	led_doubleflash_sync();
 	
 	// SPI initialisieren
 	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
@@ -124,22 +124,23 @@ int main()
 	using namespace rfm12::commands;
 	
 	// check interrupt pin
-	StatusCommandResult status;
+	const StatusCommandResult *status;
 	while ((PIND & (1 << PIND2)) == 0)
 	{
 		// status read clears interrupt flags in RFM12
 		status = rfm12->readStatus();
 	}
 	
-	led_doubleflash_sync();
-		
 	// signal we're ready to go
 	usart_comm_send_zstr("power-on reset cleared\r\n");
-	led_doubleflash_sync();
+	_delay_ms(200);
 	usart_comm_send_zstr("configuring ...\r\n");
 		
 	// configure the rfm12
 	configureRfm12(rfm12);
+	
+	led_doubleflash_sync();
+	sleep(1);
 	
 	// enable transceiver
 	PowerManagementCommand *powerMgmt = rfm12->getPowerManagementCommand();
@@ -148,7 +149,10 @@ int main()
 	powerMgmt->setSynthesizerEnabled(true);
 	powerMgmt->setCrystalOscillatorEnabled(true);
 	powerMgmt->setTransmissionEnabled(true);
-	rfm12->executeCommand(powerMgmt);
+	powerMgmt->execute();
+
+	usart_comm_send_zstr("transmitter configured.\r\n");
+	sleep(1);
 
 	// loopity loop.
 	for(;;)
@@ -161,84 +165,96 @@ int main()
 		
 		// enable transmission
 		powerMgmt->setTransmissionEnabled(true);
-		rfm12->executeCommand(powerMgmt);
-		
-		// sleep for some time
-		for (uint8_t i = 0; i < 10; ++i){
-			_delay_ms(100);
-		}
-		
+		powerMgmt->execute();
+		usart_comm_send_zstr("transmitter on ...\r\n");
+				
 		// wait until send register is empty
-		StatusCommandResult current_status;
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		const StatusCommandResult *current_status;
+		do { 
+			led_flash_sync();
+			current_status = rfm12->readStatus(); 
+			LED_ASSERT(current_status != NULL, 1);
+		} while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 		
 		// transmit a byte
-		TransmitRegisterWriteCommand *txWrite = rfm12->TransmitRegisterWrite();
+		TransmitRegisterWriteCommand *txWrite = rfm12->getTransmitRegisterWrite();
+		LED_ASSERT(txWrite != NULL, 2);
+		
 		txWrite->setData(0xAA);
-		rfm12->executeCommand(txWrite);
+		txWrite->execute();
+		usart_comm_send_char(0xAA);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 		
 		// transmit 0x2D
 		txWrite->setData(0x2D);
-		rfm12->executeCommand(txWrite);
+		txWrite->execute();
+		usart_comm_send_char(0x2D);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 		
 		// transmit 0xD4
 		txWrite->setData(0xD4);
-		rfm12->executeCommand(txWrite);
+		txWrite->execute();
+		usart_comm_send_char(0xD4);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0x42);
-		rfm12->executeCommand(txWrite);
+		txWrite->execute();
+		usart_comm_send_char(0x42);
 			
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0xB0);
-		rfm12->executeCommand(txWrite);
+		txWrite->execute();
+		usart_comm_send_char(0xB0);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0x0B);
-		rfm12->executeCommand(txWrite);
+		txWrite->execute();
+		usart_comm_send_char(0x0B);
 			
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0xAA);
-		rfm12->executeCommand(txWrite);
+		txWrite->execute();
+		usart_comm_send_char(0xAA);
 			
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status.rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		usart_comm_send_char(0x0);
 		
+		usart_comm_send_zstr("\r\ndone.\r\n");
 		// sleep for some time
-		for (uint8_t i = 0; i < 10; ++i){
-			_delay_ms(100);
-		}
+		sleep(1);
 		
 		// disable transmission
 		powerMgmt->setTransmissionEnabled(false);
-		rfm12->executeCommand(powerMgmt);
-		
-
+		powerMgmt->execute();
 
 		usart_comm_send_zstr("data sent\r\n");
 		
 		// sleep for some time
-		for (uint8_t i = 0; i < 50; ++i){
-			_delay_ms(100);
-		}
+		sleep(5);
 	}
 }
 
@@ -250,13 +266,32 @@ int main()
 inline void set_led(switch_t enabled) 
 {
 	DDRC |= (1 << DDC2);
+	DDRC |= (1 << DDC1);
 	
-	if (enabled)
+	if (enabled) {
 		SET_BIT(PORTC, PORTC2);
-	else 
+	}
+	else {
 		CLEAR_BIT(PORTC, PORTC2);
+	}
 }
 
+/*! 
+	\brief Enables or disables the LED
+	
+	\param enabled Determines if the LED should be enabled (\c ON) or disabled (\c OFF)
+*/
+inline void set_red_led(switch_t enabled) 
+{
+	DDRC |= (1 << DDC1);
+	
+	if (enabled) {
+		SET_BIT(PORTC, PORTC1);
+	}
+	else {
+		CLEAR_BIT(PORTC, PORTC1);
+	}
+}
 
 /*! 
 	\brief Toggles the LED on and off.

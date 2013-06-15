@@ -20,7 +20,7 @@ void configureRfm12(Rfm12 *rfm12)
 	powerMgmt->setLowBatteryDetectorEnabled(true);
 	powerMgmt->setCrystalOscillatorEnabled(false);
 	powerMgmt->setClockOutputEnabled(false);
-	rfm12->executeCommand(powerMgmt);
+	powerMgmt->execute();
 	
 	// 1000 0000 .... .... Configuration Setting Command
 	ConfigSetCommand *configSet = rfm12->getConfigSetCommand();
@@ -28,18 +28,18 @@ void configureRfm12(Rfm12 *rfm12)
 	configSet->setCrystalCapacitance(CL_120);
 	configSet->setDataRegisterEnabled(true);
 	configSet->setFifoEnabled(true);
-	rfm12->executeCommand(configSet);
+	configSet->execute();
 	
 	// 1010 .... .... .... Frequency Setting Command
 	FrequencyCommand *frequencySetting = rfm12->getFrequencyCommand();
 	frequencySetting->setByFrequency(433.0F);
-	rfm12->executeCommand(frequencySetting);
+	frequencySetting->execute();
 	
 	// 1100 0110 .... .... Data Rate Command
 	DataRateCommand *dataRate = rfm12->getDataRateCommand();
 	//dataRate->setBitRate(49.2F);
 	dataRate->setBitRate(0.6F);
-	rfm12->executeCommand(dataRate);
+	dataRate->execute();
 
 	// 1001 0... .... .... Receiver Control Command
 	ReceiverControlCommand *receiverControl = rfm12->getReceiverControlCommand();
@@ -48,7 +48,7 @@ void configureRfm12(Rfm12 *rfm12)
 	receiverControl->setReceiverBasebandBandwidth(RBBW_134);
 	receiverControl->setLnaGain(LNGAIN_0);
 	receiverControl->setRssiDetectorThreshold(RSSI_91);
-	rfm12->executeCommand(receiverControl);
+	receiverControl->execute();
 	
 	// 1100 0010 .... .... Data Filter Command
 	DataFilterCommand *dataFilter = rfm12->getDataFilterCommand();
@@ -56,7 +56,7 @@ void configureRfm12(Rfm12 *rfm12)
 	dataFilter->setClockRecoveryFastLockEnabled(false);
 	dataFilter->setDataFilterType(FILTER_DIGITAL);
 	dataFilter->setDqdTrheshold(4);
-	rfm12->executeCommand(dataFilter);
+	dataFilter->execute();
 	
 	FifoAndResetModeCommand *fifoAndResetMode = rfm12->getFifoAndResetModeCommand();
 	SynchronPatternCommand *synchronPattern = rfm12->getSynchronPatternCommand();
@@ -84,8 +84,8 @@ void configureRfm12(Rfm12 *rfm12)
 		synchronPattern->setSynchronByte(0x2D);
 	}
 	
-	rfm12->executeCommand(fifoAndResetMode);
-	rfm12->executeCommand(synchronPattern);
+	fifoAndResetMode->execute();
+	synchronPattern->execute();
 	
 	// 1100 0100 .... .... AFC Command
 	AfcCommand *afcCommand = rfm12->getAfcCommand();
@@ -95,13 +95,13 @@ void configureRfm12(Rfm12 *rfm12)
 	afcCommand->setFineModeEnabled(false);
 	afcCommand->setFrequencyOffsetRegisterEnabled(true);
 	afcCommand->setFrequencyOffsetCalculationEnabled(true);
-	rfm12->executeCommand(afcCommand);
+	afcCommand->execute();
 	
 	// 1001 100. .... .... TX Configuration Command
 	TxConfigCommand *txConfig = rfm12->getTxConfigCommand();
 	txConfig->setFsk(FSKDF_90KHZ);
 	txConfig->setOutputPower(OUTPOW_FULL);
-	rfm12->executeCommand(txConfig);
+	txConfig->execute();
 	
 	// 1100 1100 0.... .... PLL Setting Command
 	PllSettingCommand *pllSetting = rfm12->getPllSettingCommand();
@@ -109,21 +109,21 @@ void configureRfm12(Rfm12 *rfm12)
 	pllSetting->setPhaseDetectorDelayEnabled(false);
 	pllSetting->setPllDitheringEnabled(false);
 	pllSetting->setPllBandwidth(PLLBW_MAX_2560KBPS);
-	rfm12->executeCommand(pllSetting);
+	pllSetting->execute();
 	
 	// 111. .... .... ....Wake-Up Timer Command
 	WakeupTimerCommand *wakeupTimer = rfm12->getWakeUpTimerCommand();
 	wakeupTimer->disableWakeupTimer();
-	rfm12->executeCommand(wakeupTimer);
+	wakeupTimer->execute();
 	
 	// 1100 1000 .... .... Low Duty-Cycle Command
 	LowDutyCycleCommand *lowDutyCycle = rfm12->getLowDutyCycleCommand();
 	lowDutyCycle->setEnabled(false);
-	rfm12->executeCommand(lowDutyCycle);
+	lowDutyCycle->execute();
 	
 	// 1100 0000 .... .... Low Battery Detector and Microcontroller Clock Divider Command
 	BatteryDetectorAndClockDividerCommand *batteryAndClock = rfm12->getBatteryAndMicroCommand();
 	batteryAndClock->setClockDivider(CLKOUTFREQ_1660kHZ);
 	batteryAndClock->setVoltageThreshould(BATTHRESH_3150mV);
-	rfm12->executeCommand(batteryAndClock);
+	batteryAndClock->execute();
 }

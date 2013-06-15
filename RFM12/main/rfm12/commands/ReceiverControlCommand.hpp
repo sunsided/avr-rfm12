@@ -10,7 +10,7 @@
 #define RFM12_RECEIVERCONTROL_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -77,7 +77,7 @@ namespace rfm12
 		/**
 		* \brief Receiver Control Command
 		*/
-		class ReceiverControlCommand : public ICommand {
+		class ReceiverControlCommand : public Command {
 			friend class rfm12::Rfm12;
 			
 			public:
@@ -126,8 +126,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			ReceiverControlCommand() 
-				: command_word(0x9080)
+			ReceiverControlCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0x9080)
 			{}
 
 			public:

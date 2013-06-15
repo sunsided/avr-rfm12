@@ -10,7 +10,7 @@
 #define RFM12_FIFORESETMODE_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -48,7 +48,7 @@ namespace rfm12
 		/**
 		* \brief FIFO and Reset Mode Command
 		*/
-		class FifoAndResetModeCommand : public ICommand {
+		class FifoAndResetModeCommand : public Command {
 			friend class rfm12::Rfm12;
 			
 			public:
@@ -98,8 +98,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			FifoAndResetModeCommand() 
-				: command_word(0xCA80)
+			FifoAndResetModeCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0xCA80)
 			{}
 
 			public:

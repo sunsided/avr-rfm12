@@ -10,7 +10,7 @@
 #define RFM12_AFC_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -45,7 +45,7 @@ namespace rfm12
 		/**
 		* \brief AFC Command
 		*/
-		class AfcCommand : public ICommand 
+		class AfcCommand : public Command 
 		{
 			friend class rfm12::Rfm12;
 			
@@ -98,8 +98,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			AfcCommand() 
-				: command_word(0xC4F7)
+			AfcCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0xC4F7)
 			{}
 
 			public:

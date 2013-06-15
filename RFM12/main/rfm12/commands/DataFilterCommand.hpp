@@ -10,7 +10,7 @@
 #define RFM12_DATAFILTER_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -29,7 +29,7 @@ namespace rfm12
 		/**
 		* \brief Data Filter Command
 		*/
-		class DataFilterCommand : public ICommand {
+		class DataFilterCommand : public Command {
 			friend class rfm12::Rfm12;
 			
 			public:
@@ -87,8 +87,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			DataFilterCommand () 
-				: command_word(0xC22C)
+			DataFilterCommand (Rfm12 *owner) 
+				: Command(owner), command_word(0xC22C)
 			{}
 
 			public:

@@ -15,7 +15,7 @@
 #include "IReceiveBuffer.hpp"
 #include "ISendBuffer.hpp"
 
-#include "commands/ICommand.hpp"
+#include "commands/Command.hpp"
 #include "commands/ConfigSetCommand.hpp"
 #include "commands/PowerManagementCommand.hpp"
 #include "commands/FrequencyCommand.hpp"
@@ -65,7 +65,7 @@ namespace rfm12
 		/**
 		* \brief The command array
 		*/
-		commands::ICommand* _commands[RFM12_COMMAND_COUNT];
+		commands::Command _commands[RFM12_COMMAND_COUNT];
 	
 		/**
 		* \brief Results of the last status command
@@ -86,6 +86,11 @@ namespace rfm12
 		Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer);
 		
 		/**
+		* \brief Destructor
+		*/
+		~Rfm12();
+		
+		/**
 		* \brief Drives the internal communication system.
 		*
 		* This method should be called on every interrupt event from the RFM12's nIRQ line.
@@ -99,7 +104,7 @@ namespace rfm12
 		 *
 		 * \return The result
 		 */
-		inline const commands::CommandResult& executeCommand(const commands::ICommand* command)
+		inline const commands::CommandResult* executeCommand(const commands::Command* command)
 		{
 			return executeCommandRaw(command->getCommandWord());
 		}
@@ -111,7 +116,7 @@ namespace rfm12
 		 *
 		 * \return The result
 		 */
-		inline const commands::CommandResult& executeCommand(const commands::ICommand& command)
+		inline const commands::CommandResult* executeCommand(const commands::Command& command)
 		{
 			return executeCommandRaw(command.getCommandWord());
 		}
@@ -121,30 +126,33 @@ namespace rfm12
 		 *
 		 * \return The result.
 		 */
-		inline const commands::CommandResult& getCommandResult() const { return this->_lastCommandResult; }
+		inline const commands::CommandResult* getCommandResult() const { return &_lastCommandResult; }
 		
 		/**
 		 * \brief Reads the status register from the RFM12.
 		 *
 		 * \return The status.
 		 */
-		const commands::StatusCommandResult& readStatus();
+		const commands::StatusCommandResult* readStatus();
 
 		/**
 		 * \brief Gets the last status as retrieved per readStatus()
 		 *
 		 * \return The status.
 		 */
-		inline const commands::StatusCommandResult& getLastStatus() const { return this->_lastStatus; }
+		inline const commands::StatusCommandResult* getLastStatus() const { return &_lastStatus; }
 
+	public:
+	
 		/**
 		* \brief Gets the command defined by the id given.
 		*
 		* \param id The command id.
+		* \return The command
 		*/
-		commands::ICommand* getCommand(const commands::commandtype_t type);
-		
-	public:
+		inline commands::Command* getCommand(const commands::commandtype_t type) {
+			return _commands[type];
+		}
 	
 		/**
 		* \brief The status command
@@ -240,7 +248,7 @@ namespace rfm12
 		/**
 		* \brief Transmitter Register Write Command
 		*/
-		inline commands::TransmitRegisterWriteCommand* TransmitRegisterWrite() {
+		inline commands::TransmitRegisterWriteCommand* getTransmitRegisterWrite() {
 			return static_cast<commands::TransmitRegisterWriteCommand*>(this->_commands[commands::RFM12CMD_TRANSMITTERWRITE]);
 		}
 		
@@ -271,7 +279,7 @@ namespace rfm12
 		*
 		* \param command_code The command to execute.
 		*/
-		const commands::CommandResult& executeCommandRaw(const uint_least16_t command_code);
+		const commands::CommandResult* executeCommandRaw(const uint_least16_t command_code);
 	
 		/**
 		 * \brief Sends a command to the RFM12.

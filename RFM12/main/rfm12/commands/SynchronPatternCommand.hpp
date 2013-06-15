@@ -10,7 +10,7 @@
 #define RFM12_SYNCHRONPATTERN_H_
 
 #include <stdint.h>
-#include "ICommand.hpp"
+#include "Command.hpp"
 
 namespace rfm12
 {
@@ -21,7 +21,7 @@ namespace rfm12
 		/**
 		* \brief Synchron Pattern Command
 		*/
-		class SynchronPatternCommand : public ICommand {
+		class SynchronPatternCommand : public Command {
 			friend class rfm12::Rfm12;
 			
 			public:
@@ -50,8 +50,8 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			SynchronPatternCommand() 
-				: command_word(0xCED4)
+			SynchronPatternCommand(Rfm12 *owner) 
+				: Command(owner), command_word(0xCED4)
 			{}
 
 			public:
