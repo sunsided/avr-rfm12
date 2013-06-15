@@ -16,7 +16,7 @@ namespace rfm12
 		/**
 		* \brief The number of defined commands for the RFM12
 		*/
-		#define RFM12_COMMAND_COUNT (16U)
+		#define RFM12_COMMAND_COUNT (17U)
 		
 		/**
 		* \brief Enumeration of all commands
@@ -25,87 +25,87 @@ namespace rfm12
 			/**
 			* \brief Configuration Setting Command
 			*/
-			RFM12CMD_CONFIGURATION_SETTING = 1,
+			RFM12CMD_CONFIGURATION_SETTING = 0,
 			
 			/**
 			* \brief Power Management Command
 			*/
-			RFM12CMD_POWERMANAGEMENT = 2,
+			RFM12CMD_POWERMANAGEMENT = 1,
 			
 			/**
 			* \brief Frequency Setting Command
 			*/
-			RFM12CMD_FREQUENCYSETTING = 3,
+			RFM12CMD_FREQUENCYSETTING = 2,
 			
 			/**
 			* \brief Data Rate Command
 			*/
-			RFM12CMD_DATARATE = 4,
+			RFM12CMD_DATARATE = 3,
 			
 			/**
 			* \brief Receiver Control Command
 			*/
-			RFM12CMD_RECEIVERCONTROL = 5,
+			RFM12CMD_RECEIVERCONTROL = 4,
 			
 			/**
 			* \brief Data Filter Command
 			*/
-			RFM12CMD_DATAFILTER = 6,
+			RFM12CMD_DATAFILTER = 5,
 			
 			/**
 			* \brief FIFO and Reset Mode Command
 			*/
-			RFM12CMD_FIFOANDRESETMODE = 7,
+			RFM12CMD_FIFOANDRESETMODE = 6,
 			
 			/**
 			* \brief Synchron Pattern Command
 			*/
-			RFM12CMD_SYNCHRONPATTERN = 8,
+			RFM12CMD_SYNCHRONPATTERN = 7,
 			
 			/**
 			* \brief Receiver FIFO Read Command
 			*/
-			RFM12CMD_RECEIVERFIFO = 9,
+			RFM12CMD_RECEIVERFIFO = 8,
 			
 			/**
 			* \brief AFC Command
 			*/
-			RFM12CMD_AFC = 10,
+			RFM12CMD_AFC = 9,
 			
 			/**
 			* \brief TX Configuration Control Command
 			*/
-			RFM12CMD_TXCONFIGURATION = 11,
+			RFM12CMD_TXCONFIGURATION = 10,
 			
 			/**
 			* \brief PLL Setting Command
 			*/
-			RFM12CMD_PLLSETTING = 12,
+			RFM12CMD_PLLSETTING = 11,
 			
 			/**
 			* \brief Transmitter Register Write Command
 			*/
-			RFM12CMD_TRANSMITTERWRITE = 13,
+			RFM12CMD_TRANSMITTERWRITE = 12,
 			
 			/**
 			* \brief Wake-Up Timer Command
 			*/
-			RFM12CMD_WAKEUPTIMER = 14,
+			RFM12CMD_WAKEUPTIMER = 13,
 			
 			/**
 			* \brief Configuration Setting Command
 			*/
-			RFM12CMD_LOWDUTYCYCLE = 15,
+			RFM12CMD_LOWDUTYCYCLE = 14,
 			
 			/**
 			* \brief Low Battery Detector and Microcontroller Clock Divider Command
 			*/
-			RFM12CMD_LOWBATTERY_MCCLOCKDIVDER = 16,
+			RFM12CMD_LOWBATTERY_MCCLOCKDIVDER = 15,
 			
 			/**
 			* \brief Status Read Command
 			*/
-			RFM12CMD_STATUS_READ = 17,
+			RFM12CMD_STATUS_READ = 16,
 		} commandtype_t;
 	}
 }
