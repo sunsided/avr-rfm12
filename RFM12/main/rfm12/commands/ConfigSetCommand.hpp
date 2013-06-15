@@ -59,12 +59,12 @@ namespace rfm12
 		{
 			friend class rfm12::Rfm12;
 			
-			public:
+			protected:
 			union {
 				/**
 				* \brief The raw command word.
 				*/
-				const uint16_t command_word;
+				uint16_t command_word;
 				struct {
 					/**
 					* \brief The crystal load capacitance.
@@ -100,7 +100,7 @@ namespace rfm12
 			* \brief Initializes this instance to default values (POR)
 			*/
 			ConfigSetCommand() 
-				: command_word(0x8008)
+				: command_word(RFM12DEFAULT_CONFIGURATION_SETTING)
 			{}
 
 			public:
@@ -149,6 +149,20 @@ namespace rfm12
 			*/
 			inline commandtype_t getCommandType() const {
 				return RFM12CMD_CONFIGURATION_SETTING;
+			}
+			
+			/**
+			* \brief Applies the command word if the mask matches.
+			*
+			* \param value The value to set
+			* \returns true if the mask matched and the value was set, false otherwise
+			*/
+			inline bool applyCommandWord(const uint16_t value) {
+				if (isMatch(value, RFM12MASK_CONFIGURATION_SETTING, RFM12DEFAULT_CONFIGURATION_SETTING)) {
+					command_word = value;
+					return true;
+				}
+				return false;
 			}
 		};
 	}

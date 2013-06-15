@@ -63,29 +63,44 @@ Rfm12::~Rfm12() {
 	*
 	* \return The result
 	*/
-inline const uint_fast16_t Rfm12::executeCommandInternal(const uint_least16_t command_code) const
+inline const uint_fast16_t Rfm12::executeCommandInternalRaw(const uint_least16_t command_code) const
 {
 	_spi->beginTransmission();
 	uint_fast16_t result = _spi->transmitWord(command_code);
 	_spi->endTransmission();
 
-	// uint_fast16_t result  = spi_transmit((command_code >> 8) & 0xFF) << 8;
-	// 			   result |= spi_transmit(command_code & 0xFF);
-		
 	return result;
 }
 
 /**
-	* \brief Sends a command to the RFM12.
-	*
-	* \param command The command word
-	*
-	* \return The result
-	*/
-const CommandResult* Rfm12::executeCommandRaw(const uint_least16_t command_code)
+* \brief Sends a command to the RFM12.
+*
+* \param command The command word
+*
+* \return The result or NULL if the command was invalid
+*/
+const CommandResult* Rfm12::executeCommand(const Command* command)
 {
-	const uint_fast16_t result = executeCommandInternal(command_code);
+	uint16_t command_code = command->getCommandWord();
+	
+	// apply the command word to the internal values if they match
+	bool match = false;
+	for (uint8_t i=0; i<RFM12_COMMAND_COUNT; ++i) {
+		Command* token = _commands[i];
 		
+		// execute pointer check first to circumvent compare-and-set
+		if (command == token || token->applyCommandWord(command_code)) {
+			match = true;
+			break;
+		}
+	}
+	
+	// no matching command was found, abort.
+	if (!match) return NULL;
+	
+	// execute
+	const uint_fast16_t result = executeCommandInternalRaw(command_code);
+	
 	// wrap in beautiful paper
 	_lastCommandResult.applyResult(result);
 	return &_lastCommandResult;
@@ -98,7 +113,7 @@ const CommandResult* Rfm12::executeCommandRaw(const uint_least16_t command_code)
 	*/
 const StatusCommandResult* Rfm12::readStatus()
 {
-	const uint16_t result = executeCommandInternal(*this->_commands[RFM12CMD_STATUS_READ]);
+	const uint16_t result = executeCommandInternalRaw(*this->_commands[RFM12CMD_STATUS_READ]);
 		
 	// wrap in beautiful paper
 	_lastStatus.applyResult(result);

@@ -102,24 +102,9 @@ namespace rfm12
 		 *
 		 * \param command The command word
 		 *
-		 * \return The result
+		 * \return The result or NULL if the command was invalid
 		 */
-		inline const commands::CommandResult* executeCommand(const commands::Command* command)
-		{
-			return executeCommandRaw(command->getCommandWord());
-		}
-		
-		/**
-		 * \brief Sends a command to the RFM12.
-		 *
-		 * \param command The command word
-		 *
-		 * \return The result
-		 */
-		inline const commands::CommandResult* executeCommand(const commands::Command& command)
-		{
-			return executeCommandRaw(command.getCommandWord());
-		}
+		const commands::CommandResult* executeCommand(const commands::Command* command);
 		
 		/**
 		 * \brief Gets the last command result as retrieved per executeCommand*()
@@ -275,20 +260,13 @@ namespace rfm12
 
 	private:
 		/**
-		* \brief Executes an RFM12 command.
-		*
-		* \param command_code The command to execute.
-		*/
-		const commands::CommandResult* executeCommandRaw(const uint_least16_t command_code);
-	
-		/**
 		 * \brief Sends a command to the RFM12.
 		 *
 		 * \param command The command word
 		 *
 		 * \return The result
 		 */
-		inline const uint_fast16_t executeCommandInternal(const uint_least16_t command_code) const;
+		inline const uint_fast16_t executeCommandInternalRaw(const uint_least16_t command_code) const;
 	};
 
 }

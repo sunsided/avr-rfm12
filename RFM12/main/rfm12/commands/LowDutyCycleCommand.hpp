@@ -24,12 +24,12 @@ namespace rfm12
 		class LowDutyCycleCommand : public Command {
 			friend class rfm12::Rfm12;
 			
-			public:
+			protected:
 			union {
 				/**
 				* \brief The raw command word.
 				*/
-				const uint16_t command_word;
+				uint16_t command_word;
 				struct {	
 					/**
 					* \brief Enables the low duty-cycle command
@@ -62,7 +62,7 @@ namespace rfm12
 			* \brief Initializes this instance to default values (POR)
 			*/
 			LowDutyCycleCommand()
-				: command_word(0xC80E)
+				: command_word(RFM12DEFAULT_LOWDUTYCYCLE)
 			{}
 				
 			public:
@@ -97,6 +97,20 @@ namespace rfm12
 			*/
 			inline commandtype_t getCommandType() const {
 				return RFM12CMD_LOWDUTYCYCLE;
+			}
+			
+			/**
+			* \brief Applies the command word if the mask matches.
+			*
+			* \param value The value to set
+			* \returns true if the mask matched and the value was set, false otherwise
+			*/
+			inline bool applyCommandWord(const uint16_t value) {
+				if (isMatch(value, RFM12MASK_LOWDUTYCYCLE, RFM12DEFAULT_LOWDUTYCYCLE)) {
+					command_word = value;
+					return true;
+				}
+				return false;
 			}
 		};
 	}

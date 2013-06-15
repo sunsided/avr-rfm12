@@ -62,12 +62,12 @@ namespace rfm12
 		{
 			friend class rfm12::Rfm12;
 			
-			public:
+			protected:
 			union {
 				/**
 				* \brief The raw command word.
 				*/
-				const uint16_t command_word;
+				uint16_t command_word;
 				struct {
 					/**
 					* \brief Battery threshold voltage.
@@ -101,7 +101,7 @@ namespace rfm12
 			* \brief Initializes this instance to default values (POR)
 			*/
 			BatteryDetectorAndClockDividerCommand()
-				: command_word(0xC000)
+				: command_word(RFM12DEFAULT_LOWBATTERY_MCCLOCKDIVDER)
 			{}
 
 			public:
@@ -132,6 +132,20 @@ namespace rfm12
 			*/
 			inline commandtype_t getCommandType() const {
 				return RFM12CMD_LOWBATTERY_MCCLOCKDIVDER;
+			}
+			
+			/**
+			* \brief Applies the command word if the mask matches.
+			*
+			* \param value The value to set
+			* \returns true if the mask matched and the value was set, false otherwise
+			*/
+			inline bool applyCommandWord(const uint16_t value) {
+				if (isMatch(value, RFM12MASK_LOWBATTERY_MCCLOCKDIVDER, RFM12DEFAULT_LOWBATTERY_MCCLOCKDIVDER)) {
+					command_word = value;
+					return true;
+				}
+				return false;
 			}
 		};
 	}

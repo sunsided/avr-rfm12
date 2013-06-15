@@ -49,12 +49,12 @@ namespace rfm12
 		{
 			friend class rfm12::Rfm12;
 			
-			public:
+			protected:
 			union {
 				/**
 				* \brief The raw command word.
 				*/
-				const uint16_t command_word;
+				uint16_t command_word;
 				struct {
 					/**
 					* \brief Enable offset frequency calculation.
@@ -99,7 +99,7 @@ namespace rfm12
 			* \brief Initializes this instance to default values (POR)
 			*/
 			AfcCommand()
-				: command_word(0xC4F7)
+				: command_word(RFM12DEFAULT_AFC)
 			{}
 
 			public:
@@ -167,6 +167,19 @@ namespace rfm12
 				return RFM12CMD_AFC;
 			}
 			
+			/**
+			* \brief Applies the command word if the mask matches.
+			*
+			* \param value The value to set
+			* \returns true if the mask matched and the value was set, false otherwise
+			*/
+			inline bool applyCommandWord(const uint16_t value) {
+				if (isMatch(value, RFM12MASK_AFC, RFM12DEFAULT_AFC)) {
+					command_word = value;
+					return true;
+				}
+				return false;
+			}
 		};
 	}
 }

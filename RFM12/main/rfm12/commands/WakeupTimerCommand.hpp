@@ -24,12 +24,12 @@ namespace rfm12
 		class WakeupTimerCommand : public Command {
 			friend class rfm12::Rfm12;
 			
-			public:
+			protected:
 			union {
 				/**
 				* \brief The raw command word.
 				*/
-				const uint16_t command_word;
+				uint16_t command_word;
 				struct {
 					/**
 					* \brief Wake-up time period mantissa factor.
@@ -63,7 +63,7 @@ namespace rfm12
 			* \brief Initializes this instance to default values (POR)
 			*/
 			WakeupTimerCommand()
-				: command_word(0xE196)
+				: command_word(RFM12DEFAULT_WAKEUPTIMER)
 			{}
 				
 			public:				
@@ -103,6 +103,20 @@ namespace rfm12
 			*/
 			inline commandtype_t getCommandType() const {
 				return RFM12CMD_WAKEUPTIMER;
+			}
+			
+			/**
+			* \brief Applies the command word if the mask matches.
+			*
+			* \param value The value to set
+			* \returns true if the mask matched and the value was set, false otherwise
+			*/
+			inline bool applyCommandWord(const uint16_t value) {
+				if (isMatch(value, RFM12MASK_WAKEUPTIMER, RFM12DEFAULT_WAKEUPTIMER)) {
+					command_word = value;
+					return true;
+				}
+				return false;
 			}
 		};
 	}

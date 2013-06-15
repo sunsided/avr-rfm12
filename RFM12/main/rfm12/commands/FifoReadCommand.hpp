@@ -24,12 +24,12 @@ namespace rfm12
 		class FifoReadCommand : public Command {
 			friend class rfm12::Rfm12;
 			
-			public:
+			protected:
 			union {
 				/**
 				* \brief The raw command word.
 				*/
-				const uint16_t command_word;
+				uint16_t command_word;
 				struct {
 					/**
 					* \brief Padding.
@@ -49,7 +49,7 @@ namespace rfm12
 			* \brief Initializes this instance to default values (POR)
 			*/
 			FifoReadCommand()
-				: command_word(0xB000)
+				: command_word(RFM12DEFAULT_RECEIVERFIFO)
 			{}
 				
 			public:				
@@ -66,6 +66,20 @@ namespace rfm12
 			*/
 			inline commandtype_t getCommandType() const {
 				return RFM12CMD_RECEIVERFIFO;
+			}
+			
+			/**
+			* \brief Applies the command word if the mask matches.
+			*
+			* \param value The value to set
+			* \returns true if the mask matched and the value was set, false otherwise
+			*/
+			inline bool applyCommandWord(const uint16_t value) {
+				if (isMatch(value, RFM12MASK_RECEIVERFIFO, RFM12DEFAULT_RECEIVERFIFO)) {
+					command_word = value;
+					return true;
+				}
+				return false;
 			}
 		};
 	}
