@@ -65,7 +65,7 @@ namespace rfm12
 		/**
 		* \brief The command array
 		*/
-		commands::Command _commands[RFM12_COMMAND_COUNT];
+		commands::Command* _commands[RFM12_COMMAND_COUNT];
 	
 		/**
 		* \brief Results of the last status command

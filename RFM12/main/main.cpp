@@ -168,10 +168,11 @@ int main()
 		powerMgmt->execute();
 		usart_comm_send_zstr("transmitter on ...\r\n");
 				
+		sleep(1);	
+			
 		// wait until send register is empty
 		const StatusCommandResult *current_status;
 		do { 
-			led_flash_sync();
 			current_status = rfm12->readStatus(); 
 			LED_ASSERT(current_status != NULL, 1);
 		} while (!current_status->rgit_ffit);
@@ -187,7 +188,6 @@ int main()
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
-		usart_comm_send_char(0x0);
 		
 		// transmit 0x2D
 		txWrite->setData(0x2D);
@@ -196,7 +196,6 @@ int main()
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
-		usart_comm_send_char(0x0);
 		
 		// transmit 0xD4
 		txWrite->setData(0xD4);
@@ -205,7 +204,6 @@ int main()
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
-		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0x42);
@@ -214,7 +212,6 @@ int main()
 			
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
-		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0xB0);
@@ -223,7 +220,6 @@ int main()
 		
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
-		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0x0B);
@@ -232,7 +228,6 @@ int main()
 			
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
-		usart_comm_send_char(0x0);
 			
 		// transmit payload
 		txWrite->setData(0xAA);
@@ -241,9 +236,8 @@ int main()
 			
 		// wait until send register is empty
 		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
-		usart_comm_send_char(0x0);
 		
-		usart_comm_send_zstr("\r\ndone.\r\n");
+		usart_comm_send_zstr("\r\ndata sent.\r\n");
 		// sleep for some time
 		sleep(1);
 		
@@ -251,7 +245,7 @@ int main()
 		powerMgmt->setTransmissionEnabled(false);
 		powerMgmt->execute();
 
-		usart_comm_send_zstr("data sent\r\n");
+		usart_comm_send_zstr("transmitter off.\r\n");
 		
 		// sleep for some time
 		sleep(5);

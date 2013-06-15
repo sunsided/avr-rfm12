@@ -21,22 +21,22 @@ Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBu
 	assert(NULL != receiveBuffer);
 	assert(NULL != sendBuffer);
 	
-	_commands[RFM12CMD_CONFIGURATION_SETTING] = ConfigSetCommand(this);
-	_commands[RFM12CMD_POWERMANAGEMENT] = PowerManagementCommand(this);
-	_commands[RFM12CMD_FREQUENCYSETTING] = FrequencyCommand(this);
-	_commands[RFM12CMD_DATARATE] = DataRateCommand(this);
-	_commands[RFM12CMD_RECEIVERCONTROL] = ReceiverControlCommand(this);
-	_commands[RFM12CMD_DATAFILTER] = DataFilterCommand(this);
-	_commands[RFM12CMD_FIFOANDRESETMODE] = FifoAndResetModeCommand(this);
-	_commands[RFM12CMD_SYNCHRONPATTERN] = SynchronPatternCommand(this);
-	_commands[RFM12CMD_RECEIVERFIFO] = FifoReadCommand(this);
-	_commands[RFM12CMD_AFC] = AfcCommand(this);
-	_commands[RFM12CMD_TXCONFIGURATION] = TxConfigCommand(this);
-	_commands[RFM12CMD_PLLSETTING] = PllSettingCommand(this);
-	_commands[RFM12CMD_TRANSMITTERWRITE] = TransmitRegisterWriteCommand(this);
-	_commands[RFM12CMD_WAKEUPTIMER] = WakeupTimerCommand(this);
-	_commands[RFM12CMD_LOWDUTYCYCLE] = LowDutyCycleCommand(this);
-	_commands[RFM12CMD_LOWBATTERY_MCCLOCKDIVDER] = BatteryDetectorAndClockDividerCommand(this);
+	_commands[RFM12CMD_CONFIGURATION_SETTING] = new ConfigSetCommand(this);
+	_commands[RFM12CMD_POWERMANAGEMENT] = new PowerManagementCommand(this);
+	_commands[RFM12CMD_FREQUENCYSETTING] = new FrequencyCommand(this);
+	_commands[RFM12CMD_DATARATE] = new DataRateCommand(this);
+	_commands[RFM12CMD_RECEIVERCONTROL] = new ReceiverControlCommand(this);
+	_commands[RFM12CMD_DATAFILTER] = new DataFilterCommand(this);
+	_commands[RFM12CMD_FIFOANDRESETMODE] = new FifoAndResetModeCommand(this);
+	_commands[RFM12CMD_SYNCHRONPATTERN] = new SynchronPatternCommand(this);
+	_commands[RFM12CMD_RECEIVERFIFO] = new FifoReadCommand(this);
+	_commands[RFM12CMD_AFC] = new AfcCommand(this);
+	_commands[RFM12CMD_TXCONFIGURATION] = new TxConfigCommand(this);
+	_commands[RFM12CMD_PLLSETTING] = new PllSettingCommand(this);
+	_commands[RFM12CMD_TRANSMITTERWRITE] = new TransmitRegisterWriteCommand(this);
+	_commands[RFM12CMD_WAKEUPTIMER] = new WakeupTimerCommand(this);
+	_commands[RFM12CMD_LOWDUTYCYCLE] = new LowDutyCycleCommand(this);
+	_commands[RFM12CMD_LOWBATTERY_MCCLOCKDIVDER] = new BatteryDetectorAndClockDividerCommand(this);
 	_commands[RFM12CMD_STATUS_READ] = new StatusReadCommand(this);
 	
 	#ifdef DEBUG
