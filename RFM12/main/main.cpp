@@ -175,7 +175,7 @@ int main()
 		do { 
 			current_status = rfm12->readStatus(); 
 			LED_ASSERT(current_status != NULL, 1);
-		} while (!current_status->rgit_ffit);
+		} while (!current_status->isTransmitRegisterReady());
 		usart_comm_send_char(0x0);
 		
 		// transmit a byte
@@ -187,7 +187,7 @@ int main()
 		usart_comm_send_char(0xAA);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->isTransmitRegisterReady());
 		
 		// transmit 0x2D
 		txWrite->setData(0x2D);
@@ -195,7 +195,7 @@ int main()
 		usart_comm_send_char(0x2D);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->isTransmitRegisterReady());
 		
 		// transmit 0xD4
 		txWrite->setData(0xD4);
@@ -203,7 +203,7 @@ int main()
 		usart_comm_send_char(0xD4);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->isTransmitRegisterReady());
 			
 		// transmit payload
 		txWrite->setData(0x42);
@@ -211,7 +211,7 @@ int main()
 		usart_comm_send_char(0x42);
 			
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->isTransmitRegisterReady());
 			
 		// transmit payload
 		txWrite->setData(0xB0);
@@ -219,7 +219,7 @@ int main()
 		usart_comm_send_char(0xB0);
 		
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->isTransmitRegisterReady());
 			
 		// transmit payload
 		txWrite->setData(0x0B);
@@ -227,7 +227,7 @@ int main()
 		usart_comm_send_char(0x0B);
 			
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->isTransmitRegisterReady());
 			
 		// transmit payload
 		txWrite->setData(0xAA);
@@ -235,7 +235,7 @@ int main()
 		usart_comm_send_char(0xAA);
 			
 		// wait until send register is empty
-		do { current_status = rfm12->readStatus(); } while (!current_status->rgit_ffit);
+		do { current_status = rfm12->readStatus(); } while (!current_status->isTransmitRegisterReady());
 		
 		usart_comm_send_zstr("\r\ndata sent.\r\n");
 		// sleep for some time

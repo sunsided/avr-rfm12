@@ -18,7 +18,7 @@ namespace rfm12
 		*/
 		class StatusCommandResult
 		{
-		public:
+			private:
 			/**
 			* \brief The result data of a single command call
 			*/
@@ -133,6 +133,125 @@ namespace rfm12
 			* \brief Cast operator
 			*/
 			inline operator uint16_t() const { return this->result_word; }
+				
+			/**
+			* \brief TX register is ready to receive the next byte 
+			*
+			* Can be cleared by Transmitter Register Write Command.
+			*
+			* \returns true if the transmit register is ready to receive a byte.
+			*/
+			inline const bool isTransmitRegisterReady() const { return rgit_ffit; }
+				
+			/**
+			* \brief The number of data bits in the RX FIFO has reached the pre-programmed limit 
+			*
+			* Can be cleared by any of the FIFO read methods.
+			*
+			* \returns
+			*/
+			inline const bool isFifoLevelReached() const { return rgit_ffit; }
+				
+			/**
+			* \brief Power-on reset
+			*
+			* Cleared after Status Read Command
+			*
+			* \returns true if we are/were in power-on reset
+			*/
+			inline const bool isPowerOnReset() const { return por; }
+				
+			/**
+			* \brief TX register under run, register over write
+			*
+			* Cleared after Status Read Command.
+			*
+			* \returns true if the transmit buffer is underrun
+			*/
+			inline const bool isTransmitRegisterUnderrun() const { return ffov_rgur; }
+				
+			/**
+			* \brief RX FIFO overflow
+			*
+			* Cleared after Status Read Command.
+			*
+			* \returns true if the receive FIFO is overflown
+			*/
+			inline const bool isReceiverFifoOverflown() const { return ffov_rgur; }
+				
+			/**
+			* \brief Wake-up timer overflow
+			*
+			* Cleared after Status Read Command.
+			*
+			* \returns true if a wake-up was triggered
+			*/
+			inline const bool isWakeUpTimerOverflown() const { return wkup; }
+				
+			/**
+			* \brief Logic level on interrupt pin (pin 16) changed to low
+			*
+			* Cleared after Status Read Command.
+			*
+			* \returns true if an external interrupt occured
+			*/
+			inline const bool isExternalInterruptLow() const { return ext; }
+				
+			/**
+			* \brief Low battery detect, the power supply voltage is below the pre-programmed limit
+			*
+			* \returns true if the battery voltage level is low
+			*/
+			inline const bool isLowBatteryDetected() const { return lbd; }
+				
+			/**
+			* \brief FIFO is empty
+			*
+			* \returns true if the receiver FIFO is empty
+			*/
+			inline const bool isReceiverFifoEmpty() const { return ffem; }
+				
+			/**
+			* \brief Antenna tuning circuit detected strong enough RF signal
+			*
+			* \returns true if a strong signal is being received
+			*/
+			inline const bool isStrongRFSignal() const { return rssi_ats; }
+				
+			/**
+			* \brief The strength of the incoming signal is above the pre-programmed limit
+			*
+			* \returns true if RSSI is high
+			*/
+			inline const bool isHighRSSI() const { return rssi_ats; }
+				
+			/**
+			* \brief Data quality detector output
+			*
+			* \returns true if high signal quality is detected
+			*/
+			inline const bool isDataQualityDetected() const { return dqd; }
+				
+			/**
+			* \brief Clock recovery locked
+			*
+			* \returns true if recovery is locked
+			*/
+			inline const bool isClockRecoveryLocked() const { return crl; }
+				
+			/**
+			* \brief Toggling in each AFC cycle
+			*
+			* \returns Binary value.
+			*/
+			inline const bool getAFCCycleIndicator() const { return atgl; }
+				
+			/**
+			* \brief Offset value to be added to the value of the frequency control parameter
+			*
+			* \returns The frequency offset
+			*/
+			inline const uint8_t getFrequencyOffset() const { return (offs_sign ? 0b11110000 : 0b0000000) | offs; }
 		};		
 	}
 }
