@@ -84,16 +84,8 @@ const CommandResult* Rfm12::executeCommand(const Command* command)
 	uint16_t command_code = command->getCommandWord();
 	
 	// apply the command word to the internal values if they match
-	bool match = false;
-	for (uint8_t i=0; i<RFM12_COMMAND_COUNT; ++i) {
-		Command* token = _commands[i];
-		
-		// execute pointer check first to circumvent compare-and-set
-		if (command == token || token->applyCommandWord(command_code)) {
-			match = true;
-			break;
-		}
-	}
+	Command* token = _commands[command->getCommandType()];
+	bool match = (command == token || token->applyCommandWord(command_code));
 	
 	// no matching command was found, abort.
 	if (!match) return NULL;
@@ -107,10 +99,10 @@ const CommandResult* Rfm12::executeCommand(const Command* command)
 }
 
 /**
-	* \brief Reads the status register from the RFM12.
-	*
-	* \return Status byte
-	*/
+* \brief Reads the status register from the RFM12.
+*
+* \return Status byte
+*/
 const StatusCommandResult* Rfm12::readStatus()
 {
 	const uint16_t result = executeCommandInternalRaw(*this->_commands[RFM12CMD_STATUS_READ]);

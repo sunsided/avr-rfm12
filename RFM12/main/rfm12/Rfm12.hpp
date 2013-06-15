@@ -96,7 +96,21 @@ namespace rfm12
 		* This method should be called on every interrupt event from the RFM12's nIRQ line.
 		*/	
 		void pulse();
-		
+				
+		/**
+		 * \brief Reads the status register from the RFM12.
+		 *
+		 * \return The status.
+		 */
+		const commands::StatusCommandResult* readStatus();
+
+		/**
+		 * \brief Gets the last status as retrieved per readStatus()
+		 *
+		 * \return The status.
+		 */
+		inline const commands::StatusCommandResult* getLastStatus() const { return &_lastStatus; }
+
 		/**
 		 * \brief Sends a command to the RFM12.
 		 *
@@ -112,20 +126,6 @@ namespace rfm12
 		 * \return The result.
 		 */
 		inline const commands::CommandResult* getCommandResult() const { return &_lastCommandResult; }
-		
-		/**
-		 * \brief Reads the status register from the RFM12.
-		 *
-		 * \return The status.
-		 */
-		const commands::StatusCommandResult* readStatus();
-
-		/**
-		 * \brief Gets the last status as retrieved per readStatus()
-		 *
-		 * \return The status.
-		 */
-		inline const commands::StatusCommandResult* getLastStatus() const { return &_lastStatus; }
 
 	public:
 	
