@@ -7,6 +7,8 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "ringbuffer", "ringbuffer\ri
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "rfm12", "rfm12\rfm12.cppproj", "{BC08C5BF-AE83-4C34-A66E-73826C281B34}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "spi", "spi\spi.cppproj", "{616308D0-ACA8-405B-85E9-C66DA4AC695E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -25,6 +27,10 @@ Global
 		{BC08C5BF-AE83-4C34-A66E-73826C281B34}.Debug|AVR.Build.0 = Debug|AVR
 		{BC08C5BF-AE83-4C34-A66E-73826C281B34}.Release|AVR.ActiveCfg = Release|AVR
 		{BC08C5BF-AE83-4C34-A66E-73826C281B34}.Release|AVR.Build.0 = Release|AVR
+		{616308D0-ACA8-405B-85E9-C66DA4AC695E}.Debug|AVR.ActiveCfg = Debug|AVR
+		{616308D0-ACA8-405B-85E9-C66DA4AC695E}.Debug|AVR.Build.0 = Debug|AVR
+		{616308D0-ACA8-405B-85E9-C66DA4AC695E}.Release|AVR.ActiveCfg = Release|AVR
+		{616308D0-ACA8-405B-85E9-C66DA4AC695E}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

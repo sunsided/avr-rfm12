@@ -9,8 +9,8 @@
 #ifndef __RFM12SPIADAPTER_H__
 #define __RFM12SPIADAPTER_H__
 
-#include "../spi/SpiMaster.hpp"
-#include "../rfm12/ISpi.hpp"
+#include <SpiMaster.hpp>
+#include <ISpi.hpp>
 
 namespace adapters
 {
