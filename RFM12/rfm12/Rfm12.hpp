@@ -34,8 +34,8 @@
 #include "commands/BatteryDetectorAndClockDividerCommand.hpp"
 #include "commands/StatusReadCommand.hpp"
 
-#include "commands/CommandResult.hpp"
-#include "commands/StatusCommandResult.hpp"
+#include "results/CommandResult.hpp"
+#include "results/StatusCommandResult.hpp"
 
 #include "TransceiverStrategy.hpp"
 #include "TransceiverMode.hpp"
