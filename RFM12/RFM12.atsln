@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Atmel Studio Solution File, Format Version 11.00
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "main", "main\main.cppproj", "{7C38DAF7-65E1-48DA-AB02-87C29E1C14C7}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "ringbuffer", "ringbuffer\ringbuffer.cppproj", "{DE1CABF1-EF37-4105-89D4-37921A74C865}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -13,6 +15,10 @@ Global
 		{7C38DAF7-65E1-48DA-AB02-87C29E1C14C7}.Debug|AVR.Build.0 = Debug|AVR
 		{7C38DAF7-65E1-48DA-AB02-87C29E1C14C7}.Release|AVR.ActiveCfg = Release|AVR
 		{7C38DAF7-65E1-48DA-AB02-87C29E1C14C7}.Release|AVR.Build.0 = Release|AVR
+		{DE1CABF1-EF37-4105-89D4-37921A74C865}.Debug|AVR.ActiveCfg = Debug|AVR
+		{DE1CABF1-EF37-4105-89D4-37921A74C865}.Debug|AVR.Build.0 = Debug|AVR
+		{DE1CABF1-EF37-4105-89D4-37921A74C865}.Release|AVR.ActiveCfg = Release|AVR
+		{DE1CABF1-EF37-4105-89D4-37921A74C865}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
