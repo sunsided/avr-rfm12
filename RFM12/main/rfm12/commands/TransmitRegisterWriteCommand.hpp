@@ -62,7 +62,7 @@ namespace rfm12
 			/**
 			* \brief Sets the data for transmission.
 			*/
-			inline void setData(uint8_t byte = 0xAA) { this->t = byte; }
+			inline void setData(const uint8_t byte = 0xAA) { this->t = byte; }
 				
 			/**
 			* \brief Gets this command's type.
