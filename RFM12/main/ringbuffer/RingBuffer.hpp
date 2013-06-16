@@ -13,7 +13,7 @@
 
 // #include <avr/cpufunc.h> 
 #ifndef _MemoryBarrier
-#define _MemoryBarrier() __asm__ __volatile__("":::"memory")
+#define _MemoryBarrier() __asm__ __volatile__("":::"memory") // not including avr/cpufunc.h because of an error
 #endif
 
 namespace ringbuffer 

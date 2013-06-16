@@ -13,11 +13,32 @@
 #include <assert.h>
 #include "../RingBuffer.hpp"
 
+/**
+* \brief Instruction for condition prediction
+*/
+#ifndef likely_match(x)
+#ifdef __GNUC__
+#define likely_match(x)		__builtin_expect(!!(x), 1)		//<! GCC specific, http://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-g_t_005f_005fbuiltin_005fexpect-3067
+#else
+#define likely_match(x)		(x)
+#endif /* __GNUC__ */
+#endif /* likely_match */
+
+/**
+* \brief Instruction for condition prediction
+*/
+#ifndef unlikely_match(x)
+#ifdef __GNUC__
+#define unlikely_match(x)	__builtin_expect(!!(x), 0)		//<! GCC specific, http://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-g_t_005f_005fbuiltin_005fexpect-3067
+#else
+#define unlikely_match(x)	(x)
+#endif /* __GNUC__ */
+#endif /* unlikely_match */
+
 namespace ringbuffer 
 {
 	namespace specializations 
 	{
-
 		class RingBufferAnySize : public RingBuffer
 		{
 	
@@ -66,7 +87,7 @@ namespace ringbuffer
 				_buffer[--_write_index] = item;
 		
 				// reset the write pointer if needed
-				if (0 == _write_index) {
+				if (unlikely_match(0 == _write_index)) {
 					_write_index = _size;
 				}
 		
@@ -102,7 +123,7 @@ namespace ringbuffer
 				item = _buffer[--_read_index];
 		
 				// reset the read pointer if needed
-				if (0 == _read_index) {
+				if (unlikely_match(0 == _read_index)) {
 					_read_index = _size;
 				}
 		
