@@ -23,7 +23,7 @@ namespace rfm12
 			* \brief Configuration Setting Command (#1)
 			*/
 			RFM12MASK_CONFIGURATION_SETTING = (uint16_t)0b1111111100000000U,
-			
+						
 			/**
 			* \brief Power Management Command (#2)
 			*/

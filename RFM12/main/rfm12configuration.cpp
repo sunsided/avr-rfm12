@@ -11,6 +11,26 @@ using namespace rfm12;
 using namespace rfm12::commands;
 
 /**
+* \brief Initializes the RFM12 interrupt pin.
+* 
+* \return void
+*/
+void initializeRfm12Interrupt()
+{
+	// DDRC: Data Direction Register, Port D
+	// Set pin D2 input
+	RFM12_IRQ_PIN_DDR &= ~(1 << RFM12_IRQ_PIN_DDR_BIT);
+
+	// PCICR: Pin Change Interrupt Control Register
+	// PCMSK2 monitioring active
+	RFM12_IRQ_PCICR |= (1 << RFM12_IRQ_PCICR_IEBIT);
+	
+	// PCMSK: Pin Change Mask Register
+	// Pin D2 triggers interrupt
+	RFM12_IRQ_PCIMASK |= (1 << RFM12_IRQ_PCIMASK_BIT);
+}
+
+/**
 * \brief Configures the given RFM12 instance
 */
 void configureRfm12(Rfm12 *rfm12)

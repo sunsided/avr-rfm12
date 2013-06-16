@@ -25,6 +25,7 @@
 #include "rfm12configuration.hpp"
 
 using namespace rfm12;
+using namespace rfm12::commands;
 
 #define SPI_DDR				DDRB
 #define SPI_PORT			PORTB
@@ -34,10 +35,6 @@ using namespace rfm12;
 #define SPI_BIT_MISO		PINB4
 #define SPI_BIT_SCK			PORTB5
 #define SPI_BIT_SS			PORTB2
-
-#define RFM12_IRQ_PIN_REG	PIND
-#define RFM12_IRQ_PIN_BIT	PIND2
-#define RFM12_INTERRUPT_PIN_VALUE (RFM12_IRQ_PIN_REG & (1 << RFM12_IRQ_PIN_BIT))
 
 /**
 * \brief Determines if a pulse of the rfm12 instance is needed.
@@ -56,55 +53,16 @@ static enum {
 	TXSTATE_TRANSMITTING,		//<! System is transmitting
 } txdemostate = TXSTATE_IDLE_TXOFF;
 
-/**
-* \brief Endianess-Überprüfung der Bitfields
-*/
-void checkEndianessAndHangUpOnError()
-{
-	/*
-	commands::PowerManagementCommand powerMgmt;
-	powerMgmt.eb = true;
-	powerMgmt.ex = false;
-	powerMgmt.dc = true;
-	
-	// if endianness is reversed, hang up.
-	if (0b0101 != (powerMgmt.command_word & 0b0101)) 
-	{
-		while(1) { led_doubleflash_sync(); }
-	}
-	*/
-}
-
-/**
-	* \brief Initializes the RFM12 interrupt pin.
-	* 
-	* \return void
-	*/
-void rfm12_initialize_interrupt()
-{
-	// DDRC: Data Direction Register, Port D
-	DDRD &= ~(1 << DDD2);		// Pin D2 als Eingang setzen
-
-	// PCICR: Pin Change Interrupt Control Register
-	PCICR |= (1 << PCIE2);		// PCMSK2-Überprüfung aktivieren
-	
-	// PCMSK: Pin Change Mask Register
-	PCMSK2 |= (1 << PCINT18);	// Pin D2 triggert interrupt
-}
-
 int main()
 {
 	wdt_disable();
 	
-	sleep(10);
+	sleep(5);
 	led_doubleflash_sync();
 	
 	#if F_CPU != 16000000UL
 	#error Expected F_CPU to be 16MHz; Timer calculation will be wrong!
 	#endif
-
-	// Tja nu.
-	checkEndianessAndHangUpOnError();
 	
 	// SPI initialisieren
 	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
@@ -121,7 +79,7 @@ int main()
 	adapters::Rfm12SendBuffer *rfm12SendBufferAdapter = new adapters::Rfm12SendBuffer(rfm12SendBuffer);
 		
 	// Prepare SPI and RFM12
-	rfm12_initialize_interrupt();
+	initializeRfm12Interrupt();
 	
 	// Fire and go.
 	sei();
@@ -132,9 +90,6 @@ int main()
 		
 	// initialisieren des RFM12
 	Rfm12 *rfm12 = new Rfm12(rfm12SpiAdapter, rfm12ReceiveBufferAdapter, rfm12SendBufferAdapter);
-			
-	// TODO: State machine: Fortfahren, wenn externer Interrupt HIGH.
-	using namespace rfm12::commands;
 	
 	// check interrupt pin
 	const StatusCommandResult *status;
@@ -154,6 +109,11 @@ int main()
 	
 	led_doubleflash_sync();
 	sleep(1);
+	
+	// sanity checking
+#ifdef DEBUG
+	LED_ASSERT(rfm12->getPowerManagementCommand()->checkBitfieldIsValid(), 10);
+#endif	
 	
 	// enable fast-switching strategy and commit (receiver still in idle mode)
 	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_SWITCHING, true);
