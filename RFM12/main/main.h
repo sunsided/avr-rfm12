@@ -47,12 +47,19 @@ void led_doubleflash_sync();
 * \brief Sleeps for the given number of seconds
 */
 static inline void sleep(uint8_t seconds) {
-	set_red_led(ON);
 	for (uint8_t s = 0; s < seconds; ++s) {
-		for (uint8_t loops = 0; loops < 10; ++loops) {
-			_delay_ms(100);
+		for (uint8_t loops = 0; loops < 20; ++loops) {
+			_delay_ms(50);
 		}
 	}
+}
+
+/**
+* \brief Sleeps for the given number of seconds
+*/
+static inline void red_sleep(uint8_t seconds) {
+	set_red_led(ON);
+	sleep(seconds);
 	set_red_led(OFF);
 }
 
