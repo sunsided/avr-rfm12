@@ -7,7 +7,6 @@
 
 #include <avr/interrupt.h>
 #include <avr/io.h>
-#include "../main.h"
 #include "ISpi.hpp"
 #include "Rfm12.hpp"
 

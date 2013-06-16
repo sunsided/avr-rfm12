@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.1</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.CPP</ToolchainName>
-    <ProjectGuid>{de1cabf1-ef37-4105-89d4-37921a74c865}</ProjectGuid>
+    <ProjectGuid>{bc08c5bf-ae83-4c34-a66e-73826c281b34}</ProjectGuid>
     <avrdevice>ATmega328P</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>StaticLibrary</OutputType>
@@ -14,9 +14,9 @@
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AvrGccProjectExtensions>
     </AvrGccProjectExtensions>
-    <AssemblyName>ringbuffer</AssemblyName>
-    <Name>ringbuffer</Name>
-    <RootNamespace>ringbuffer</RootNamespace>
+    <AssemblyName>rfm12</AssemblyName>
+    <Name>rfm12</Name>
+    <RootNamespace>rfm12</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
@@ -95,7 +95,7 @@
             <Value>DEBUG</Value>
           </ListValues>
         </avrgcccpp.compiler.symbols.DefSymbols>
-        <avrgcccpp.compiler.optimization.level>Optimize most (-O3)</avrgcccpp.compiler.optimization.level>
+        <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
         <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
         <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
         <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
@@ -111,19 +111,106 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="specializations\" />
+    <Folder Include="commands\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RingBuffer.cpp">
+    <Compile Include="commands\AfcCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="RingBuffer.hpp">
+    <Compile Include="commands\BatteryDetectorAndClockDividerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="specializations\RingBufferAnySize.hpp">
+    <Compile Include="commands\Command.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="specializations\RingBufferPow2.hpp">
+    <Compile Include="commands\Command.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\CommandDefaults.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\CommandMask.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\CommandResult.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\CommandType.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\ConfigSetCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\DataFilterCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\DataRateCommand.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\DataRateCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\FifoAndResetModeCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\FifoReadCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\FrequencyCommand.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\FrequencyCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\LowDutyCycleCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\PllSettingCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\PowerManagementCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\ReceiverControlCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\StatusCommandResult.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\StatusReadCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\SynchronPatternCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\TransmitRegisterWriteCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\TxConfigCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="commands\WakeupTimerCommand.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="IReceiveBuffer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ISendBuffer.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ISpi.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Rfm12.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Rfm12.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TransceiverMode.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TransceiverStrategy.hpp">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

@@ -11,13 +11,13 @@
 #include <avr/wdt.h>
 
 #include <RingBuffer.hpp>
+#include <Rfm12.hpp>
 
 #include "comm/usart_comm.h"
 #include "comm/command_decoder.h"
 
 #include "main.h"
 #include "spi/SpiMaster.hpp"
-#include "rfm12/rfm12.hpp"
 #include "adapters/Rfm12SpiAdapter.hpp"
 #include "adapters/Rfm12ReceiveBuffer.hpp"
 #include "adapters/Rfm12SendBuffer.hpp"

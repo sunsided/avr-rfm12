@@ -10,7 +10,7 @@
 #define RFM12CONFIGURATION_H_
 
 #include <avr/io.h>
-#include "rfm12/Rfm12.hpp"
+#include <Rfm12.hpp>
 
 #define RFM12_IRQ_PIN_DDR			DDRD		//<! Data Direction Register
 #define RFM12_IRQ_PIN_DDR_BIT		DDD2		//<! Data Direction Register bit

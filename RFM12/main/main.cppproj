@@ -148,6 +148,7 @@
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
       <Value>../../ringbuffer</Value>
+      <Value>../../rfm12</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
   <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
@@ -214,105 +215,6 @@
     <Compile Include="rfm12configuration.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="rfm12\commands\Command.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\CommandDefaults.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\CommandMask.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\CommandType.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\Command.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\AfcCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\BatteryDetectorAndClockDividerCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\CommandResult.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\ConfigSetCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\DataFilterCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\DataRateCommand.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\DataRateCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\FifoReadCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\FifoAndResetModeCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\FrequencyCommand.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\FrequencyCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\StatusCommandResult.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\LowDutyCycleCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\PllSettingCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\PowerManagementCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\ReceiverControlCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\StatusReadCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\SynchronPatternCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\TxConfigCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\TransmitRegisterWriteCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\commands\WakeupTimerCommand.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\IReceiveBuffer.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\ISendBuffer.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\ISpi.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\Rfm12.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\Rfm12.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\TransceiverMode.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="rfm12\TransceiverStrategy.hpp">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="spi\SpiMaster.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -330,10 +232,13 @@
     <Folder Include="comm" />
     <Folder Include="adapters" />
     <Folder Include="spi" />
-    <Folder Include="rfm12" />
-    <Folder Include="rfm12\commands" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\rfm12\rfm12.cppproj">
+      <Name>rfm12</Name>
+      <Project>{bc08c5bf-ae83-4c34-a66e-73826c281b34}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\ringbuffer\ringbuffer.cppproj">
       <Name>ringbuffer</Name>
       <Project>{de1cabf1-ef37-4105-89d4-37921a74c865}</Project>
