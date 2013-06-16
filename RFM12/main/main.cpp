@@ -10,9 +10,9 @@
 #include <util/atomic.h>
 #include <avr/wdt.h>
 
-#include <RingBuffer.hpp>
-#include <Rfm12.hpp>
-#include <SpiMaster.hpp>
+#include <ringbuffer/RingBuffer.hpp>
+#include <rfm12/Rfm12.hpp>
+#include <spi/SpiMaster.hpp>
 
 #include "comm/usart_comm.h"
 #include "comm/command_decoder.h"

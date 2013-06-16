@@ -10,8 +10,8 @@
 #define RFM12SENDBUFFER_H_
 
 
-#include <RingBuffer.hpp>
-#include <ISendBuffer.hpp>
+#include <ringbuffer/RingBuffer.hpp>
+#include <rfm12/ISendBuffer.hpp>
 
 namespace adapters
 {

@@ -20,15 +20,15 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.8.1" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.8.1" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -111,107 +111,108 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="commands\" />
-    <Folder Include="results" />
+    <Folder Include="rfm12" />
+    <Folder Include="rfm12\commands\" />
+    <Folder Include="rfm12\results\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="commands\AfcCommand.hpp">
+    <Compile Include="rfm12\commands\AfcCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\BatteryDetectorAndClockDividerCommand.hpp">
+    <Compile Include="rfm12\commands\BatteryDetectorAndClockDividerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\Command.cpp">
+    <Compile Include="rfm12\commands\Command.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\Command.hpp">
+    <Compile Include="rfm12\commands\Command.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\CommandDefaults.hpp">
+    <Compile Include="rfm12\commands\CommandDefaults.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\CommandMask.hpp">
+    <Compile Include="rfm12\commands\CommandMask.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\CommandType.hpp">
+    <Compile Include="rfm12\commands\CommandType.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\ConfigSetCommand.hpp">
+    <Compile Include="rfm12\commands\ConfigSetCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\DataFilterCommand.hpp">
+    <Compile Include="rfm12\commands\DataFilterCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\DataRateCommand.cpp">
+    <Compile Include="rfm12\commands\DataRateCommand.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\DataRateCommand.hpp">
+    <Compile Include="rfm12\commands\DataRateCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\FifoAndResetModeCommand.hpp">
+    <Compile Include="rfm12\commands\FifoAndResetModeCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\FifoReadCommand.hpp">
+    <Compile Include="rfm12\commands\FifoReadCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\FrequencyCommand.cpp">
+    <Compile Include="rfm12\commands\FrequencyCommand.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\FrequencyCommand.hpp">
+    <Compile Include="rfm12\commands\FrequencyCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\LowDutyCycleCommand.hpp">
+    <Compile Include="rfm12\commands\LowDutyCycleCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\PllSettingCommand.hpp">
+    <Compile Include="rfm12\commands\PllSettingCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\PowerManagementCommand.hpp">
+    <Compile Include="rfm12\commands\PowerManagementCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\ReceiverControlCommand.hpp">
+    <Compile Include="rfm12\commands\ReceiverControlCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\StatusReadCommand.hpp">
+    <Compile Include="rfm12\commands\StatusReadCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\SynchronPatternCommand.hpp">
+    <Compile Include="rfm12\commands\SynchronPatternCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\TransmitRegisterWriteCommand.hpp">
+    <Compile Include="rfm12\commands\TransmitRegisterWriteCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\TxConfigCommand.hpp">
+    <Compile Include="rfm12\commands\TxConfigCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\WakeupTimerCommand.hpp">
+    <Compile Include="rfm12\commands\WakeupTimerCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="IReceiveBuffer.hpp">
+    <Compile Include="rfm12\IReceiveBuffer.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ISendBuffer.hpp">
+    <Compile Include="rfm12\ISendBuffer.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ISpi.hpp">
+    <Compile Include="rfm12\ISpi.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="results\CommandResult.hpp">
+    <Compile Include="rfm12\results\CommandResult.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="results\StatusCommandResult.hpp">
+    <Compile Include="rfm12\results\StatusCommandResult.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Rfm12.cpp">
+    <Compile Include="rfm12\Rfm12.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Rfm12.hpp">
+    <Compile Include="rfm12\Rfm12.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="TransceiverMode.hpp">
+    <Compile Include="rfm12\TransceiverMode.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="TransceiverStrategy.hpp">
+    <Compile Include="rfm12\TransceiverStrategy.hpp">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

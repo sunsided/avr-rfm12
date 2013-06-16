@@ -20,15 +20,15 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.8.1" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.8.1" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -111,19 +111,20 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="specializations\" />
+    <Folder Include="ringbuffer" />
+    <Folder Include="ringbuffer\specializations\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RingBuffer.cpp">
+    <Compile Include="ringbuffer\RingBuffer.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="RingBuffer.hpp">
+    <Compile Include="ringbuffer\RingBuffer.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="specializations\RingBufferAnySize.hpp">
+    <Compile Include="ringbuffer\specializations\RingBufferAnySize.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="specializations\RingBufferPow2.hpp">
+    <Compile Include="ringbuffer\specializations\RingBufferPow2.hpp">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

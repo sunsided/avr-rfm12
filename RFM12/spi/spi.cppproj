@@ -99,12 +99,15 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="SpiMaster.cpp">
+    <Compile Include="spi\SpiMaster.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SpiMaster.hpp">
+    <Compile Include="spi\SpiMaster.hpp">
       <SubType>compile</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="spi" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
