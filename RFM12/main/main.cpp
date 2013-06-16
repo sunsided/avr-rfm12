@@ -148,7 +148,6 @@ int main()
 			{			
 				// the interrupt knows best
 				if (_rfm12PulseRequired) {
-					usart_comm_send_char(0x0);
 					set_led(OFF);
 					rfm12->pulse();
 				}
