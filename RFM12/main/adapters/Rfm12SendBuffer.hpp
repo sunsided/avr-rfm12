@@ -47,7 +47,7 @@ namespace adapters
 		*				this value is undefined.
 		* \return true if a byte was fetched, false otherwise
 		*/
-		inline bool fetch(uint_least8_t &data) {
+		inline bool fetch(uint_least8_t *data) {
 			return _buffer->tryRead(data);
 		}
 	

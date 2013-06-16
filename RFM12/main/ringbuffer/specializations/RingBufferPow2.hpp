@@ -87,7 +87,9 @@ namespace ringbuffer
 		*				value is undefined.
 		* \returns true if an item was read, false otherwise
 		*/
-		inline bool tryRead(register rbdata_t &item) { 
+		inline bool tryRead(register rbdata_t *item) { 
+			assert(NULL != item);
+			
 			// loop until the buffer has a full slot
 			if (!canRead()) return false;
 
@@ -98,7 +100,7 @@ namespace ringbuffer
 			--_fillLevel;
 				
 			// write to the current write index
-			item = _buffer[_read_index];
+			*item = _buffer[_read_index];
 		
 			// advance the read pointer
 			_read_index = (_read_index+1) & this->_sizeMask;

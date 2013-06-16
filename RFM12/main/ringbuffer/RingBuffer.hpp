@@ -59,7 +59,7 @@ namespace ringbuffer
 		/**
 		* \brief The actual data buffer
 		*/
-		rbdata_t *_buffer;
+		rbdata_t *const _buffer;
 
 		/**
 		* \brief The actual size of the ring buffer
@@ -166,7 +166,7 @@ namespace ringbuffer
 		*				value is undefined.
 		* \returns true if an item was read, false otherwise
 		*/
-		virtual bool tryRead(register rbdata_t &item) = 0;
+		virtual bool tryRead(register rbdata_t *item) = 0;
 	
 		/**
 		* \brief Reads an item from the buffer.
@@ -178,7 +178,7 @@ namespace ringbuffer
 		inline rbdata_t readSync() { 	
 			// loop until the buffer has a full slot
 			rbdata_t item;
-			do {} while (!tryRead(item));
+			do {} while (!tryRead(&item));
 		
 			// there we go
 			return item;

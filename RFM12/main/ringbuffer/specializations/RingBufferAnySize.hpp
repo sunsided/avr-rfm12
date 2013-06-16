@@ -16,7 +16,7 @@
 /**
 * \brief Instruction for condition prediction
 */
-#ifndef likely_match(x)
+#ifndef likely_match
 #ifdef __GNUC__
 #define likely_match(x)		__builtin_expect(!!(x), 1)		//<! GCC specific, http://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-g_t_005f_005fbuiltin_005fexpect-3067
 #else
@@ -27,7 +27,7 @@
 /**
 * \brief Instruction for condition prediction
 */
-#ifndef unlikely_match(x)
+#ifndef unlikely_match
 #ifdef __GNUC__
 #define unlikely_match(x)	__builtin_expect(!!(x), 0)		//<! GCC specific, http://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-g_t_005f_005fbuiltin_005fexpect-3067
 #else
@@ -109,7 +109,9 @@ namespace ringbuffer
 			*				value is undefined.
 			* \returns true if an item was read, false otherwise
 			*/
-			inline bool tryRead(register rbdata_t &item) { 
+			inline bool tryRead(register rbdata_t *item) { 
+				assert(NULL != item);
+				
 				// loop until the buffer has a full slot
 				if (!canRead()) return false;
 
@@ -120,7 +122,7 @@ namespace ringbuffer
 				--_fillLevel;
 				
 				// write to the current write index and advance the pointer
-				item = _buffer[--_read_index];
+				*item = _buffer[--_read_index];
 		
 				// reset the read pointer if needed
 				if (unlikely_match(0 == _read_index)) {
