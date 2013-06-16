@@ -67,7 +67,8 @@ namespace rfm12
 		/**
 		* \brief The command array
 		*/
-		commands::Command *_commands[RFM12_COMMAND_COUNT];
+		//commands::Command *_commands[RFM12_COMMAND_COUNT];
+		commands::Command **const _commands;
 	
 		/**
 		* \brief Results of the last status command
@@ -92,17 +93,28 @@ namespace rfm12
 		/**
 		* \brief Pointer for fast access to the write command
 		*/
-		commands::TransmitRegisterWriteCommand *const _txWriteFastAccess;
+		//commands::TransmitRegisterWriteCommand *const _txWriteFastAccess;
+		commands::TransmitRegisterWriteCommand *_txWriteFastAccess;
 		
 		/**
 		* \brief Pointer for fast access to the read command
 		*/
-		commands::FifoReadCommand *const _receiverReadFastAccess;
+		//commands::FifoReadCommand *const _receiverReadFastAccess;
+		commands::FifoReadCommand *_receiverReadFastAccess;
 
 		/**
 		* \brief Pointer for fast access to the status read command
 		*/
-		commands::StatusReadCommand *const _statusReadFastAccess;
+		//commands::StatusReadCommand *const _statusReadFastAccess;
+		commands::StatusReadCommand *_statusReadFastAccess;
+		
+		/**
+		* \brief Determines if the current transmission is done.
+		*
+		* This value will be set automatically depending on the number of bytes in
+		* the send buffer. If no byte could be read, transmission is considered done.
+		*/
+		volatile bool _transmissionDone;
 
 	public:
 		/**
@@ -211,6 +223,13 @@ namespace rfm12
 			_transceiverStrategy = strategy;
 			if (forceCommit) setTransceiverMode(_transceiverMode, true);
 		}
+
+		/**
+		* \brief Determines whether the current transmission is considered done.
+		*
+		* \returns The transmission state
+		*/
+		inline const bool isTransmissionDone() const { return _transmissionDone; }
 
 	public:
 	

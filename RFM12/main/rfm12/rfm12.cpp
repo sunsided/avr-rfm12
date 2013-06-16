@@ -16,11 +16,10 @@ using namespace commands;
 
 Rfm12::Rfm12(ISpi* spi, IReceiveBuffer *receiveBuffer, ISendBuffer *sendBuffer)
 :	_spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer), 
+	_commands(new Command*[RFM12_COMMAND_COUNT]),
 	_transceiverStrategy(RXTXSTRATEGY_IGNORE),
 	_transceiverMode(RXTXMODE_IDLE),
-	_txWriteFastAccess(static_cast<commands::TransmitRegisterWriteCommand*>(_commands[RFM12CMD_TRANSMITTERWRITE])),
-	_receiverReadFastAccess(static_cast<commands::FifoReadCommand*>(_commands[RFM12CMD_RECEIVERFIFO])),
-	_statusReadFastAccess(static_cast<commands::StatusReadCommand*>(_commands[RFM12CMD_STATUS_READ]))
+	_transmissionDone(true)
 {
 	assert(NULL != spi);
 	assert(NULL != receiveBuffer);
@@ -45,6 +44,11 @@ Rfm12::Rfm12(ISpi* spi, IReceiveBuffer *receiveBuffer, ISendBuffer *sendBuffer)
 	_commands[RFM12CMD_LOWDUTYCYCLE]			= new LowDutyCycleCommand();
 	_commands[RFM12CMD_LOWBATTERY_MCCLOCKDIVDER] = new BatteryDetectorAndClockDividerCommand();
 	_commands[RFM12CMD_STATUS_READ]				= new StatusReadCommand();
+	
+	// TODO: make 'em const
+	_txWriteFastAccess			= static_cast<TransmitRegisterWriteCommand*>(_commands[RFM12CMD_TRANSMITTERWRITE]);
+	_receiverReadFastAccess		= static_cast<FifoReadCommand*>(_commands[RFM12CMD_RECEIVERFIFO]);
+	_statusReadFastAccess		= static_cast<StatusReadCommand*>(_commands[RFM12CMD_STATUS_READ]);
 	
 	#ifdef DEBUG
 	for (uint8_t i=0; i<RFM12_COMMAND_COUNT; ++i) {
@@ -230,7 +234,12 @@ void Rfm12::pulseTx(register const StatusCommandResult *status)
 	// try to fetch a byte from the send buffer.
 	// if no byte could be read, abort.
 	uint_least8_t data;
-	if (!_sendBuffer->fetch(&data)) return;
+	if (!_sendBuffer->fetch(&data)) {
+		_transmissionDone = true;
+		
+		// TODO: If we were in transmitting state before, send an additional dummy byte, then power down? otherwise this will rely on the user.
+		return;
+	}
 	
 	// send the byte
 	TransmitRegisterWriteCommand *write = getTransmitRegisterWrite();
