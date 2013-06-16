@@ -183,6 +183,21 @@ namespace rfm12
 				}
 				return false;
 			}
+			
+			/**
+			* \brief Sanity check.
+			*
+			* Quick hack check to ensure the compiler generates the correct bit field order.
+			*
+			* \return Bitfield order valid.
+			*/
+			inline bool checkBitfieldIsValid() const {
+#ifdef DEBUG
+				return command_code == 0b10000010;
+#else
+				return true;
+#endif
+			}
 		};
 	}
 }
