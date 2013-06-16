@@ -52,17 +52,17 @@ namespace rfm12
 		/**
 		* \brief The SPI interface used for communication.
 		*/
-		const ISpi* _spi;
+		ISpi *const _spi;
 	
 		/**
 		* \brief The receive buffer interface for inbound data
 		*/
-		const IReceiveBuffer* _receiveBuffer;
+		IReceiveBuffer *const _receiveBuffer;
 		
 		/**
 		* \brief The send buffer interface for outbound data
 		*/
-		const ISendBuffer* _sendBuffer;
+		ISendBuffer *const _sendBuffer;
 		
 		/**
 		* \brief The command array
@@ -89,13 +89,28 @@ namespace rfm12
 		*/
 		transceivermode_t _transceiverMode;
 
+		/**
+		* \brief Pointer for fast access to the write command
+		*/
+		commands::TransmitRegisterWriteCommand *const _txWriteFastAccess;
+		
+		/**
+		* \brief Pointer for fast access to the read command
+		*/
+		commands::FifoReadCommand *const _receiverReadFastAccess;
+
+		/**
+		* \brief Pointer for fast access to the status read command
+		*/
+		commands::StatusReadCommand *const _statusReadFastAccess;
+
 	public:
 		/**
 		* \brief Initializes this instance.
 		*
 		* \param spi The SPI interface to use.
 		*/
-		Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer);
+		Rfm12(ISpi* spi, IReceiveBuffer *receiveBuffer, ISendBuffer *sendBuffer);
 		
 		/**
 		* \brief Destructor
@@ -213,7 +228,8 @@ namespace rfm12
 		* \brief The status command
 		*/
 		const inline commands::StatusReadCommand* getStatusCommand() const { 
-			return static_cast<commands::StatusReadCommand*>(this->_commands[commands::RFM12CMD_STATUS_READ]); 
+			return _statusReadFastAccess;
+			// return static_cast<commands::StatusReadCommand*>(this->_commands[commands::RFM12CMD_STATUS_READ]); 
 		}
 			
 		/**
@@ -276,7 +292,8 @@ namespace rfm12
 		* \brief Receiver FIFO Read Command
 		*/
 		const inline commands::FifoReadCommand* getFifoReadCommand() const {
-			return static_cast<commands::FifoReadCommand*>(this->_commands[commands::RFM12CMD_RECEIVERFIFO]);
+			return _receiverReadFastAccess;
+			// return static_cast<commands::FifoReadCommand*>(this->_commands[commands::RFM12CMD_RECEIVERFIFO]);
 		}
 		
 		/**
@@ -304,7 +321,8 @@ namespace rfm12
 		* \brief Transmitter Register Write Command
 		*/
 		inline commands::TransmitRegisterWriteCommand* getTransmitRegisterWrite() {
-			return static_cast<commands::TransmitRegisterWriteCommand*>(this->_commands[commands::RFM12CMD_TRANSMITTERWRITE]);
+			return _txWriteFastAccess;
+			// return static_cast<commands::TransmitRegisterWriteCommand*>(this->_commands[commands::RFM12CMD_TRANSMITTERWRITE]);
 		}
 		
 		/**
@@ -337,6 +355,16 @@ namespace rfm12
 		 * \return The result
 		 */
 		inline const uint_fast16_t executeCommandInternalRaw(const uint_least16_t command_code) const;
+		
+		/**
+		* \brief Drives the internal communication system; Called internally when in transmitter mode.
+		*/	
+		void pulseTx(register const commands::StatusCommandResult *status);
+		
+		/**
+		* \brief Drives the internal communication system; Called internally when in receiver mode.
+		*/	
+		void pulseRx(register const commands::StatusCommandResult *status);
 	};
 
 }

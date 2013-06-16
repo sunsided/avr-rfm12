@@ -14,10 +14,13 @@
 using namespace rfm12;
 using namespace commands;
 
-Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBuffer *sendBuffer)
+Rfm12::Rfm12(ISpi* spi, IReceiveBuffer *receiveBuffer, ISendBuffer *sendBuffer)
 :	_spi(spi), _receiveBuffer(receiveBuffer), _sendBuffer(sendBuffer), 
 	_transceiverStrategy(RXTXSTRATEGY_IGNORE),
-	_transceiverMode(RXTXMODE_IDLE)
+	_transceiverMode(RXTXMODE_IDLE),
+	_txWriteFastAccess(static_cast<commands::TransmitRegisterWriteCommand*>(_commands[RFM12CMD_TRANSMITTERWRITE])),
+	_receiverReadFastAccess(static_cast<commands::FifoReadCommand*>(_commands[RFM12CMD_RECEIVERFIFO])),
+	_statusReadFastAccess(static_cast<commands::StatusReadCommand*>(_commands[RFM12CMD_STATUS_READ]))
 {
 	assert(NULL != spi);
 	assert(NULL != receiveBuffer);
@@ -47,6 +50,10 @@ Rfm12::Rfm12(const ISpi* spi, const IReceiveBuffer *receiveBuffer, const ISendBu
 	for (uint8_t i=0; i<RFM12_COMMAND_COUNT; ++i) {
 		assert(_commands[i] != NULL);
 	}
+	
+	assert(_txWriteFastAccess		== _commands[RFM12CMD_TRANSMITTERWRITE]);
+	assert(_receiverReadFastAccess	== _commands[RFM12CMD_RECEIVERFIFO]);
+	assert(_statusReadFastAccess	== _commands[RFM12CMD_STATUS_READ]);
 	#endif
 }
 
@@ -180,7 +187,60 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 */	
 void Rfm12::pulse() 
 {
-	// TODO: When in transmitter mode, if the send buffer is empty, disable power amplifier but keep oscillator and synthesizer enabled until idle mode is enabled manually. If the send buffer is filled again, enable end send.
+	// poll the status
+	const StatusCommandResult *status = readStatus();
+	
+	// TODO: Test for interrupts
+	
+	// Handle transceiver
+	switch (_transceiverMode)	
+	{
+		default:
+		case RXTXMODE_IDLE:
+		{
+			break;
+		}
+		
+		case RXTXMODE_TX:
+		{
+			pulseTx(status);
+			break;
+		}
+		
+		case RXTXMODE_RX:
+		{
+			pulseRx(status);
+			break;
+		}
+	}
 	
 	// TODO: State transmitting, transmitting-idle, receiving, idle
+}
+
+/**
+* \brief Drives the internal communication system; Called internally when in transmitter mode.
+*/	
+void Rfm12::pulseTx(register const StatusCommandResult *status)
+{
+	// TODO: When in transmitter mode, if the send buffer is empty, disable power amplifier but keep oscillator and synthesizer enabled until idle mode is enabled manually. If the send buffer is filled again, enable end send.
+	
+	// if the transmit register is not empty, abort.
+	if (!status->isTransmitRegisterReady()) return;
+	
+	// try to fetch a byte from the send buffer.
+	// if no byte could be read, abort.
+	uint_least8_t data;
+	if (!_sendBuffer->fetch(&data)) return;
+	
+	// send the byte
+	TransmitRegisterWriteCommand *write = getTransmitRegisterWrite();
+	write->setData(data);
+	executeCommand(write);
+}
+		
+/**
+* \brief Drives the internal communication system; Called internally when in receiver mode.
+*/	
+void Rfm12::pulseRx(register const commands::StatusCommandResult *status) 
+{
 }
