@@ -90,21 +90,9 @@ int main()
 		
 	// initialisieren des RFM12
 	Rfm12 *rfm12 = new Rfm12(rfm12SpiAdapter, rfm12ReceiveBufferAdapter, rfm12SendBufferAdapter);
-	
-	// check interrupt pin
-	const StatusCommandResult *status;
-	while (RFM12_INTERRUPT_PIN_VALUE == 0)
-	{
-		// status read clears interrupt flags in RFM12
-		status = rfm12->readStatus();
-	}
-	
-	// signal we're ready to go
-	usart_comm_send_zstr("power-on reset cleared\r\n");
-	_delay_ms(200);
-	usart_comm_send_zstr("configuring ...\r\n");
 		
 	// configure the rfm12
+	usart_comm_send_zstr("configuring ...\r\n");
 	configureRfm12(rfm12);
 	
 	led_doubleflash_sync();

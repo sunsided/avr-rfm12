@@ -35,6 +35,13 @@ void initializeRfm12Interrupt()
 */
 void configureRfm12(Rfm12 *rfm12)
 {
+	// check interrupt pin
+	// status read clears interrupt flags in RFM12 (in this case: power-on reset)
+	while (RFM12_INTERRUPT_PIN_VALUE == 0)
+	{
+		rfm12->readStatus();
+	}
+	
 	// Set sleep mode
 	PowerManagementCommand *powerMgmt = rfm12->getPowerManagementCommand();
 	powerMgmt->setLowBatteryDetectorEnabled(true);
