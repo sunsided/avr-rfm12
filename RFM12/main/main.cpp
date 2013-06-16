@@ -44,6 +44,15 @@ using namespace rfm12;
 static volatile bool _rfm12PulseRequired = false;
 
 /**
+* \brief State of the send demo
+*/
+static enum {
+	TXSTATE_IDLE_TXOFF,			//<! System is idle and transmitter is disabled
+	TXSTATE_IDLE_TXON,			//<! System is idle and transmitter is enabled
+	TXSTATE_TRANSMITTING,		//<! System is transmitting
+} txdemostate = TXSTATE_IDLE_TXOFF;
+
+/**
 * \brief Endianess-Überprüfung der Bitfields
 */
 void checkEndianessAndHangUpOnError()
@@ -151,43 +160,61 @@ int main()
 	// loopity loop.
 	for(;;)
 	{
-		/*
-		if (_rfm12PulseRequired) {
-			rfm12->pulse();
-		}
-		*/
-		
-		// at this point, the receiver should not be active, so we may very well reset the buffer
-		rfm12SendBuffer->reset();
-		rfm12SendBuffer->writeSync(0xAA);
-		rfm12SendBuffer->writeSync(0x2D);
-		rfm12SendBuffer->writeSync(0xD4);
-		rfm12SendBuffer->writeSync(0x42);
-		rfm12SendBuffer->writeSync(0xB0);
-		rfm12SendBuffer->writeSync(0x0B);
-		rfm12SendBuffer->writeSync(0xAA);
-		
-		// enable transmission
-		rfm12->enterTransmitterMode();
-		usart_comm_send_zstr("transmitter on ...\r\n");
+		switch (txdemostate) 
+		{
+			case TXSTATE_IDLE_TXOFF: 
+			{
+				// at this point, the receiver should not be active, so we may very well reset the buffer
+				rfm12SendBuffer->reset();
+				rfm12SendBuffer->writeSync(0xAA);
+				rfm12SendBuffer->writeSync(0x2D);
+				rfm12SendBuffer->writeSync(0xD4);
+				rfm12SendBuffer->writeSync(0x42);
+				rfm12SendBuffer->writeSync(0xB0);
+				rfm12SendBuffer->writeSync(0x0B);
+				rfm12SendBuffer->writeSync(0xAA);
+								
+				// enable transmitter, then sleep
+				rfm12->enterTransmitterMode();
+				usart_comm_send_zstr("transmitter on ...\r\n");
+				sleep(1);
 				
-		sleep(1);
-		
-		do {
-			rfm12->pulse(); // TODO: return status flags
-			_delay_ms(1);
+				txdemostate = TXSTATE_TRANSMITTING;
+				break;
+			}
+						
+			case TXSTATE_TRANSMITTING:
+			{			
+				// the interupt knows best
+				if (_rfm12PulseRequired) {
+					rfm12->pulse();
+					usart_comm_send_char('!');
+				}
+				
+				ringbuffer::rbsize_t fillLevel = rfm12SendBuffer->getFillLevel();
+				usart_comm_send_char(fillLevel);
+				
+				// if the transmission is not done, do not switch state
+				if (!rfm12->isTransmissionDone()) break;
+				usart_comm_send_zstr("data sent.\r\n");
+				txdemostate = TXSTATE_IDLE_TXON;
+				break;
+			}
+			
+			case TXSTATE_IDLE_TXON:
+			{
+				sleep(1);
+				
+				// disable transmission
+				rfm12->enterIdleMode();
+				usart_comm_send_zstr("transmitter off.\r\n");
+				
+				// sleep for some time
+				sleep(5);
+				txdemostate = TXSTATE_IDLE_TXOFF;
+				break;
+			}
 		}
-		while(!rfm12->isTransmissionDone());
-		
-		sleep(1);
-		
-		// disable transmission
-		rfm12->enterIdleMode();
-
-		usart_comm_send_zstr("transmitter off.\r\n");
-		
-		// sleep for some time
-		sleep(5);
 	}
 }
 
