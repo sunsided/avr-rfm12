@@ -30,7 +30,7 @@ namespace rfm12
 		*				this value is undefined.
 		* \return true if a byte was fetched, false otherwise
 		*/
-		virtual bool fetch(uint_least8_t &data) = 0;
+		virtual bool fetch(uint_least8_t *data) = 0;
 	};
 
 }
