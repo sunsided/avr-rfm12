@@ -119,11 +119,21 @@ int main()
 				// at this point, the receiver should not be active, so we may very well reset the buffer
 				rfm12SendBuffer->reset();
 				rfm12SendBuffer->writeSync(0xAA);
+				rfm12SendBuffer->writeSync(0xAA);
+				rfm12SendBuffer->writeSync(0xAA);
+				rfm12SendBuffer->writeSync(0xAA);
+				
 				rfm12SendBuffer->writeSync(0x2D);
 				rfm12SendBuffer->writeSync(0xD4);
+				rfm12SendBuffer->writeSync(0x01);
+				rfm12SendBuffer->writeSync(0x02);
+				rfm12SendBuffer->writeSync(0x03);
+				rfm12SendBuffer->writeSync(0x04);
 				rfm12SendBuffer->writeSync(0x42);
 				rfm12SendBuffer->writeSync(0xB0);
 				rfm12SendBuffer->writeSync(0x0B);
+				rfm12SendBuffer->writeSync(0xE3);
+				
 				rfm12SendBuffer->writeSync(0xAA);
 								
 				// enable transmitter, then sleep
@@ -140,11 +150,7 @@ int main()
 				// the interupt knows best
 				if (_rfm12PulseRequired) {
 					rfm12->pulse();
-					usart_comm_send_char('!');
 				}
-				
-				ringbuffer::rbsize_t fillLevel = rfm12SendBuffer->getFillLevel();
-				usart_comm_send_char(fillLevel);
 				
 				// if the transmission is not done, do not switch state
 				if (!rfm12->isTransmissionDone()) break;
