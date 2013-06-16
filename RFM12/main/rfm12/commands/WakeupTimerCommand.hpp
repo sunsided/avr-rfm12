@@ -62,8 +62,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			WakeupTimerCommand()
+			inline WakeupTimerCommand()
 				: command_word(RFM12DEFAULT_WAKEUPTIMER)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline WakeupTimerCommand(const WakeupTimerCommand& other)
+				: command_word(other.command_word)
 			{}
 				
 			public:				

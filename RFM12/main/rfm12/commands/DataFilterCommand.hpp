@@ -87,8 +87,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			DataFilterCommand ()
+			inline DataFilterCommand ()
 				: command_word(RFM12DEFAULT_DATAFILTER)
+			{}
+
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline DataFilterCommand(const DataFilterCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

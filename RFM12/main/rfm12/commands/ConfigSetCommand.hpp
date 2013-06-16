@@ -99,8 +99,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			ConfigSetCommand() 
+			inline ConfigSetCommand() 
 				: command_word(RFM12DEFAULT_CONFIGURATION_SETTING)
+			{}
+
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline ConfigSetCommand(const ConfigSetCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

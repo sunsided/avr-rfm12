@@ -50,8 +50,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			FrequencyCommand()
+			inline FrequencyCommand()
 				: command_word(RFM12DEFAULT_FREQUENCYSETTING)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline FrequencyCommand(const FrequencyCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

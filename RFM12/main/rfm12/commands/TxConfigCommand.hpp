@@ -125,8 +125,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			TxConfigCommand()
+			inline TxConfigCommand()
 				: command_word(RFM12DEFAULT_TXCONFIGURATION)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline TxConfigCommand(const TxConfigCommand& other)
+				: command_word(other.command_word)
 			{}
 				
 			public:

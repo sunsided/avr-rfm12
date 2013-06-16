@@ -50,8 +50,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			SynchronPatternCommand()
+			inline SynchronPatternCommand()
 				: command_word(RFM12DEFAULT_SYNCHRONPATTERN)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline SynchronPatternCommand(const SynchronPatternCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

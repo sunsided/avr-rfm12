@@ -98,8 +98,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			FifoAndResetModeCommand()
+			inline FifoAndResetModeCommand()
 				: command_word(RFM12DEFAULT_FIFOANDRESETMODE)
+			{}
+
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline FifoAndResetModeCommand(const FifoAndResetModeCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

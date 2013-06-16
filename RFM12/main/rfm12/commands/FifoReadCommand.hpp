@@ -48,8 +48,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			FifoReadCommand()
+			inline FifoReadCommand()
 				: command_word(RFM12DEFAULT_RECEIVERFIFO)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline FifoReadCommand(const FifoReadCommand& other)
+				: command_word(other.command_word)
 			{}
 				
 			public:				

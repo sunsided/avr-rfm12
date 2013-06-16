@@ -48,8 +48,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			StatusReadCommand()
+			inline StatusReadCommand()
 				: command_word(RFM12DEFAULT_STATUS_READ)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline StatusReadCommand(const StatusReadCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

@@ -48,8 +48,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			TransmitRegisterWriteCommand()
+			inline TransmitRegisterWriteCommand()
 				: command_word(RFM12DEFAULT_TRANSMITTERWRITE)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline TransmitRegisterWriteCommand(const TransmitRegisterWriteCommand& other)
+				: command_word(other.command_word)
 			{}
 				
 			public:				

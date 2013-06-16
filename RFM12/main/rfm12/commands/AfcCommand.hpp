@@ -98,8 +98,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			AfcCommand()
+			inline AfcCommand()
 				: command_word(RFM12DEFAULT_AFC)
+			{}
+
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline AfcCommand(const AfcCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

@@ -101,21 +101,21 @@ namespace rfm12
 			*
 			* \param data The data.
 			*/
-			StatusCommandResult() : result_word(0) {}
+			inline StatusCommandResult() : result_word(0) {}
 		
 			/**
 			* \brief Initializes this instance as empty.
 			*
 			* \param data The data.
 			*/
-			StatusCommandResult(const uint16_t data) : result_word(data) {}
+			inline StatusCommandResult(const uint16_t data) : result_word(data) {}
 				
 			/**
 			* \brief Initializes this copy from another instance.
 			*
 			* \param other The instance to copy
 			*/
-			StatusCommandResult(const StatusCommandResult& other) : result_word(other.result_word) {}
+			inline StatusCommandResult(const StatusCommandResult& other) : result_word(other.result_word) {}
 					
 			/**
 			* \brief Applies a result to the status word

@@ -91,8 +91,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			PllSettingCommand()
+			inline PllSettingCommand()
 				: command_word(RFM12DEFAULT_PLLSETTING)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline PllSettingCommand(const PllSettingCommand& other)
+				: command_word(other.command_word)
 			{}
 				
 			public:				

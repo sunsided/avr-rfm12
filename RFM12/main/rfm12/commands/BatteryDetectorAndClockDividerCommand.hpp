@@ -100,8 +100,15 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			BatteryDetectorAndClockDividerCommand()
+			inline BatteryDetectorAndClockDividerCommand()
 				: command_word(RFM12DEFAULT_LOWBATTERY_MCCLOCKDIVDER)
+			{}
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline BatteryDetectorAndClockDividerCommand(const BatteryDetectorAndClockDividerCommand& other)
+				: command_word(other.command_word)
 			{}
 
 			public:

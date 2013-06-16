@@ -54,10 +54,17 @@ namespace rfm12
 			/**
 			* \brief Initializes this instance to default values (POR)
 			*/
-			DataRateCommand()
+			inline DataRateCommand()
 				: command_word(RFM12DEFAULT_DATARATE)
 			{}
-
+				
+			/**
+			* \brief Initializes this instance from another instance
+			*/
+			inline DataRateCommand(const DataRateCommand& other)
+				: command_word(other.command_word)
+			{}
+				
 			public:
 
 			/**
