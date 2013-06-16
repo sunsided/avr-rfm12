@@ -186,6 +186,16 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 
 	// NOTE: strategy adjustment is done in the command execution phase.
 	executeCommand(command);
+	
+	// Toogle FIFO fill mode to start synchron pattern detection (should probably be in enterReceiverMode())
+	if (RXTXMODE_RX == mode) {
+		ConfigSetCommand *config = getConfigSetCommand();
+		config->setFifoEnabled(false);
+		executeCommand(config);
+		
+		config->setFifoEnabled(true);
+		executeCommand(config);
+	}
 }
 
 /**
