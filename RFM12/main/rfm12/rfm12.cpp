@@ -138,6 +138,11 @@ const CommandResult* Rfm12::executeCommand(const Command* command)
 		PowerManagementCommand *mgmt = static_cast<PowerManagementCommand*>(token);
 		_transceiverMode = mgmt->er ? RXTXMODE_RX : (mgmt->et ? RXTXMODE_TX : RXTXMODE_IDLE);
 		
+		// if we are in transmitter mode, mark transmission as not done
+		if (RXTXMODE_TX == _transceiverMode) {
+			_transmissionDone = false;
+		}
+		
 		// apply transceiver strategy here.
 		// if the strategy is set to RXTXSTRATEGY_IGNORE,
 		// the user settings will not be overwritten.
@@ -229,10 +234,11 @@ void Rfm12::pulseTx(register const StatusCommandResult *status)
 	// TODO: When in transmitter mode, if the send buffer is empty, disable power amplifier but keep oscillator and synthesizer enabled until idle mode is enabled manually. If the send buffer is filled again, enable end send.
 	
 	// if the transmit register is not empty, abort.
+	// Transmission state (e.g. "done") is not modified
 	if (!status->isTransmitRegisterReady()) return;
 	
 	// try to fetch a byte from the send buffer.
-	// if no byte could be read, abort.
+	// if no byte could be read, abort and mark transmission as done.
 	uint_least8_t data;
 	if (!_sendBuffer->fetch(&data)) {
 		_transmissionDone = true;
@@ -241,7 +247,8 @@ void Rfm12::pulseTx(register const StatusCommandResult *status)
 		return;
 	}
 	
-	// send the byte
+	// since we have a byte, transmission is not done - send the byte
+	_transmissionDone = false;
 	TransmitRegisterWriteCommand *write = getTransmitRegisterWrite();
 	write->setData(data);
 	executeCommand(write);
