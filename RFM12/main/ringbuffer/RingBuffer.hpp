@@ -120,6 +120,16 @@ namespace ringbuffer
 		}
 		
 		/**
+		* \brief Gets the current capacity of the ring buffer
+		*/
+		inline const rbsize_t getCapacity() const { return _capacity; }
+		
+		/**
+		* \brief Gets the current fill level of the ring buffer
+		*/
+		inline const rbsize_t getFillLevel() const { return _fillLevel; }
+		
+		/**
 		* \brief Determines if an item can be read from this buffer.
 		*/
 		inline bool canRead() const { 
