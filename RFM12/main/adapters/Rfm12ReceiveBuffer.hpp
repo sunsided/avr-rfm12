@@ -9,8 +9,8 @@
 #ifndef RFM12RECEIVEBUFFER_H_
 #define RFM12RECEIVEBUFFER_H_
 
-#include "../ringbuffer/RingBuffer.hpp"
-#include "../rfm12/IReceiveBuffer.hpp"
+#include <RingBuffer.hpp>
+#include <IReceiveBuffer.hpp>
 
 namespace adapters
 {
