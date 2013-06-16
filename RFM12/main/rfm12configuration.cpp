@@ -5,6 +5,7 @@
  *  Author: Markus
  */ 
 
+#include "comm/usart_comm.h"
 #include "rfm12configuration.hpp"
 
 using namespace rfm12;
@@ -39,8 +40,12 @@ void configureRfm12(Rfm12 *rfm12)
 	// status read clears interrupt flags in RFM12 (in this case: power-on reset)
 	while (RFM12_INTERRUPT_PIN_VALUE == 0)
 	{
-		rfm12->readStatus();
+		const StatusCommandResult *status = rfm12->readStatus();
+		usart_comm_send_word(status->getResultWord());
+		usart_comm_send_zstr("\r\n");
 	}
+	
+	usart_comm_send_zstr("IRQ cleared, proceeding ...\r\n");
 	
 	// Set sleep mode
 	PowerManagementCommand *powerMgmt = rfm12->getPowerManagementCommand();
@@ -64,8 +69,7 @@ void configureRfm12(Rfm12 *rfm12)
 	
 	// 1100 0110 .... .... Data Rate Command
 	DataRateCommand *dataRate = rfm12->getDataRateCommand();
-	//dataRate->setBitRate(49.2F);
-	dataRate->setBitRate(0.6F);
+	dataRate->setBitRate(38.4F);
 	rfm12->executeCommand(dataRate);
 
 	// 1001 0... .... .... Receiver Control Command
@@ -88,27 +92,26 @@ void configureRfm12(Rfm12 *rfm12)
 	FifoAndResetModeCommand *fifoAndResetMode = rfm12->getFifoAndResetModeCommand();
 	SynchronPatternCommand *synchronPattern = rfm12->getSynchronPatternCommand();
 
-	uint8_t group = 212; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
+	fifoAndResetMode->setFifoFillAfterSynchronMatchEnabled(true);
+	fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
+	// fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_ALWAYSFILL);
+	fifoAndResetMode->setSensitiveResetMode(RESETMODE_NONSENSITIVE);
+
+	uint8_t group = 0; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
 	if (group != 0) {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode->setFifoInterruptFillLevel(8);
 		fifoAndResetMode->setSynchronPatternLength(SP_TWO_BYTE);
-		fifoAndResetMode->setFifoFillAfterSynchronMatchEnabled(false);
-		fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
-		fifoAndResetMode->setSensitiveResetMode(RESETMODE_NONSENSITIVE);
 		
 		// 1100 1110 .... .... Synchron Pattern Command
 		synchronPattern->setSynchronByte(group);
-		} else {
+	} else {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode->setFifoInterruptFillLevel(8);
-		fifoAndResetMode->setSynchronPatternLength(SP_ONE_BYTE);
-		fifoAndResetMode->setFifoFillAfterSynchronMatchEnabled(false);
-		fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
-		fifoAndResetMode->setSensitiveResetMode(RESETMODE_NONSENSITIVE);
+		fifoAndResetMode->setSynchronPatternLength(SP_TWO_BYTE);
 		
 		// 1100 1110 .... .... Synchron Pattern Command
-		synchronPattern->setSynchronByte(0x2D);
+		synchronPattern->setSynchronByte(0xD4);
 	}
 	
 	rfm12->executeCommand(fifoAndResetMode);
@@ -116,10 +119,10 @@ void configureRfm12(Rfm12 *rfm12)
 	
 	// 1100 0100 .... .... AFC Command
 	AfcCommand *afcCommand = rfm12->getAfcCommand();
-	afcCommand->setAutomaticOperationMode(AUTOMODE_VDI_HIGH);
+	afcCommand->setAutomaticOperationMode(AUTOMODE_VDI_INDEPENDENT);
 	afcCommand->setRangeLimit(MAXDEVIATION_UNRESTRICTED);
 	afcCommand->setStrobeEdgeEnabled(false);
-	afcCommand->setFineModeEnabled(false);
+	afcCommand->setFineModeEnabled(true);
 	afcCommand->setFrequencyOffsetRegisterEnabled(true);
 	afcCommand->setFrequencyOffsetCalculationEnabled(true);
 	rfm12->executeCommand(afcCommand);
@@ -135,7 +138,7 @@ void configureRfm12(Rfm12 *rfm12)
 	pllSetting->setOutputClockBufferTimeControl(MCCLKFRQ_5OR10MHZ);
 	pllSetting->setPhaseDetectorDelayEnabled(false);
 	pllSetting->setPllDitheringEnabled(false);
-	pllSetting->setPllBandwidth(PLLBW_MAX_2560KBPS);
+	pllSetting->setPllBandwidth(PLLBW_MAX_0862KBPS);
 	rfm12->executeCommand(pllSetting);
 	
 	// 111. .... .... ....Wake-Up Timer Command
