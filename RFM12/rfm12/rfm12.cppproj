@@ -112,6 +112,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="commands\" />
+    <Folder Include="results" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="commands\AfcCommand.hpp">
@@ -130,9 +131,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="commands\CommandMask.hpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="commands\CommandResult.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="commands\CommandType.hpp">
@@ -174,9 +172,6 @@
     <Compile Include="commands\ReceiverControlCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="commands\StatusCommandResult.hpp">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="commands\StatusReadCommand.hpp">
       <SubType>compile</SubType>
     </Compile>
@@ -199,6 +194,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ISpi.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="results\CommandResult.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="results\StatusCommandResult.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Rfm12.cpp">
