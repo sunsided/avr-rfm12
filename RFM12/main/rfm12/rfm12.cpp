@@ -180,5 +180,7 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 */	
 void Rfm12::pulse() 
 {
+	// TODO: When in transmitter mode, if the send buffer is empty, disable power amplifier but keep oscillator and synthesizer enabled until idle mode is enabled manually. If the send buffer is filled again, enable end send.
 	
+	// TODO: State transmitting, transmitting-idle, receiving, idle
 }
