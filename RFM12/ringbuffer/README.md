@@ -13,7 +13,7 @@ using namespace ringbuffer;
 
 ### Dynamic buffer creation
 
-After that, in order to dynamically create a buffer, call the `create()`
+After that, in order to dynamically create a buffer, call the static `RingBuffer::create(size)`
 method with any buffer size greater than `0`:
 
 ```cpp
@@ -26,7 +26,7 @@ and will delete it upon destruction.
 ### Buffer reuse
 
 If an already existing memory location is to be used, you can
-pass the pointer to it to the create method.
+pass the pointer to it to `RingBuffer::create(ptr, size)`.
 
 ```cpp
 #define BUFFER_SIZE (64)
