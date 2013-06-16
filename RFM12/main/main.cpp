@@ -26,14 +26,18 @@
 
 using namespace rfm12;
 
-#define SPI_DDR			DDRB
-#define SPI_PORT		PORTB
-#define SPI_PIN			PINB
+#define SPI_DDR				DDRB
+#define SPI_PORT			PORTB
+#define SPI_PIN				PINB
 
-#define SPI_BIT_MOSI	PORTB3
-#define SPI_BIT_MISO	PINB4
-#define SPI_BIT_SCK		PORTB5
-#define SPI_BIT_SS		PORTB2
+#define SPI_BIT_MOSI		PORTB3
+#define SPI_BIT_MISO		PINB4
+#define SPI_BIT_SCK			PORTB5
+#define SPI_BIT_SS			PORTB2
+
+#define RFM12_IRQ_PIN_REG	PIND
+#define RFM12_IRQ_PIN_BIT	PIND2
+#define RFM12_INTERRUPT_PIN_VALUE (RFM12_IRQ_PIN_REG & (1 << RFM12_IRQ_PIN_BIT))
 
 /**
 * \brief Determines if a pulse of the rfm12 instance is needed.
@@ -134,7 +138,7 @@ int main()
 	
 	// check interrupt pin
 	const StatusCommandResult *status;
-	while ((PIND & (1 << PIND2)) == 0)
+	while (RFM12_INTERRUPT_PIN_VALUE == 0)
 	{
 		// status read clears interrupt flags in RFM12
 		status = rfm12->readStatus();
@@ -289,7 +293,7 @@ void led_doubleflash_sync()
 ISR (PCINT2_vect)
 {
 	static uint_least8_t last_value = 0;
-	uint_least8_t current_value = PIND & (1 << PIND2);
+	uint_least8_t current_value = RFM12_INTERRUPT_PIN_VALUE;
 	
 	// RFM12 INT ist active low
 	if (current_value < last_value) 
