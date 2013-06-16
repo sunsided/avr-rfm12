@@ -50,7 +50,17 @@ namespace rfm12
 			/**
 			* \brief Gets the result word.
 			*/
-			inline uint16_t getResultWord() const { return this->_data; }
+			const inline uint_fast16_t getResultWord() const { return this->_data; }
+				
+			/**
+			* \brief Gets the result word's lower byte.
+			*/
+			inline const uint_fast8_t getLowerResultByte() const { return this->_data & 0b0000000011111111; }
+			
+			/**
+			* \brief Gets the result word's upper byte.
+			*/
+			inline const uint_fast8_t getUpperResultByte() const { return (this->_data >> 8); }
 				
 			/**
 			* \brief Applies a result to the status word

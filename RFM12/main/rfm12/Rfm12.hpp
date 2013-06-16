@@ -67,7 +67,7 @@ namespace rfm12
 		/**
 		* \brief The command array
 		*/
-		commands::Command* _commands[RFM12_COMMAND_COUNT];
+		commands::Command *_commands[RFM12_COMMAND_COUNT];
 	
 		/**
 		* \brief Results of the last status command
@@ -146,7 +146,7 @@ namespace rfm12
 		 * \return The result or NULL if the command was invalid
 		 */
 		const commands::CommandResult* executeCommand(const commands::Command* command);
-		
+				
 		/**
 		 * \brief Gets the last command result as retrieved per executeCommand*()
 		 *

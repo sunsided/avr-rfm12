@@ -243,4 +243,14 @@ void Rfm12::pulseTx(register const StatusCommandResult *status)
 */	
 void Rfm12::pulseRx(register const commands::StatusCommandResult *status) 
 {
+	// if the transmit register is not empty, abort.
+	if (!status->isFifoLevelReached()) return;
+	
+	// receive the byte
+	const FifoReadCommand *read = getFifoReadCommand();
+	const CommandResult *result = executeCommand(read);
+	const uint_fast8_t data = result->getLowerResultByte();
+	
+	// store the byte in the receive buffer
+	if (!_receiveBuffer->store(data)) return;
 }
