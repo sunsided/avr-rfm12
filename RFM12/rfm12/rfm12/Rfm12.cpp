@@ -181,7 +181,7 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 	if ((mode == _transceiverMode) && (!forceCommit)) return;
 	
 	PowerManagementCommand *command = getPowerManagementCommand();
-	command->setReceiverBasebandCircuitryEnabled(RXTXMODE_RX == mode);
+	command->setReceiverChainEnabled(RXTXMODE_RX == mode);
 	command->setTransmissionEnabled(RXTXMODE_TX == mode);
 
 	// NOTE: strategy adjustment is done in the command execution phase.
