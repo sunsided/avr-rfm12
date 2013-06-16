@@ -142,15 +142,9 @@ int main()
 	led_doubleflash_sync();
 	sleep(1);
 	
-	// enable transceiver
-	PowerManagementCommand *powerMgmt = rfm12->getPowerManagementCommand();
-	powerMgmt->setReceiverChainEnabled(false);
-	powerMgmt->setReceiverBasebandCircuitryEnabled(true);
-	powerMgmt->setSynthesizerEnabled(true);
-	powerMgmt->setCrystalOscillatorEnabled(true);
-	powerMgmt->setTransmissionEnabled(true);
-	rfm12->executeCommand(powerMgmt);
-
+	// enable fast-switching strategy and commit (receiver still in idle mode)
+	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_SWITCHING, true);
+	
 	usart_comm_send_zstr("transmitter configured.\r\n");
 	sleep(1);
 
@@ -164,8 +158,7 @@ int main()
 		*/
 		
 		// enable transmission
-		powerMgmt->setTransmissionEnabled(true);
-		rfm12->executeCommand(powerMgmt);
+		rfm12->enterTransmitterMode();
 		usart_comm_send_zstr("transmitter on ...\r\n");
 				
 		sleep(1);	
@@ -242,8 +235,7 @@ int main()
 		sleep(1);
 		
 		// disable transmission
-		powerMgmt->setTransmissionEnabled(false);
-		rfm12->executeCommand(powerMgmt);
+		rfm12->enterIdleMode();
 
 		usart_comm_send_zstr("transmitter off.\r\n");
 		

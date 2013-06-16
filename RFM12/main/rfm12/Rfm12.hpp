@@ -147,42 +147,55 @@ namespace rfm12
 		inline const transceivermode_t getMode() const { return _transceiverMode; }
 
 		/**
-		* \brief Sets the transceiver strategy.
-		*
-		* \param strategy The selected mode
-		*/
-		inline void setTransceiverStrategy(register const transceiverstrategy_t strategy = RXTXSTRATEGY_FAST_SWITCHING) {
-			_transceiverStrategy = strategy;
-		}
-
-		/**
 		* \brief Adjusts the Power Management Command for the given transceiver strategy.
+		*
+		* This might implicitly issue an SPI transmission.
 		*
 		* \param command The command
 		* \param mode The selected mode
+		* \param forceCommit If set to true, an SPI transfer will be initiated regardless of the current transceiver mode.
 		*/
-		void setTransceiverMode(register const transceivermode_t mode = RXTXMODE_RX);
+		void setTransceiverMode(register const transceivermode_t mode = RXTXMODE_RX, register const bool forceCommit = false);
 
 		/**
 		* \brief Enters transmit (TX) mode
 		*
-		* This implicitly issues an SPI transmission.
+		* This might implicitly issue an SPI transmission.
+		*
+		* \param forceCommit If set to true, an SPI transfer will be initiated regardless of the current transceiver mode.
 		*/
-		inline void enterTransmitterMode() { setTransceiverMode(RXTXMODE_TX); }
+		inline void enterTransmitterMode(const bool forceCommit = false) { setTransceiverMode(RXTXMODE_TX, forceCommit); }
 		
 		/**
 		* \brief Enters receive (RX) mode
 		*
-		* This implicitly issues an SPI transmission.
+		* This might implicitly issue an SPI transmission.
+		*
+		* \param forceCommit If set to true, an SPI transfer will be initiated regardless of the current transceiver mode.
 		*/
-		void enterReceiverMode() { setTransceiverMode(RXTXMODE_RX); }
+		void enterReceiverMode(const bool forceCommit = false) { setTransceiverMode(RXTXMODE_RX, forceCommit); }
 		
 		/**
 		* \brief Enters idle mode (i.e. leaves transmitter and receiver mode)
 		*
-		* This implicitly issues an SPI transmission.
+		* This might implicitly issue an SPI transmission.
+		*
+		* \param forceCommit If set to true, an SPI transfer will be initiated regardless of the current transceiver mode.
 		*/
-		void enterIdleMode() { setTransceiverMode(RXTXMODE_IDLE); }
+		void enterIdleMode(const bool forceCommit = false) { setTransceiverMode(RXTXMODE_IDLE, forceCommit); }
+			
+		/**
+		* \brief Sets the transceiver strategy.
+		*
+		* This might implicitly issue an SPI transmission.
+		*
+		* \param strategy The selected mode
+		* \param forceCommit If set to true, an SPI transfer will be initiated regardless of the current transceiver mode.
+		*/
+		inline void setTransceiverStrategy(register const transceiverstrategy_t strategy = RXTXSTRATEGY_FAST_SWITCHING, const bool forceCommit = false) {
+			_transceiverStrategy = strategy;
+			if (forceCommit) setTransceiverMode(_transceiverMode, true);
+		}
 
 	public:
 	

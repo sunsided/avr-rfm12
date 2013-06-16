@@ -161,9 +161,9 @@ const StatusCommandResult* Rfm12::readStatus()
 * \param command The command
 * \param mode The selected mode
 */
-inline void Rfm12::setTransceiverMode(register const transceivermode_t mode) 
+void Rfm12::setTransceiverMode(register const transceivermode_t mode, register const bool forceCommit)
 {
-	if (mode == _transceiverMode) return;
+	if ((mode == _transceiverMode) && (!forceCommit)) return;
 	
 	PowerManagementCommand *command = getPowerManagementCommand();
 	command->setReceiverBasebandCircuitryEnabled(RXTXMODE_RX == mode);
