@@ -21,7 +21,7 @@ RingBuffer *buffer = RingBuffer::create(64);
 ```
 
 By doing so, `buffer` takes the ownership of the `new`'d memory
-and will delete it upon destruction.
+and will `delete` it upon destruction.
 
 ### Buffer reuse
 
@@ -74,7 +74,7 @@ rbdata_t wdata = 0x42;
 bool dataWritten = buffer->tryWrite(wdata);
 ```
 
-Note that neither read and write operations are atomic.
+Note that neither read nor write operations are atomic.
 
 In order to flush the buffer, the `reset()` method can be used which
 resets the internal capacity counter. To retrieve the current fill level,
