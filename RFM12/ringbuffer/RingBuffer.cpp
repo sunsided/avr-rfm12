@@ -15,7 +15,7 @@
 using namespace ringbuffer;
 using namespace ringbuffer::specializations;
 
-RingBuffer::RingBuffer(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete)
+RingBuffer::RingBuffer(rbdata_t *const backingArray, const rbsize_t size, bool free_on_delete)
 :	_buffer(backingArray), _size(size), _capacity(size), _fillLevel(0), _read_index(0), _write_index(0), _free_on_delete(free_on_delete)
 {
 	assert(backingArray != NULL);
@@ -48,7 +48,7 @@ RingBuffer::~RingBuffer()
 * \param size			The size of the array
 * \param free_on_delete Sets whether the backing array should be freed during destruction
 */
-RingBuffer* RingBuffer::create(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete) {
+RingBuffer* RingBuffer::create(rbdata_t *const backingArray, const rbsize_t size, bool free_on_delete) {
 	// select the buffer strategy
 	bool sizeIsPowerOfTwo = ((size & (size - 1)) == 0);
 	
@@ -67,6 +67,6 @@ RingBuffer* RingBuffer::create(rbdata_t *backingArray, const rbsize_t size, bool
 * \param size			The size of the array
 */
 RingBuffer* RingBuffer::create(const rbsize_t size) {
-	rbdata_t *buffer = static_cast<rbdata_t *>(malloc(size * sizeof(rbsize_t)));
+	rbdata_t *const buffer = static_cast<rbdata_t *const >(malloc(size * sizeof(rbsize_t)));
 	return create(buffer, size, true);
 }

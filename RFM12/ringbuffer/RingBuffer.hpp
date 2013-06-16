@@ -38,18 +38,18 @@ namespace ringbuffer
 		/**
 		* Creates a new ring buffer instance
 		*
-		* An optimized specialization will be instanciated if the buffer size is a power of two.
+		* An optimized specialization will be instantiated if the buffer size is a power of two.
 		*
 		* \param backingArray	The array to be used for the buffer
 		* \param size			The size of the array
 		* \param free_on_delete Sets whether the backing array should be freed during destruction
 		*/
-		static RingBuffer* create(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete = false);
+		static RingBuffer* create(rbdata_t *const backingArray, const rbsize_t size, bool free_on_delete = false);
 
 		/**
 		* Creates a new ring buffer instance
 		*
-		* An optimized specialization will be instanciated if the buffer size is a power of two.
+		* An optimized specialization will be instantiated if the buffer size is a power of two.
 		*
 		* \param size			The size of the array
 		*/
@@ -100,7 +100,7 @@ namespace ringbuffer
 		* \param size			The size of the array
 		* \param free_on_delete Sets whether the backing array should be freed during destruction
 		*/
-		RingBuffer(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete);
+		RingBuffer(rbdata_t *const backingArray, const rbsize_t size, bool free_on_delete);
 
 	public:
 	
@@ -176,7 +176,7 @@ namespace ringbuffer
 		*				value is undefined.
 		* \returns true if an item was read, false otherwise
 		*/
-		virtual bool tryRead(register rbdata_t *item) = 0;
+		virtual bool tryRead(register rbdata_t *const item) = 0;
 	
 		/**
 		* \brief Reads an item from the buffer.
