@@ -32,6 +32,13 @@ namespace ringbuffer
 			inline RingBufferAnySize(rbdata_t *backingArray, const rbsize_t size, bool free_on_delete)
 			:	RingBuffer(backingArray, size, free_on_delete)
 			{
+				assert(size < (2^sizeof(rbsize_t)));
+				
+				// this implementation is based on the idea that by marching through
+				// memory backwards (i.e. decreasing the pointers before reading) only 
+				// an conditional jump based on zero is required, which should increase performance.
+				_write_index = _size;
+				_read_index = _size;
 			}
 
 			// virtual ~RingBuffer(){}
@@ -55,12 +62,12 @@ namespace ringbuffer
 				// since we write, the capacity will be reduced
 				--_capacity;
 		
-				// write to the current write index
-				_buffer[_write_index] = item;
+				// write to the current write index and advance the pointer
+				_buffer[--_write_index] = item;
 		
-				// advance the write pointer
-				if (++_write_index == this->_size) {
-					_write_index ^= _write_index;
+				// reset the write pointer if needed
+				if (0 == _write_index) {
+					_write_index = _size;
 				}
 		
 				// since we write, the fill level will be increased
@@ -91,12 +98,12 @@ namespace ringbuffer
 				// since we read, the fill level will be decreased
 				--_fillLevel;
 				
-				// write to the current write index
-				item = _buffer[_read_index];
+				// write to the current write index and advance the pointer
+				item = _buffer[--_read_index];
 		
-				// advance the read pointer
-				if (++_read_index == this->_size) {
-					_read_index ^= _read_index;
+				// reset the read pointer if needed
+				if (0 == _read_index) {
+					_read_index = _size;
 				}
 		
 				// since we read, the capacity will be increased
