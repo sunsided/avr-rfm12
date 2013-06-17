@@ -37,13 +37,15 @@ void initializeRfm12Interrupt()
 void configureRfm12(Rfm12 *rfm12)
 {
 	// check interrupt pin
-	// status read clears interrupt flags in RFM12 (in this case: power-on reset)
-	while (RFM12_INTERRUPT_PIN_VALUE == 0)
+	// loop until power-on reset is cleared
+	const StatusCommandResult *status;
+	do
 	{
-		const StatusCommandResult *status = rfm12->readStatus();
+		status = rfm12->readStatus();
 		usart_comm_send_word(status->getResultWord());
 		usart_comm_send_zstr("\r\n");
 	}
+	while(status->isPowerOnReset());
 	
 	usart_comm_send_zstr("IRQ cleared, proceeding ...\r\n");
 	
@@ -59,7 +61,7 @@ void configureRfm12(Rfm12 *rfm12)
 	configSet->setFrequencyBand(FREQ_BAND_433);
 	configSet->setCrystalCapacitance(CL_120);
 	configSet->setDataRegisterEnabled(true);
-	configSet->setFifoEnabled(true);
+	configSet->setFifoEnabled(false);
 	rfm12->executeCommand(configSet);
 	
 	// 1010 .... .... .... Frequency Setting Command
