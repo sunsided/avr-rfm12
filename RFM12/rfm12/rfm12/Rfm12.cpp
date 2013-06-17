@@ -117,6 +117,13 @@ static inline void adjustForTransceiverStrategy(register PowerManagementCommand 
 			command->setCrystalOscillatorEnabled(true);
 			break;
 		}
+		
+		case RXTXSTRATEGY_FAST_RECEIVER:
+		{
+			command->setCrystalOscillatorEnabled(true);
+			command->setReceiverBasebandCircuitryEnabled(true);
+			break;
+		}
 	}
 }
 

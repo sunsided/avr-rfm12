@@ -104,8 +104,8 @@ int main()
 	LED_ASSERT(rfm12->getPowerManagementCommand()->checkBitfieldIsValid(), 10);
 #endif	
 	
-	// enable fast-switching strategy and commit (receiver still in idle mode)
-	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_TRANSMITTER, true);
+	// enable fast-receiver strategy and commit (receiver still in idle mode)
+	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_RECEIVER, true);
 	
 	usart_comm_send_zstr("transceiver configured.\r\n");
 	sleep(1);
