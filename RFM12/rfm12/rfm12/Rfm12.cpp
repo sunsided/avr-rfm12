@@ -110,6 +110,13 @@ static inline void adjustForTransceiverStrategy(register PowerManagementCommand 
 			command->setReceiverBasebandCircuitryEnabled(true);
 			break;
 		}
+		
+		case RXTXSTRATEGY_FAST_TRANSMITTER:
+		{
+			command->setSynthesizerEnabled(true);
+			command->setCrystalOscillatorEnabled(true);
+			break;
+		}
 	}
 }
 
@@ -180,17 +187,37 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 {
 	if ((mode == _transceiverMode) && (!forceCommit)) return;
 	
+	// mode specific behaviour
+	if (RXTXMODE_RX == mode) {
+		// Toogle FIFO fill mode to start synchron pattern detection (should probably be in enterReceiverMode())
+		resyncReceiver();
+	}
+	else if (RXTXMODE_TX == mode) {
+		// enable TX buffer if in transmit mode
+		ConfigSetCommand *config = getConfigSetCommand();
+		if (!config->getDataRegisterEnabled())
+		{
+			config->setDataRegisterEnabled(true);
+			executeCommand(config);
+		}
+	}
+	else if (mode == RXTXMODE_IDLE) {
+		// disable transmit buffer when entering idle mode
+		ConfigSetCommand *config = getConfigSetCommand();
+		if (config->getDataRegisterEnabled())
+		{
+			config->setDataRegisterEnabled(false);
+			executeCommand(config);
+		}
+	}
+	
+	// switch mode
 	PowerManagementCommand *command = getPowerManagementCommand();
 	command->setReceiverChainEnabled(RXTXMODE_RX == mode);
 	command->setTransmissionEnabled(RXTXMODE_TX == mode);
 
 	// NOTE: strategy adjustment is done in the command execution phase.
 	executeCommand(command);
-	
-	// Toogle FIFO fill mode to start synchron pattern detection (should probably be in enterReceiverMode())
-	if (RXTXMODE_RX == mode) {
-		resyncReceiver();
-	}
 }
 
 /**

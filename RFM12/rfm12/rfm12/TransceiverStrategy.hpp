@@ -27,7 +27,15 @@ typedef enum {
 	* and receiver baseband block enabled when switching RX and TX to
 	* minimize startup time.
 	*/
-	RXTXSTRATEGY_FAST_SWITCHING = 1
+	RXTXSTRATEGY_FAST_SWITCHING = 1,
+	
+	/**
+	* \brief Assume fast TX on/TX off switching.
+	*
+	* This strategy will try to leave the synthesizer and crystal oscillator 
+	* block enabled when switching TX to idle to minimize startup time.
+	*/
+	RXTXSTRATEGY_FAST_TRANSMITTER = 2,
 	
 } transceiverstrategy_t;
 
