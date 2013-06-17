@@ -48,11 +48,6 @@ volatile bool _rfm12PulseRequired = false;
 
 int main()
 {
-	wdt_disable();
-	
-	sleep(5);
-	led_doubleflash_sync();
-	
 	#if F_CPU != 16000000UL
 	#error Expected F_CPU to be 16MHz; Timer calculation will be wrong!
 	#endif
