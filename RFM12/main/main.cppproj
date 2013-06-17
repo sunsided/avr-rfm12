@@ -36,7 +36,7 @@
       </StimuliFile>
       <Channel>
         <host>127.0.0.1</host>
-        <port>2368</port>
+        <port>4242</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
@@ -45,7 +45,7 @@
           <JtagDbgClock>249000</JtagDbgClock>
           <SwdClock>249000</SwdClock>
           <JtagProgClock>1000000</JtagProgClock>
-          <IspClock>103560</IspClock>
+          <IspClock>150000</IspClock>
           <JtagInChain>false</JtagInChain>
           <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
           <JtagDevicesBefore>0</JtagDevicesBefore>

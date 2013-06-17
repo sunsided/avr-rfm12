@@ -5,6 +5,7 @@
  *  Author: Markus
  */ 
 
+#include "comm/usart_comm.h"
 #include "rfm12configuration.hpp"
 
 using namespace rfm12;
@@ -39,8 +40,12 @@ void configureRfm12(Rfm12 *rfm12)
 	// status read clears interrupt flags in RFM12 (in this case: power-on reset)
 	while (RFM12_INTERRUPT_PIN_VALUE == 0)
 	{
-		rfm12->readStatus();
+		const StatusCommandResult *status = rfm12->readStatus();
+		usart_comm_send_word(status->getResultWord());
+		usart_comm_send_zstr("\r\n");
 	}
+	
+	usart_comm_send_zstr("IRQ cleared, proceeding ...\r\n");
 	
 	// Set sleep mode
 	PowerManagementCommand *powerMgmt = rfm12->getPowerManagementCommand();
@@ -103,10 +108,10 @@ void configureRfm12(Rfm12 *rfm12)
 	} else {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode->setFifoInterruptFillLevel(8);
-		fifoAndResetMode->setSynchronPatternLength(SP_ONE_BYTE);
+		fifoAndResetMode->setSynchronPatternLength(SP_TWO_BYTE);
 		
 		// 1100 1110 .... .... Synchron Pattern Command
-		synchronPattern->setSynchronByte(0x2D);
+		synchronPattern->setSynchronByte(0xD4);
 	}
 	
 	rfm12->executeCommand(fifoAndResetMode);
