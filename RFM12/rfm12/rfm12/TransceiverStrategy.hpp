@@ -35,7 +35,7 @@ typedef enum {
 	* This strategy will try to leave the synthesizer and crystal oscillator 
 	* block enabled when switching TX to idle to minimize startup time.
 	*/
-	RXTXSTRATEGY_FAST_TRANSMITTER = 1,
+	RXTXSTRATEGY_FAST_TRANSMITTER = 2,
 	
 } transceiverstrategy_t;
 
