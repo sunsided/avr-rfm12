@@ -180,14 +180,6 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 {
 	if ((mode == _transceiverMode) && (!forceCommit)) return;
 	
-	PowerManagementCommand *command = getPowerManagementCommand();
-	command->setReceiverChainEnabled(RXTXMODE_RX == mode);
-	command->setTransmissionEnabled(RXTXMODE_TX == mode);
-
-	// NOTE: strategy adjustment is done in the command execution phase.
-	executeCommand(command);
-	
-<<<<<<< HEAD
 	// mode specific behaviour
 	if (RXTXMODE_RX == mode) {
 		// Toogle FIFO fill mode to start synchron pattern detection (should probably be in enterReceiverMode())
@@ -211,6 +203,14 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 			executeCommand(config);
 		}
 	}
+	
+	// switch mode
+	PowerManagementCommand *command = getPowerManagementCommand();
+	command->setReceiverChainEnabled(RXTXMODE_RX == mode);
+	command->setTransmissionEnabled(RXTXMODE_TX == mode);
+
+	// NOTE: strategy adjustment is done in the command execution phase.
+	executeCommand(command);
 }
 
 /**
