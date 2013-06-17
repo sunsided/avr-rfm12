@@ -44,6 +44,16 @@ void usart_comm_init();
 void usart_comm_send_char(uint_least8_t data);
 
 /*!
+	\brief Writes a data word to the USART Communication Interface
+	
+	\param data The data word to write
+*/
+inline void usart_comm_send_word(const uint_least16_t data) {
+	usart_comm_send_char((data >> 8) & 0xFF);
+	usart_comm_send_char(data        & 0xFF);
+}
+
+/*!
 	\brief Writes a data byte to the USART Communication Interface as binary.
 	
 	Converts a single byte to binary and prints it as eight chars.
