@@ -36,7 +36,10 @@ void initializeRfm12Interrupt();
 
 /**
 * \brief Configures the given RFM12 instance
+*
+* \param rfm12 The Rfm12 instance
+* \param group The group (effectively the synchron pattern; 212 MUST be used for RFM12)
 */
-void configureRfm12(rfm12::Rfm12 *rfm12);
+void configureRfm12(rfm12::Rfm12 *rfm12, uint8_t group = 212)
 
 #endif /* RFM12CONFIGURATION_H_ */

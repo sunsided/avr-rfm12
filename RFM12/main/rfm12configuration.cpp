@@ -33,8 +33,11 @@ void initializeRfm12Interrupt()
 
 /**
 * \brief Configures the given RFM12 instance
+*
+* \param rfm12 The Rfm12 instance
+* \param group The group (effectively the synchron pattern; 212 MUST be used for RFM12)
 */
-void configureRfm12(Rfm12 *rfm12)
+void configureRfm12(Rfm12 *rfm12uint8_t group)
 {
 	// check interrupt pin
 	// loop until power-on reset is cleared
@@ -96,21 +99,23 @@ void configureRfm12(Rfm12 *rfm12)
 
 	fifoAndResetMode->setFifoFillAfterSynchronMatchEnabled(true);
 	fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
-	// fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_ALWAYSFILL);
 	fifoAndResetMode->setSensitiveResetMode(RESETMODE_NONSENSITIVE);
 
-	uint8_t group = 0; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht
 	if (group != 0) {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode->setFifoInterruptFillLevel(8);
 		fifoAndResetMode->setSynchronPatternLength(SP_TWO_BYTE);
+		
+		// In two-byte mode the value 0x2D followed by the synchron pattern defined below will be used to synchronize the receiver
 		
 		// 1100 1110 .... .... Synchron Pattern Command
 		synchronPattern->setSynchronByte(group);
 	} else {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode->setFifoInterruptFillLevel(8);
-		fifoAndResetMode->setSynchronPatternLength(SP_TWO_BYTE);
+		fifoAndResetMode->setSynchronPatternLength(SP_ONE_BYTE);
+
+		// In one-byte mode ONLY the synchron pattern defined below will be used to synchronize the receiver
 		
 		// 1100 1110 .... .... Synchron Pattern Command
 		synchronPattern->setSynchronByte(0xD4);

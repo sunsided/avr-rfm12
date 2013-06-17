@@ -36,11 +36,14 @@ static enum {
 /**
 * \brief Starts the transmitter demo loop
 */
-void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendBuffer) 
+void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendBuffer, uint8_t group) 
 {
 	// enable fast-transmitter strategy and commit (transmitter still in idle mode)
 	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_TRANSMITTER, true);
 	usart_comm_send_zstr("transmitter configured.\r\n");
+	
+	// data counter
+	static uint8_t counter = 0;
 	
 	// loopity loop.
 	for(;;)
@@ -52,24 +55,38 @@ void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendB
 			{
 				// at this point, the receiver should not be active, so we may very well reset the buffer
 				rfm12SendBuffer->reset();
+				
+				// send receiver synchronization bytes
 				rfm12SendBuffer->writeSync(0xAA);
 				rfm12SendBuffer->writeSync(0xAA);
 				rfm12SendBuffer->writeSync(0xAA);
 				rfm12SendBuffer->writeSync(0xAA);
 			
+				// send synchronization pattern
 				rfm12SendBuffer->writeSync(0x2D);
-				rfm12SendBuffer->writeSync(0xD4);
+				rfm12SendBuffer->writeSync(group);
 			
+				// send payload: magic pattern
 				rfm12SendBuffer->writeSync(0x01);
 				rfm12SendBuffer->writeSync(0x02);
 				rfm12SendBuffer->writeSync(0x03);
 				rfm12SendBuffer->writeSync(0x04);
-				rfm12SendBuffer->writeSync(0x42);
-				rfm12SendBuffer->writeSync(0xB0);
-				rfm12SendBuffer->writeSync(0x0B);
-				rfm12SendBuffer->writeSync(0xE3);
+				
+				// send payload: user data length
+				rfm12SendBuffer->writeSync(8);
+				
+				// send payload: user data
+				rfm12SendBuffer->writeSync('H');
+				rfm12SendBuffer->writeSync('O');
+				rfm12SendBuffer->writeSync('L');
+				rfm12SendBuffer->writeSync('Y');
+				rfm12SendBuffer->writeSync('C');
+				rfm12SendBuffer->writeSync('O');
+				rfm12SendBuffer->writeSync('W');
+				rfm12SendBuffer->writeSync(counter++);
 			
-				rfm12SendBuffer->writeSync(0xAA);
+				// send dummy byte
+				rfm12SendBuffer->writeSync(0x00);
 			
 				// enable transmitter, then sleep
 				rfm12->enterTransmitterMode();
