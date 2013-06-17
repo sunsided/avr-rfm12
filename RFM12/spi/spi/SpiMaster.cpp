@@ -24,8 +24,8 @@ namespace spi
 		// Configure SPI
 		SPCR = ((1 << SPE)	// SPI enabled
 			| (1 << MSTR)	// SPI Master mode
-			| (1 << SPR1)	// OSC/64
-			| (0 << SPR0))  //  --"--
+			| (0 << SPR1)	// OSC/16 --> 1MHz SPI at 16 MHz CPU_FREQ
+			| (1 << SPR0))  //  --"--
 			& ~(1 << DORD)  // MSB first
 			& ~(1 << CPHA)	// Polarity and phase set to default (mode 1)
 			& ~(1 << CPOL); //  --"--
