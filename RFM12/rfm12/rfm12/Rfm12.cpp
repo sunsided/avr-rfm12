@@ -186,6 +186,16 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 
 	// NOTE: strategy adjustment is done in the command execution phase.
 	executeCommand(command);
+	
+	// enable TX buffer if in transmit mode
+	if (mode == RXTXMODE_TX) {
+		ConfigSetCommand *config = getConfigSetCommand();
+		if (!config->getDataRegisterEnabled())
+		{
+			config->setDataRegisterEnabled(true);
+			executeCommand(config);
+		}
+	}
 }
 
 /**
