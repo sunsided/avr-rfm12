@@ -37,13 +37,15 @@ void initializeRfm12Interrupt()
 void configureRfm12(Rfm12 *rfm12)
 {
 	// check interrupt pin
-	// status read clears interrupt flags in RFM12 (in this case: power-on reset)
-	while (RFM12_INTERRUPT_PIN_VALUE == 0)
+	// loop until power-on reset is cleared
+	const StatusCommandResult *status;
+	do
 	{
-		const StatusCommandResult *status = rfm12->readStatus();
+		status = rfm12->readStatus();
 		usart_comm_send_word(status->getResultWord());
 		usart_comm_send_zstr("\r\n");
 	}
+	while(status->isPowerOnReset());
 	
 	usart_comm_send_zstr("IRQ cleared, proceeding ...\r\n");
 	
@@ -92,9 +94,9 @@ void configureRfm12(Rfm12 *rfm12)
 	FifoAndResetModeCommand *fifoAndResetMode = rfm12->getFifoAndResetModeCommand();
 	SynchronPatternCommand *synchronPattern = rfm12->getSynchronPatternCommand();
 
-	fifoAndResetMode->setFifoFillAfterSynchronMatchEnabled(false);
-	// fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
-	fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_ALWAYSFILL);
+	fifoAndResetMode->setFifoFillAfterSynchronMatchEnabled(true);
+	fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
+	// fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_ALWAYSFILL);
 	fifoAndResetMode->setSensitiveResetMode(RESETMODE_NONSENSITIVE);
 
 	uint8_t group = 0; // 212 ist einzige für RFM12 -- sind zwar RFM12B, aber schaden kann es ja nicht

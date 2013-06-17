@@ -37,6 +37,16 @@ typedef enum {
 	*/
 	RXTXSTRATEGY_FAST_TRANSMITTER = 2,
 	
+	/**
+	* \brief Assume fast RX on/RX off switching.
+	*
+	* This strategy will try to leave the receiver baseband and crystal oscillator 
+	* block enabled when switching RX to idle to minimize startup time.
+	*
+	* I don't see why RX on/RX off switching would be required though.
+	*/
+	RXTXSTRATEGY_FAST_RECEIVER = 3,
+	
 } transceiverstrategy_t;
 
 

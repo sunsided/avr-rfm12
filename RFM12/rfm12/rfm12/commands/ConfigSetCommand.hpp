@@ -143,6 +143,13 @@ namespace rfm12
 			inline void setFifoEnabled(const bool value = true) { this->ef = value; }
 
 			/**
+			* \brief Gets if the internal FIFO is be enabled.
+			*	
+			* \returns true if receiver FIFO is enabled.
+			*/
+			inline bool getFifoEnabled() const { return this->ef; }
+
+			/**
 			* \brief Sets whether the internal data register should be enabled.
 			*	
 			* \param value Data register enabled.
