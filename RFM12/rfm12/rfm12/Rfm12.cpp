@@ -270,11 +270,12 @@ void Rfm12::pulse()
 void Rfm12::pulseTx(register const StatusCommandResult *status)
 {
 	// TODO: When in transmitter mode, if the send buffer is empty, disable power amplifier but keep oscillator and synthesizer enabled until idle mode is enabled manually. If the send buffer is filled again, enable end send.
+	// TODO: When in transmitter mode, the RGUR flag can be used to determine end-of-line
 	
 	// if the transmit register is not empty, abort.
 	// Transmission state (e.g. "done") is not modified
 	if (!status->isTransmitRegisterReady()) return;
-	
+		
 	// try to fetch a byte from the send buffer.
 	// if no byte could be read, abort and mark transmission as done.
 	uint_least8_t data;

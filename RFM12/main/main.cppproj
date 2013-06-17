@@ -18,8 +18,7 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>
-    </OverrideVtorValue>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
@@ -231,10 +230,16 @@
     <Compile Include="datatypes.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="demoloops.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="demoloops.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="main.h">
+    <Compile Include="main.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="rfm12configuration.cpp">
