@@ -18,31 +18,6 @@
 #include "util.h"
 #include "datatypes.h"
 
-/*! 
-	\brief Enables or disables the LED
-	
-	\param enabled Determines if the LED should be enabled (\c ON) or disabled (\c OFF)
-*/
-void set_led(switch_t enabled);
-
-/*! 
-	\brief Enables or disables the LED
-	
-	\param enabled Determines if the LED should be enabled (\c ON) or disabled (\c OFF)
-*/
-void set_red_led(switch_t enabled);
-
-/*! 
-	\brief Toggles the LED on and off.
-
-*/
-void led_flash_sync();
-
-/*! 
-	\brief Toggles the LED on and off.
-*/
-void led_doubleflash_sync();
-
 /**
 * \brief Sleeps for the given number of seconds
 */

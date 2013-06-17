@@ -6,7 +6,7 @@
  */ 
 
 #include "comm/usart_comm.h"
-#include "main.hpp"
+#include "leds.hpp"
 #include "demoloops.hpp"
 
 /**

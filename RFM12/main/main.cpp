@@ -17,13 +17,14 @@
 #include "comm/usart_comm.h"
 #include "comm/command_decoder.h"
 
-#include "main.hpp"
+#include "leds.hpp"
 #include "adapters/Rfm12SpiAdapter.hpp"
 #include "adapters/Rfm12ReceiveBuffer.hpp"
 #include "adapters/Rfm12SendBuffer.hpp"
 
 #include "rfm12configuration.hpp"
 #include "demoloops.hpp"
+#include "main.hpp"
 
 using namespace rfm12;
 using namespace rfm12::commands;
@@ -112,71 +113,6 @@ int main()
 	receiverDemoLoop(rfm12, rfm12ReceiveBuffer);
 #endif
 
-}
-
-/*! 
-	\brief Enables or disables the LED
-	
-	\param enabled Determines if the LED should be enabled (\c ON) or disabled (\c OFF)
-*/
-inline void set_led(switch_t enabled) 
-{
-	DDRC |= (1 << DDC2);
-	DDRC |= (1 << DDC1);
-	
-	if (enabled) {
-		SET_BIT(PORTC, PORTC2);
-	}
-	else {
-		CLEAR_BIT(PORTC, PORTC2);
-	}
-}
-
-/*! 
-	\brief Enables or disables the LED
-	
-	\param enabled Determines if the LED should be enabled (\c ON) or disabled (\c OFF)
-*/
-inline void set_red_led(switch_t enabled) 
-{
-	DDRC |= (1 << DDC1);
-	
-	if (enabled) {
-		SET_BIT(PORTC, PORTC1);
-	}
-	else {
-		CLEAR_BIT(PORTC, PORTC1);
-	}
-}
-
-/*! 
-	\brief Toggles the LED on and off.
-	
-	\param ms HIGH duration in milliseconds.
-*/
-void led_flash_sync()
-{
-	set_led(ON);
-	_delay_ms(100);
-	set_led(OFF);
-}
-
-/*! 
-	\brief Toggles the LED on and off.
-*/
-void led_doubleflash_sync()
-{
-	set_led(ON);
-	_delay_ms(100);
-	set_led(OFF);
-	_delay_ms(50);
-	set_led(ON);
-	_delay_ms(100);
-	set_led(OFF);
-	
-	_delay_ms(100);
-	_delay_ms(100);
-	_delay_ms(100);
 }
 
 /*! 
