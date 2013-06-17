@@ -16,8 +16,8 @@
 
 #include "comm/usart_comm.h"
 #include "comm/command_decoder.h"
-#include "main.h"
 
+#include "main.h"
 #include "adapters/Rfm12SpiAdapter.hpp"
 #include "adapters/Rfm12ReceiveBuffer.hpp"
 #include "adapters/Rfm12SendBuffer.hpp"
@@ -35,7 +35,6 @@ using namespace rfm12::commands;
 #define SPI_BIT_MISO		PINB4
 #define SPI_BIT_SCK			PORTB5
 #define SPI_BIT_SS			PORTB2
-
 
 /**
 * \brief Determines if a pulse of the rfm12 instance is needed.
@@ -68,14 +67,7 @@ int main()
 	
 	// SPI initialisieren
 	spi::SpiMaster spi(&SPI_DDR, &SPI_PORT, &SPI_PIN, SPI_BIT_MOSI, SPI_BIT_MISO, SPI_BIT_SCK, SPI_BIT_SS);
-	
-	led_flash_sync();
-	_delay_ms(200);
-	
 	spi.initialize();
-	
-	led_flash_sync();
-	_delay_ms(200);
 	
 	// create an SPI adapter for RFM12
 	adapters::Rfm12SpiAdapter *rfm12SpiAdapter = new adapters::Rfm12SpiAdapter(&spi);
@@ -88,9 +80,6 @@ int main()
 	adapters::Rfm12SendBuffer *rfm12SendBufferAdapter = new adapters::Rfm12SendBuffer(rfm12SendBuffer);
 		
 	// Prepare SPI and RFM12
-	led_doubleflash_sync();
-	_delay_ms(200);
-	
 	initializeRfm12Interrupt();
 	
 	// Fire and go.
@@ -99,16 +88,12 @@ int main()
 	// USART
 	usart_comm_init();
 	usart_comm_send_zstr("SYSTEM READY\r\n");
-	led_doubleflash_sync();
-	sleep(1);
 		
 	// initialisieren des RFM12
 	Rfm12 *rfm12 = new Rfm12(rfm12SpiAdapter, rfm12ReceiveBufferAdapter, rfm12SendBufferAdapter);
 		
 	// configure the rfm12
 	usart_comm_send_zstr("configuring ...\r\n");
-	_delay_ms(100);
-	
 	configureRfm12(rfm12);
 	
 	led_doubleflash_sync();
