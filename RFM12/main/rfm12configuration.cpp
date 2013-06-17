@@ -58,8 +58,8 @@ void configureRfm12(Rfm12 *rfm12)
 	ConfigSetCommand *configSet = rfm12->getConfigSetCommand();
 	configSet->setFrequencyBand(FREQ_BAND_433);
 	configSet->setCrystalCapacitance(CL_120);
-	configSet->setDataRegisterEnabled(true);
-	configSet->setFifoEnabled(true);
+	configSet->setDataRegisterEnabled(false);
+	configSet->setFifoEnabled(false);
 	rfm12->executeCommand(configSet);
 	
 	// 1010 .... .... .... Frequency Setting Command
