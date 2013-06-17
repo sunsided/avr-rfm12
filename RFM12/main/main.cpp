@@ -125,6 +125,7 @@ int main()
 				
 				rfm12SendBuffer->writeSync(0x2D);
 				rfm12SendBuffer->writeSync(0xD4);
+				
 				rfm12SendBuffer->writeSync(0x01);
 				rfm12SendBuffer->writeSync(0x02);
 				rfm12SendBuffer->writeSync(0x03);
@@ -139,7 +140,7 @@ int main()
 				// enable transmitter, then sleep
 				rfm12->enterTransmitterMode();
 				usart_comm_send_zstr("transmitter on ...\r\n");
-				sleep(1);
+				// sleep(1);
 				
 				txdemostate = TXSTATE_TRANSMITTING;
 				break;
@@ -161,7 +162,7 @@ int main()
 			
 			case TXSTATE_IDLE_TXON:
 			{
-				sleep(1);
+				// sleep(1);
 				
 				// disable transmission
 				rfm12->enterIdleMode();
