@@ -24,8 +24,11 @@ static enum {
 	#else
 	
 	RXTXSTATE_IDLE_RXOFF,			//<! System is idle and receiver is disabled
-	RXTXSTATE_IDLE_RXON,			//<! System is idle and receiver is enabled
 	RXTXSTATE_RECEIVING,			//<! System is receiving
+	RXTXSTATE_RECEIVING_MPMATCH,	//<! Matching the magic pattern
+	RXTXSTATE_RECEIVING_READSIZE,	//<! Reading the size
+	RXTXSTATE_RECEIVING_READPAYLOAD,//<! Reading the payload
+	RXTXSTATE_RESYNC_RXON,			//<! System is receiving but needs to re-sync
 
 	#endif
 	
@@ -140,6 +143,12 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_RECEIVER, true);
 	usart_comm_send_zstr("receiver configured.\r\n");
 	
+	// magic pattern match
+	static uint8_t magicpattern = 0;
+	
+	// The payload size
+	static uint8_t remainingpayload = 0;
+	
 	// loopity loop.
 	for(;;)
 	{
@@ -160,6 +169,9 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 			}
 		
 			case RXTXSTATE_RECEIVING:
+			case RXTXSTATE_RECEIVING_MPMATCH:
+			case RXTXSTATE_RECEIVING_READSIZE:
+			case RXTXSTATE_RECEIVING_READPAYLOAD:
 			{
 				// the interrupt knows best
 				if (_rfm12PulseRequired) {
@@ -173,16 +185,67 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 				if (rfm12ReceiveBuffer->tryRead(&item)) {
 					usart_comm_send_char(item);
 				}
+				
+				// receive-state behaviour
+				switch (rxtxdemostate)
+				{
+					default:
+					{
+						// well ... that shouldn't happen.
+						rxtxdemostate = RXTXSTATE_RESYNC_RXON;
+						usart_comm_send_zstr("wrong state.\r\n");
+						break;
+					}
+					
+					case RXTXSTATE_RECEIVING_MPMATCH: 
+					{
+						// on payload mismatch, reset.
+						if (++magicpattern != item) {
+							rxtxdemostate = RXTXSTATE_RESYNC_RXON;
+							break;
+						}
+						
+						// if magic pattern matched, switch state
+						if (magicpattern == 4) {
+							rxtxdemostate = RXTXSTATE_RECEIVING_READSIZE;
+							break;
+						}
+						break;	
+					}
+					case RXTXSTATE_RECEIVING_READSIZE:
+					{
+						// read the payload size, then switch state
+						remainingpayload = item;
+						rxtxdemostate = RXTXSTATE_RECEIVING_READPAYLOAD;
+						break;
+					}
+					case RXTXSTATE_RECEIVING_READPAYLOAD:
+					{
+						// print data until remaining payload size is zero, then switch state
+						usart_comm_send_char(item);
+						if (0 == --remainingpayload) {
+							usart_comm_send_zstr("\r\nend of line.\r\n");
+							rxtxdemostate = RXTXSTATE_RESYNC_RXON;
+							break;
+						}
+						break;
+					}
+				}
+				
 				break;
 			}
 		
-			case RXTXSTATE_IDLE_RXON:
+			case RXTXSTATE_RESYNC_RXON:
 			{
-				// disable transmission
-				rfm12->enterIdleMode();
-				usart_comm_send_zstr("receiver off.\r\n");
+				// reset payload detection
+				magicpattern = 0;
+				remainingpayload = 0;
+				
+				// restart reception
+				rfm12->resyncReceiver();
+				usart_comm_send_zstr("resync issued.\r\n");
 
-				rxtxdemostate = RXTXSTATE_IDLE_RXOFF;
+				rxtxdemostate = RXTXSTATE_RECEIVING;
 				break;
 			}
 		}
