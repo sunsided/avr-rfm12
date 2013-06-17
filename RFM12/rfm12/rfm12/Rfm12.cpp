@@ -189,17 +189,7 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 	
 	// Toogle FIFO fill mode to start synchron pattern detection (should probably be in enterReceiverMode())
 	if (RXTXMODE_RX == mode) {
-		ConfigSetCommand *config = getConfigSetCommand();
-		
-		// if the FIFO is still enabled, disable it first
-		if (config->getFifoEnabled()) {
-			config->setFifoEnabled(false);
-			executeCommand(config);
-		}
-		
-		// enable FIFO to start pattern matching
-		config->setFifoEnabled(true);
-		executeCommand(config);
+		resyncReceiver();
 	}
 }
 

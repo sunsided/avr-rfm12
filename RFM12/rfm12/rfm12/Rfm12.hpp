@@ -203,6 +203,25 @@ namespace rfm12
 		void enterReceiverMode(const bool forceCommit = false) { setTransceiverMode(RXTXMODE_RX, forceCommit); }
 		
 		/**
+		* \brief Restarts receiver synchronization.
+		*
+		* Forces an re-sync by toggling or enabling the enable fifo bit.
+		*/
+		inline void resyncReceiver() {
+			commands::ConfigSetCommand *config = getConfigSetCommand();
+			
+			// if the FIFO is still enabled, disable it first
+			if (config->getFifoEnabled()) {
+				config->setFifoEnabled(false);
+				executeCommand(config);
+			}
+			
+			// enable FIFO to start pattern matching
+			config->setFifoEnabled(true);
+			executeCommand(config);
+		}
+		
+		/**
 		* \brief Enters idle mode (i.e. leaves transmitter and receiver mode)
 		*
 		* This might implicitly issue an SPI transmission.
