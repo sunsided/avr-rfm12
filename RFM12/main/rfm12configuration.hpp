@@ -10,6 +10,7 @@
 #define RFM12CONFIGURATION_H_
 
 #include <avr/io.h>
+#include <stdint.h>
 #include <rfm12/Rfm12.hpp>
 
 #define RFM12_IRQ_PIN_DDR			DDRD		//<! Data Direction Register
@@ -40,6 +41,6 @@ void initializeRfm12Interrupt();
 * \param rfm12 The Rfm12 instance
 * \param group The group (effectively the synchron pattern; 212 MUST be used for RFM12)
 */
-void configureRfm12(rfm12::Rfm12 *rfm12, uint8_t group = 212)
+void configureRfm12(rfm12::Rfm12 *rfm12, uint8_t group = 212);
 
 #endif /* RFM12CONFIGURATION_H_ */

@@ -37,7 +37,7 @@ void initializeRfm12Interrupt()
 * \param rfm12 The Rfm12 instance
 * \param group The group (effectively the synchron pattern; 212 MUST be used for RFM12)
 */
-void configureRfm12(Rfm12 *rfm12uint8_t group)
+void configureRfm12(Rfm12 *rfm12, uint8_t group)
 {
 	// check interrupt pin
 	// loop until power-on reset is cleared
