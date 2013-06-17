@@ -170,7 +170,7 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 		
 			case RXTXSTATE_RECEIVING:
 			{
-				rxtxdemostate = RXTXSTATE_RECEIVING_READPAYLOAD;
+				rxtxdemostate = RXTXSTATE_RECEIVING_MPMATCH;
 				// fall through ...
 			}
 			
