@@ -169,6 +169,11 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 			}
 		
 			case RXTXSTATE_RECEIVING:
+			{
+				rxtxdemostate = RXTXSTATE_RECEIVING_READPAYLOAD;
+				// fall through ...
+			}
+			
 			case RXTXSTATE_RECEIVING_MPMATCH:
 			case RXTXSTATE_RECEIVING_READSIZE:
 			case RXTXSTATE_RECEIVING_READPAYLOAD:
@@ -205,6 +210,8 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 							break;
 						}
 						
+						usart_comm_send_zstr("mp match ...\r\n");
+						
 						// if magic pattern matched, switch state
 						if (magicpattern == 4) {
 							rxtxdemostate = RXTXSTATE_RECEIVING_READSIZE;
@@ -216,6 +223,8 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 					{
 						// read the payload size, then switch state
 						remainingpayload = item;
+						usart_comm_send_zstr("read size.\r\n");
+						
 						rxtxdemostate = RXTXSTATE_RECEIVING_READPAYLOAD;
 						break;
 					}
