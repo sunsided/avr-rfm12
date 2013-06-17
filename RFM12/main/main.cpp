@@ -151,6 +151,7 @@ int main()
 				// the interupt knows best
 				if (_rfm12PulseRequired) {
 					rfm12->pulse();
+					_rfm12PulseRequired = false;
 				}
 				
 				// if the transmission is not done, do not switch state
