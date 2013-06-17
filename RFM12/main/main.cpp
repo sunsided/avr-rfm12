@@ -104,7 +104,7 @@ int main()
 #endif	
 	
 	// enable fast-switching strategy and commit (receiver still in idle mode)
-	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_SWITCHING, true);
+	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_TRANSMITTER, true);
 	
 	usart_comm_send_zstr("transmitter configured.\r\n");
 	sleep(1);
