@@ -36,7 +36,7 @@ static enum {
 /**
 * \brief Starts the transmitter demo loop
 */
-void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendBuffer) 
+void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendBuffer, uint8_t group) 
 {
 	// enable fast-transmitter strategy and commit (transmitter still in idle mode)
 	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_TRANSMITTER, true);
@@ -64,7 +64,7 @@ void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendB
 			
 				// send synchronization pattern
 				rfm12SendBuffer->writeSync(0x2D);
-				rfm12SendBuffer->writeSync(0xD4);
+				rfm12SendBuffer->writeSync(group);
 			
 				// send payload: magic pattern
 				rfm12SendBuffer->writeSync(0x01);

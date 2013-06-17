@@ -33,8 +33,11 @@ void initializeRfm12Interrupt()
 
 /**
 * \brief Configures the given RFM12 instance
+*
+* \param rfm12 The Rfm12 instance
+* \param group The group (effectively the synchron pattern; 212 MUST be used for RFM12)
 */
-void configureRfm12(Rfm12 *rfm12)
+void configureRfm12(Rfm12 *rfm12uint8_t group)
 {
 	// check interrupt pin
 	// loop until power-on reset is cleared
@@ -98,7 +101,6 @@ void configureRfm12(Rfm12 *rfm12)
 	fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
 	fifoAndResetMode->setSensitiveResetMode(RESETMODE_NONSENSITIVE);
 
-	uint8_t group = 212; // 212 is the only valid value for the RFM12 (without the B)
 	if (group != 0) {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
 		fifoAndResetMode->setFifoInterruptFillLevel(8);

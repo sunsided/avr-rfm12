@@ -25,7 +25,7 @@ extern volatile bool _rfm12PulseRequired;
 /**
 * \brief Starts the transmitter demo loop
 */
-void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendBuffer);
+void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendBuffer, uint8_t group);
 
 /**
 * \brief Starts the transmitter demo loop
