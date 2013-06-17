@@ -100,10 +100,10 @@ void configureRfm12(Rfm12 *rfm12, uint8_t group)
 	fifoAndResetMode->setFifoFillAfterSynchronMatchEnabled(true);
 	fifoAndResetMode->setFifoFillStartCondition(FIFOSTART_SYNCHRON);
 	fifoAndResetMode->setSensitiveResetMode(RESETMODE_NONSENSITIVE);
+	fifoAndResetMode->setFifoInterruptFillLevel(8);
 
 	if (group != 0) {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
-		fifoAndResetMode->setFifoInterruptFillLevel(8);
 		fifoAndResetMode->setSynchronPatternLength(SP_TWO_BYTE);
 		
 		// In two-byte mode the value 0x2D followed by the synchron pattern defined below will be used to synchronize the receiver
@@ -112,7 +112,6 @@ void configureRfm12(Rfm12 *rfm12, uint8_t group)
 		synchronPattern->setSynchronByte(group);
 	} else {
 		// 1100 1010 .... .... FIFO and Reset Mode Command
-		fifoAndResetMode->setFifoInterruptFillLevel(8);
 		fifoAndResetMode->setSynchronPatternLength(SP_ONE_BYTE);
 
 		// In one-byte mode ONLY the synchron pattern defined below will be used to synchronize the receiver
