@@ -148,6 +148,13 @@ namespace rfm12
 			* \param value Data register enabled.
 			*/
 			inline void setDataRegisterEnabled(const bool value = true) { this->el = value; }
+			
+			/**
+			* \brief Determines if the data register is enabled.
+			*	
+			* \returns true if the data register is enabled.
+			*/
+			inline bool getDataRegisterEnabled() const { return this->el; }
 				
 			/**
 			* \brief Gets this command's type.
