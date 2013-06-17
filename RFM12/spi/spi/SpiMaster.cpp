@@ -44,22 +44,6 @@ namespace spi
 	}
 	
 	/**
-	* \brief Begins a transmission by pulling Slave Select low.
-	*/
-	void SpiMaster::beginTransmission() const
-	{
-		*_output_register &= ~(1 << _ss_bit);
-	}
-		
-	/**
-	* \brief Ends a transmission by pulling Slave Select high.
-	*/
-	void SpiMaster::endTransmission() const
-	{
-		*_output_register |= (1 << _ss_bit);
-	}
-
-	/**
 	* \brief Transmits a byte of data.
 	*
 	* This method sends data synchronously by blocking on the

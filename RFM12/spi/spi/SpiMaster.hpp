@@ -66,12 +66,18 @@ namespace spi
 		/**
 		* \brief Begins a transmission by pulling Slave Select low.
 		*/
-		void beginTransmission() const;
+		inline void beginTransmission() const
+		{
+			*_output_register &= ~(1 << _ss_bit);
+		}
 		
 		/**
 		* \brief Ends a transmission by pulling Slave Select high.
 		*/
-		void endTransmission() const;
+		inline void endTransmission() const
+		{
+			*_output_register |= (1 << _ss_bit);
+		}
 
 		/**
 		* \brief Transmits a byte of data.
