@@ -180,13 +180,6 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 {
 	if ((mode == _transceiverMode) && (!forceCommit)) return;
 	
-	PowerManagementCommand *command = getPowerManagementCommand();
-	command->setReceiverChainEnabled(RXTXMODE_RX == mode);
-	command->setTransmissionEnabled(RXTXMODE_TX == mode);
-
-	// NOTE: strategy adjustment is done in the command execution phase.
-	executeCommand(command);
-	
 	// mode specific behaviour
 	ConfigSetCommand *config = getConfigSetCommand();
 	if (mode == RXTXMODE_TX) {
@@ -205,6 +198,14 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 			executeCommand(config);
 		}
 	}
+	
+	// switch mode
+	PowerManagementCommand *command = getPowerManagementCommand();
+	command->setReceiverChainEnabled(RXTXMODE_RX == mode);
+	command->setTransmissionEnabled(RXTXMODE_TX == mode);
+
+	// NOTE: strategy adjustment is done in the command execution phase.
+	executeCommand(command);
 }
 
 /**
