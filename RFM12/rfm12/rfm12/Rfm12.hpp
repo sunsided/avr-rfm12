@@ -404,7 +404,6 @@ namespace rfm12
 		*/	
 		void pulseRx(register const commands::StatusCommandResult *status);
 	};
-
 }
 
 #endif /* RFM12_H_ */

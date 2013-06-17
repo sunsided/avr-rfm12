@@ -12,7 +12,7 @@
 #include <ringbuffer/RingBuffer.hpp>
 
 #define DEMO_TRANSMITTER_MODE 	false						//<! Enables the transmitter demo if true
-#define DEMO_RECEIVER_MODE 		!DEMO_TRANSMITTER_MODE		//<! Enables the receiver demo if transmitter demo is disabled
+#define DEMO_RECEIVER_MODE 		(!DEMO_TRANSMITTER_MODE)	//<! Enables the receiver demo if transmitter demo is disabled
 
 /**
 * \brief Determines if a pulse of the rfm12 instance is needed.

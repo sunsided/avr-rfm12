@@ -195,7 +195,6 @@ namespace ringbuffer
 		}
 
 	}; //RingBuffer
-
 }
 
 #endif //__RINGBUFFER_H__
