@@ -26,7 +26,7 @@
     <CacheFlash>true</CacheFlash>
     <UncachedRange />
     <BootSegment>2</BootSegment>
-    <avrtool>com.atmel.avrdbg.tool.avrdragon</avrtool>
+    <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
     <avrtoolinterface>ISP</avrtoolinterface>
     <com_atmel_avrdbg_tool_ispmk2>
       <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
@@ -36,7 +36,7 @@
       </StimuliFile>
       <Channel>
         <host>127.0.0.1</host>
-        <port>4242</port>
+        <port>1184</port>
         <ssl>False</ssl>
       </Channel>
       <ToolOptions>
