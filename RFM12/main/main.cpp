@@ -135,6 +135,7 @@ int main()
 				if (_rfm12PulseRequired) {
 					set_led(OFF);
 					rfm12->pulse();
+					_rfm12PulseRequired = false;
 				}
 								
 				// if the transmission is not done, do not switch state
