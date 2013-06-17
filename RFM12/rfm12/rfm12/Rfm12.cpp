@@ -188,8 +188,18 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 	executeCommand(command);
 	
 	// Toogle FIFO fill mode to start synchron pattern detection (should probably be in enterReceiverMode())
-	if (RXTXMODE_RX == mode) {
+	if (mode == RXTXMODE_RX) {
 		resyncReceiver();
+	}
+	// enable TX buffer if in transmit mode
+	else if (mode == RXTXMODE_TX) {
+		ConfigSetCommand *config = getConfigSetCommand();
+		if (!config->getDataRegisterEnabled())
+		{
+			config->setDataRegisterEnabled(true);
+			executeCommand(config);
+		}
+>>>>>>> eb8ea70... Enable data buffer when in transmit mode
 	}
 }
 
