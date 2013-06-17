@@ -5,7 +5,7 @@
  *  Author: sunside
  */ 
 	
-#define DEMO_TRANSMITTER_MODE 	true
+#define DEMO_TRANSMITTER_MODE 	false
 #define DEMO_RECEIVER_MODE 		!DEMO_TRANSMITTER_MODE
  
 #include <avr/io.h>
