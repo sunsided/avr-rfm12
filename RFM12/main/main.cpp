@@ -104,7 +104,7 @@ int main()
 #endif	
 	
 	// enable fast-switching strategy and commit (receiver still in idle mode)
-	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_SWITCHING, true);
+	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_TRANSMITTER, true);
 	
 	usart_comm_send_zstr("transmitter configured.\r\n");
 	sleep(1);
@@ -125,6 +125,7 @@ int main()
 				
 				rfm12SendBuffer->writeSync(0x2D);
 				rfm12SendBuffer->writeSync(0xD4);
+				
 				rfm12SendBuffer->writeSync(0x01);
 				rfm12SendBuffer->writeSync(0x02);
 				rfm12SendBuffer->writeSync(0x03);
@@ -139,7 +140,7 @@ int main()
 				// enable transmitter, then sleep
 				rfm12->enterTransmitterMode();
 				usart_comm_send_zstr("transmitter on ...\r\n");
-				sleep(1);
+				// sleep(1);
 				
 				txdemostate = TXSTATE_TRANSMITTING;
 				break;
@@ -150,6 +151,7 @@ int main()
 				// the interupt knows best
 				if (_rfm12PulseRequired) {
 					rfm12->pulse();
+					_rfm12PulseRequired = false;
 				}
 				
 				// if the transmission is not done, do not switch state
@@ -161,7 +163,7 @@ int main()
 			
 			case TXSTATE_IDLE_TXON:
 			{
-				sleep(1);
+				// sleep(1);
 				
 				// disable transmission
 				rfm12->enterIdleMode();

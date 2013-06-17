@@ -110,6 +110,13 @@ static inline void adjustForTransceiverStrategy(register PowerManagementCommand 
 			command->setReceiverBasebandCircuitryEnabled(true);
 			break;
 		}
+		
+		case RXTXSTRATEGY_FAST_TRANSMITTER:
+		{
+			command->setSynthesizerEnabled(true);
+			command->setCrystalOscillatorEnabled(true);
+			break;
+		}
 	}
 }
 
@@ -180,6 +187,26 @@ void Rfm12::setTransceiverMode(register const transceivermode_t mode, register c
 {
 	if ((mode == _transceiverMode) && (!forceCommit)) return;
 	
+	// mode specific behaviour
+	ConfigSetCommand *config = getConfigSetCommand();
+	if (mode == RXTXMODE_TX) {
+		// enable TX buffer if in transmit mode
+		if (!config->getDataRegisterEnabled())
+		{
+			config->setDataRegisterEnabled(true);
+			executeCommand(config);
+		}
+	}
+	else if (mode == RXTXMODE_IDLE) {
+		// disable transmit buffer when entering idle mode
+		if (config->getDataRegisterEnabled())
+		{
+			config->setDataRegisterEnabled(false);
+			executeCommand(config);
+		}
+	}
+	
+	// switch mode
 	PowerManagementCommand *command = getPowerManagementCommand();
 	command->setReceiverChainEnabled(RXTXMODE_RX == mode);
 	command->setTransmissionEnabled(RXTXMODE_TX == mode);
