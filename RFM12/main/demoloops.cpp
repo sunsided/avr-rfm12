@@ -7,6 +7,7 @@
 
 #include "comm/usart_comm.h"
 #include "leds.hpp"
+#include "sleep.hpp"
 #include "demoloops.hpp"
 
 /**
