@@ -11,7 +11,7 @@
 #include <rfm12/Rfm12.hpp>
 #include <ringbuffer/RingBuffer.hpp>
 
-#define DEMO_TRANSMITTER_MODE 	false						//<! Enables the transmitter demo if true
+#define DEMO_TRANSMITTER_MODE 	true						//<! Enables the transmitter demo if true
 #define DEMO_RECEIVER_MODE 		(!DEMO_TRANSMITTER_MODE)	//<! Enables the receiver demo if transmitter demo is disabled
 
 /**
