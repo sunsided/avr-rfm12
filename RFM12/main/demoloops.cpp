@@ -187,8 +187,8 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 			
 				// if the transmission is not done, do not switch state
 				ringbuffer::rbdata_t item;
-				if (rfm12ReceiveBuffer->tryRead(&item)) {
-					usart_comm_send_char(item);
+				if (!rfm12ReceiveBuffer->tryRead(&item)) {
+					break;
 				}
 				
 				// receive-state behaviour
@@ -203,18 +203,22 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 					}
 					
 					case RXTXSTATE_RECEIVING_MPMATCH: 
-					{
+					{						
 						// on payload mismatch, reset.
 						if (++magicpattern != item) {
 							rxtxdemostate = RXTXSTATE_RESYNC_RXON;
+							usart_comm_send_zstr("!mp\r\n");
 							break;
 						}
 						
-						usart_comm_send_zstr("mp match ...\r\n");
+						usart_comm_send_zstr("mp:");
+						usart_comm_send_char(magicpattern + '0');
+						usart_comm_send_zstr("\r\n");
 						
 						// if magic pattern matched, switch state
 						if (magicpattern == 4) {
 							rxtxdemostate = RXTXSTATE_RECEIVING_READSIZE;
+							usart_comm_send_zstr("magic pattern matched.\r\n");
 							break;
 						}
 						break;	
@@ -223,7 +227,9 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 					{
 						// read the payload size, then switch state
 						remainingpayload = item;
-						usart_comm_send_zstr("read size.\r\n");
+						usart_comm_send_zstr("size:");
+						usart_comm_send_char(remainingpayload);
+						usart_comm_send_zstr("\r\n");
 						
 						rxtxdemostate = RXTXSTATE_RECEIVING_READPAYLOAD;
 						break;
@@ -250,9 +256,15 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 				magicpattern = 0;
 				remainingpayload = 0;
 				
+				
+				
 				// restart reception
 				rfm12->resyncReceiver();
-				usart_comm_send_zstr("resync issued.\r\n");
+				
+				// at this point, the receiver is hopefully not be receiving ...
+				rfm12ReceiveBuffer->reset();
+				
+				usart_comm_send_zstr("resync.\r\n");
 
 				rxtxdemostate = RXTXSTATE_RECEIVING;
 				break;
