@@ -14,6 +14,14 @@ An AVR implementation in progress.
 
   A substantially lower SPI rate (i.e. lower than transmit frequency) results in buffer underruns on the transmitter side (`RGUR` in Status Register), obviously.
 
+### The wires.
+
+Wiring is basically as follows, although I eventually decided to invest in one of JeeLabs' [RFM12B breakout](http://jeelabs.com/products/rfm12b-board) boards.
+
+<p align="center">
+  <img src="https://raw.github.com/sunsided/avr-rfm12/master/screenshots/breadboard.png" alt="Breadboard"/>
+</p>
+
 ### ... and something visual.
 
 From an early demo, leaving the power amplifier enabled for a second before and after transmission.
