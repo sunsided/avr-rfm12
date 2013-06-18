@@ -25,5 +25,5 @@ From an early demo, leaving the power amplifier enabled for a second before and 
 Later, the `47`th transmission of `HOLYCOW` prefixed by magic pattern `0x01020304` (length `8`).
 
 <p align="center">
-  <img src="https://raw.github.com/sunsided/avr-rfm12/master/screenshots/rfm12.shot-1.jpg" alt="HTerm snapshot of a successful transmission"/>
+  <img src="https://raw.github.com/sunsided/avr-rfm12/master/screenshots/rfm12.shot-2.jpg" alt="HTerm snapshot of a successful transmission"/>
 </p>
