@@ -55,7 +55,7 @@ void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendB
 		switch (rxtxdemostate)
 		{
 			default:
-			case RXTXSTATE_IDLE_TXOFF:
+			case RXTXSTATE_IDLE_TXON:
 			{
 				// at this point, the receiver should not be active, so we may very well reset the buffer
 				rfm12SendBuffer->reset();
@@ -111,12 +111,13 @@ void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendB
 			
 				// if the transmission is not done, do not switch state
 				if (!rfm12->isTransmissionDone()) break;
-				usart_comm_send_zstr("data sent.\r\n");
-				rxtxdemostate = RXTXSTATE_IDLE_TXON;
+				usart_comm_send_zstr("data sent\r\n");
+				
+				rxtxdemostate = RXTXSTATE_IDLE_TXOFF;
 				break;
 			}
 		
-			case RXTXSTATE_IDLE_TXON:
+			case RXTXSTATE_IDLE_TXOFF:
 			{
 				// disable transmission
 				rfm12->enterIdleMode();
@@ -124,7 +125,7 @@ void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendB
 			
 				// sleep for some time
 				sleep(5);
-				rxtxdemostate = RXTXSTATE_IDLE_TXOFF;
+				rxtxdemostate = RXTXSTATE_IDLE_TXON;
 				break;
 			}
 		}
