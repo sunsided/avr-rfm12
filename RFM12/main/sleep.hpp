@@ -10,7 +10,7 @@
 #define SLEEP_H_
 
 #include "system.h"
-#include <avr/delay.h>
+#include <util/delay.h>
 #include "leds.hpp"
 
 /**
