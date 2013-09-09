@@ -80,13 +80,13 @@ void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendB
 				rfm12SendBuffer->writeSync(8);
 				
 				// send payload: user data
-				rfm12SendBuffer->writeSync('H');
-				rfm12SendBuffer->writeSync('O');
-				rfm12SendBuffer->writeSync('L');
-				rfm12SendBuffer->writeSync('Y');
-				rfm12SendBuffer->writeSync('C');
-				rfm12SendBuffer->writeSync('O');
-				rfm12SendBuffer->writeSync('W');
+				rfm12SendBuffer->writeSync('H'); // 0x48
+				rfm12SendBuffer->writeSync('O'); // 0x4F
+				rfm12SendBuffer->writeSync('L'); // 0x4C
+				rfm12SendBuffer->writeSync('Y'); // 0x59
+				rfm12SendBuffer->writeSync('C'); // 0x43
+				rfm12SendBuffer->writeSync('O'); // 0x4F
+				rfm12SendBuffer->writeSync('W'); // 0x57
 				rfm12SendBuffer->writeSync(counter++);
 			
 				// send dummy byte
