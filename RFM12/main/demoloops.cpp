@@ -262,7 +262,7 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 				// restart reception
 				rfm12->resyncReceiver();
 				
-				// at this point, the receiver is hopefully not be receiving ...
+				// at this point, the receiver is hopefully not receiving ...
 				rfm12ReceiveBuffer->reset();
 				
 				usart_comm_send_zstr("resync.\r\n");
