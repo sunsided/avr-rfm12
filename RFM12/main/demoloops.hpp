@@ -32,4 +32,9 @@ void transmitterDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12SendB
 */
 void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveBuffer);
 
+/**
+* \brief Starts a transmitter demo loop which logs all received bytes
+*/
+void receiverDumpAll(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveBuffer);
+
 #endif

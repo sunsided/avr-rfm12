@@ -88,7 +88,7 @@ int main()
 	// configure the rfm12
 	usart_comm_send_zstr("configuring ...\r\n");
 	
-	uint8_t group = 212;
+	uint8_t group = 0;
 	configureRfm12(rfm12, group);
 	
 	led_doubleflash_sync();
@@ -101,12 +101,15 @@ int main()
 		
 	usart_comm_send_zstr("transmitter configured.\r\n");
 	sleep(1);
-	
+
+	receiverDumpAll(rfm12, rfm12ReceiveBuffer);
+/*
 #if DEMO_TRANSMITTER_MODE
 	transmitterDemoLoop(rfm12, rfm12SendBuffer, group);
 #else
 	receiverDemoLoop(rfm12, rfm12ReceiveBuffer);
 #endif
+*/
 
 }
 

@@ -274,4 +274,79 @@ void receiverDemoLoop(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveB
 	}
 }
 
+/**
+* \brief Starts the transmitter demo loop which logs all received bytes
+*/
+void receiverDumpAll(rfm12::Rfm12 *rfm12, ringbuffer::RingBuffer *rfm12ReceiveBuffer)
+{
+	// enable fast-receiver strategy and commit (receiver still in idle mode)
+	rfm12->setTransceiverStrategy(RXTXSTRATEGY_FAST_RECEIVER, true);
+	usart_comm_send_zstr("receiver configured for dump log.\r\n");
+	
+	const uint8_t maxPayloadDumpSize = 32;
+	uint8_t remainingPayloadSize = maxPayloadDumpSize;
+	
+	// loopity loop.
+	for(;;)
+	{
+		switch (rxtxdemostate)
+		{
+			default:
+			case RXTXSTATE_IDLE_RXOFF:
+			{
+				// at this point, the receiver should not be active, so we may very well reset the buffer
+				rfm12ReceiveBuffer->reset();
+				
+				// enable transmitter, then sleep
+				rfm12->enterReceiverMode();
+				usart_comm_send_zstr("receiver on ...\r\n");
+				
+				rxtxdemostate = RXTXSTATE_RECEIVING;
+				break;
+			}
+			
+			case RXTXSTATE_RECEIVING:
+			{
+				// the interrupt knows best
+				if (_rfm12PulseRequired) {
+					set_led(OFF);
+					rfm12->pulse();
+					_rfm12PulseRequired = false;
+				}
+				
+				// if the transmission is not done, do not switch state
+				ringbuffer::rbdata_t item;
+				if (!rfm12ReceiveBuffer->tryRead(&item)) {
+					break;
+				}
+				
+				// print data until remaining payload size is zero, then switch state
+				usart_comm_send_char(item);
+				if (0 == --remainingPayloadSize) {
+					usart_comm_send_zstr("\r\nend of dump.\r\n");
+					rxtxdemostate = RXTXSTATE_RESYNC_RXON;
+				}
+				break;
+			}
+			
+			case RXTXSTATE_RESYNC_RXON:
+			{
+				// reset payload detection
+				remainingPayloadSize = maxPayloadDumpSize;
+				
+				// restart reception
+				rfm12->resyncReceiver();
+				
+				// at this point, the receiver is hopefully not receiving ...
+				rfm12ReceiveBuffer->reset();
+				
+				usart_comm_send_zstr("resync for dump log.\r\n");
+
+				rxtxdemostate = RXTXSTATE_RECEIVING;
+				break;
+			}
+		}
+	}
+}
+
 #endif /* DEMO_RECEIVER_MODE */
